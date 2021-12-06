@@ -1,0 +1,282 @@
+import base64
+import json
+import mmap
+import os
+import signal
+import sys
+import tempfile
+from getpass import getpass
+from http import cookies
+from threading import Lock, Timer
+from time import sleep
+from urllib.parse import urlparse, urljoin
+
+import requests
+import logging
+
+from requests import RequestException
+from tenacity import retry, wait_exponential, stop_after_delay, retry_if_exception_type
+
+logger = logging.getLogger(__name__)
+
+
+class AuthHandler:
+    def __init__(self):
+        self._mmap_filename = os.environ.get('CLOUD_TOKEN_MMAP', os.path.join(tempfile.gettempdir(), 'igtcloud_auth_mmap'))
+        self._token = None
+        self._mmap = None
+        self._file = None
+        self._cached_token = dict()
+
+    @property
+    def token(self):
+        token = self._read_token()
+        return token.get("jwt")
+
+    @property
+    def csrf_token(self):
+        token = self._read_token()
+        return token.get("csrf")
+
+    def _read_token(self):
+        if self._mmap is None:
+            if not os.path.exists(self._mmap_filename):
+                raise RuntimeError('IGT Cloud auth file doesn\'t exist')
+            try:
+                self._file = open(self._mmap_filename, 'r+b', 0)
+                if sys.platform != "win32":
+                    self._mmap = mmap.mmap(self._file.fileno(), 0, mmap.MAP_SHARED, mmap.ACCESS_READ)
+                else:
+                    self._mmap = mmap.mmap(self._file.fileno(), 0, access=mmap.ACCESS_READ)
+            except Exception:
+                raise RuntimeError('Error opening IGT Cloud auth file {}'.format(self._mmap_filename))
+        self._mmap.seek(0)
+        try:
+            data = self._mmap.readline().decode('utf-8').strip().strip('\x00')
+            data = base64.b64decode(data)
+            self._cached_token = json.loads(data)
+        except Exception:
+            logger.error("Error retrieving/decoding token")
+        return self._cached_token
+
+    def __del__(self):
+        self.close()
+
+    def close(self):
+        if self._mmap is not None:
+            self._mmap.close()
+            self._file.close()
+
+
+class AuthRefresher:
+    def __init__(self, **kwargs):
+        self._filename = os.environ.get('CLOUD_TOKEN_MMAP', os.path.join(tempfile.gettempdir(), 'igtcloud_auth_mmap'))
+        self._domain = None
+        self._host = None
+
+        self._token_data = dict()
+        # Refresh token mechanism does not work, due to missing (correct) csrf in refresh response
+        # if 'CLOUD_REFRESH_TOKEN' in os.environ:
+        #     self._token_data['refresh_token'] = os.environ['CLOUD_REFRESH_TOKEN']
+
+        # ensure the directory exists
+        dir_name = os.path.dirname(self._filename)
+        if not os.path.exists(dir_name):
+            os.makedirs(dir_name)
+
+        self._file = open(self._filename, 'w+b', 0)
+        self._file.write(b'\x00' * 5 * mmap.PAGESIZE)
+        self._file.flush()
+        if sys.platform != "win32":
+            self._m = mmap.mmap(self._file.fileno(), 5 * mmap.PAGESIZE, mmap.MAP_SHARED, mmap.ACCESS_WRITE)
+        else:
+            self._m = mmap.mmap(self._file.fileno(), 5 * mmap.PAGESIZE, access=mmap.ACCESS_WRITE)
+        self._rt = Periodic(-1, self._refresh_token, autostart=False)
+        self._running = False
+
+        signals = [signal.SIGABRT, signal.SIGINT, signal.SIGTERM]
+        if sys.platform != "win32":
+            signals.append(signal.SIGHUP)
+        for signum in signals:
+            signal.signal(signum, self._signal_handler)
+
+        self._start_kwargs = kwargs
+
+    def __enter__(self):
+        self.start(blocking=False, **self._start_kwargs)
+        self._authhandler = AuthHandler()
+        return self._authhandler
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self._authhandler:
+            try:
+                self._authhandler.close()
+            except Exception:
+                pass
+        self.stop()
+
+    def _save_data(self):
+        self._rt.interval = int(self._token_data['expires_in']) - 180
+        data = {k: v for k, v in self._token_data.items() if
+                k in ['sub', 'jwt', 'jwt_data', 'csrf']}
+        data = base64.b64encode(json.dumps(data).encode('utf-8'))
+        if self._m:
+            self._m.seek(0)
+            self._m.write(data)
+            self._m.flush()
+
+    def _oauth_login(self, username, password):
+
+        data = {'grantType': 'password',
+                'username': username,
+                'password': password}
+        self._token_data = self._oauth_token(data, 'login')
+        self._token_data["csrf"] = self._token_data["CSRFToken"]  # Copy csrf, is only valid on logon, not refresh
+
+    def _oauth_token(self, data, action='login'):
+        url = urljoin(self._domain, f'/api/auth/{action}')
+        headers = {'Content-Type': 'application/json',
+                   'Accept': 'application/json'}
+        if action == 'refresh':
+            headers['X-JWT'] = self._token_data['jwt']
+            headers['X-CSRF-TOKEN'] = self._token_data['csrf']
+
+        resp = requests.post(url, json=data, headers=headers)
+        if resp.ok:
+            data = resp.json()
+            c = resp.headers['Set-Cookie']
+            cookie = cookies.SimpleCookie()
+            cookie.load(c)
+            data["jwt"] = f"{cookie['jwt_header_payload'].value}.{cookie['jwt_signature'].value}"
+            data["expires_in"] = float(cookie['jwt_header_payload']['max-age'])
+            jwt_payload = data["jwt"].split(".")[1]
+            jwt_payload += '=' * (-len(jwt_payload) % 4)  # pad payload
+            data["jwt_data"] = json.loads(base64.b64decode(jwt_payload))
+            return data
+        else:
+            logger.error(resp.text)
+            resp.raise_for_status()
+
+    def _login(self, username=None):
+        if self._token_data is None or self._token_data.get('refresh_token') is None:
+            logger.info("Login to IGT CLoud ({})".format(self._host))
+            username = username or os.environ.get('CLOUD_USERNAME') or input("Username: ")
+            password = getpass('{}@{}\'s password: '.format(username, self._host))
+
+            try:
+                self._oauth_login(username, password)
+            except:
+                raise RuntimeError('Error during login')
+        else:
+            try:
+                self._oauth_refresh_token()
+            except:
+                raise RuntimeError('Error during login using refresh token')
+
+        logger.info(
+            'Logged in as: {sub}'.format(sub=self._token_data.get('sub', None)))
+        self._save_data()
+
+    def _logout(self):
+        logger.info("Logout...")
+        url = urljoin(self._domain, '/api/auth/logout')
+        headers = {'X-JWT': self._token_data['jwt']}
+        resp = requests.post(url, {}, headers=headers)
+        return resp.ok
+
+    def _refresh_token(self):
+        logger.info('Refreshing token')
+        try:
+            csrf = self._token_data.get('csrf')
+            self._oauth_refresh_token()
+
+            self._token_data['csrf'] = csrf
+            self._save_data()
+        except:
+            logger.error("Error during refresh")
+            self.stop()
+
+    @retry(stop=(stop_after_delay(180)), wait=wait_exponential(),
+           retry=retry_if_exception_type(RequestException), reraise=True)
+    def _oauth_refresh_token(self):
+        self._token_data = self._oauth_token(None, 'refresh')
+
+    def _signal_handler(self, signum, frame):
+        logger.debug('Signal handler called with signal', signum)
+        if self._running:
+            self.stop()
+
+    def stop(self):
+        self._rt.stop()
+        try:
+            self._m.close()
+            self._m = None
+            self._file.close()
+            self._file = None
+            os.remove(self._filename)
+        except:
+            logger.debug("Error during stop")
+        try:
+            self._logout()
+        except:
+            logger.debug("Error during logout")
+        self._running = False
+        logger.info("Stopped IGT Cloud authentication handler")
+
+    def start(self, domain=None, username=None, blocking=True):
+        try:
+            logger.info("Starting IGT Cloud authentication handler...")
+            self._running = True
+
+            domain = domain or os.environ.get('CLOUD_DOMAIN') or input("Provide domain: ")
+            if not domain:
+                raise RuntimeError("Domain not provided")
+
+            url = urlparse(domain)
+            if not url.scheme:
+                url = urlparse('https://' + domain)
+            self._domain = url.geturl()
+            self._host = url.netloc
+
+            self._login(username=username)
+            self._rt.start()
+            while blocking and self._running:
+                sleep(1)
+        except InterruptedError:
+            pass
+
+
+class Periodic(object):
+    """
+    A periodic task running in threading.Timers
+    """
+
+    def __init__(self, interval, function, *args, **kwargs):
+        self._lock = Lock()
+        self._timer = None
+        self.function = function
+        self.interval = interval
+        self.args = args
+        self.kwargs = kwargs
+        self._stopped = True
+        if kwargs.pop('autostart', True):
+            self.start()
+
+    def start(self, from_run=False):
+        self._lock.acquire()
+        if from_run or self._stopped:
+            self._stopped = False
+            self._timer = Timer(self.interval, self._run)
+            self._timer.start()
+            self._lock.release()
+
+    def _run(self):
+        self.function(*self.args, **self.kwargs)
+        self.start(from_run=True)
+
+    def stop(self):
+        self._lock.acquire()
+        self._stopped = True
+        if self._timer:
+            self._timer.cancel()
+        self._lock.release()

@@ -1,0 +1,48 @@
+#!/usr/bin/env python
+
+import argparse
+import logging
+logging.basicConfig(level=logging.INFO)
+
+
+def login(sub_args):
+    from igtcloud.client.core.auth import AuthRefresher
+    auth_refresher = AuthRefresher()
+    auth_refresher.start(domain=sub_args.domain, username=sub_args.user)
+
+
+def get_token(sub_args):
+    from igtcloud.client.core.auth import AuthHandler
+    auth_handler = AuthHandler()
+    if sub_args.type == 'access':
+        print(auth_handler.token)
+    elif sub_args.type == 'csrf':
+        print(auth_handler.csrf_token)
+    else:
+        print('ERROR')
+
+
+def version(sub_args):
+    from igtcloud.client import __version__
+    print(__version__)
+
+
+parser = argparse.ArgumentParser(description='IGT Cloud CLI.')
+parser.set_defaults(func=(lambda x: parser.print_help()))
+subparsers = parser.add_subparsers()
+parser_login = subparsers.add_parser('login')
+parser_login.add_argument('-d', '--domain', required=False, type=str, default=None)
+parser_login.add_argument('-u', '--user', required=False, type=str, default=None)
+parser_login.set_defaults(func=login)
+
+parser_token = subparsers.add_parser('get-token')
+parser_token.add_argument('type', nargs='?', choices=['access', 'csrf'], default='access')
+parser_token.set_defaults(func=get_token)
+
+parser_version = subparsers.add_parser('version')
+parser_version.set_defaults(func=version)
+
+args = parser.parse_args()
+
+
+args.func(args)
