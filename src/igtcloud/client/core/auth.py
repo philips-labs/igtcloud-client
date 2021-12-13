@@ -38,6 +38,12 @@ class AuthHandler:
         token = self._read_token()
         return token.get("csrf")
 
+    @property
+    def domain(self):
+        token = self._read_token()
+        return token.get("domain")
+
+
     def _read_token(self):
         if self._mmap is None:
             if not os.path.exists(self._mmap_filename):
@@ -119,6 +125,10 @@ class AuthRefresher:
         self._rt.interval = int(self._token_data['expires_in']) - 180
         data = {k: v for k, v in self._token_data.items() if
                 k in ['sub', 'jwt', 'jwt_data', 'csrf']}
+
+        # Add domain
+        data['domain'] = self._domain
+
         data = base64.b64encode(json.dumps(data).encode('utf-8'))
         if self._m:
             self._m.seek(0)
