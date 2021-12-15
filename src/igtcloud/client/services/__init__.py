@@ -12,6 +12,7 @@ def _setup_service(module):
 
     config = module.Configuration(host=f"{auth_handler.domain}/api/data", api_key=dict(jwt=None, csrf=None))
     config.refresh_api_key_hook = _api_key_hook
+    config.discard_unknown_keys = True
     for p in 'https_proxy', 'HTTPS_PROXY', 'http_proxy', 'HTTP_PROXY':
         if p in os.environ:
             config.proxy = os.environ[p]
