@@ -29,7 +29,7 @@ class AuthHandler:
         self._cached_token = dict()
 
     @property
-    def token(self):
+    def jwt_token(self):
         token = self._read_token()
         return token.get("jwt")
 
@@ -39,15 +39,32 @@ class AuthHandler:
         return token.get("csrf")
 
     @property
+    def access_token(self):
+        return self._jwt_data.get("access_token")
+
+    @property
     def domain(self):
         token = self._read_token()
         return token.get("domain")
 
+    @property
+    def username(self):
+        token = self._read_token()
+        return token.get("sub")
+
+    @property
+    def uid(self):
+        return self._jwt_data.get('uid')
+
+    @property
+    def _jwt_data(self):
+        token = self._read_token()
+        return token.get("jwt_data", {})
 
     def _read_token(self):
         if self._mmap is None:
             if not os.path.exists(self._mmap_filename):
-                raise RuntimeError('IGT Cloud auth file doesn\'t exist')
+                raise RuntimeError("IGT Cloud auth file doesn't exist.\nPlease login using `igtcloud login`")
             try:
                 self._file = open(self._mmap_filename, 'r+b', 0)
                 if sys.platform != "win32":
@@ -81,9 +98,6 @@ class AuthRefresher:
         self._host = None
 
         self._token_data = dict()
-        # Refresh token mechanism does not work, due to missing (correct) csrf in refresh response
-        # if 'CLOUD_REFRESH_TOKEN' in os.environ:
-        #     self._token_data['refresh_token'] = os.environ['CLOUD_REFRESH_TOKEN']
 
         # ensure the directory exists
         dir_name = os.path.dirname(self._filename)

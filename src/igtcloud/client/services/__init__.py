@@ -7,7 +7,7 @@ auth_handler = AuthHandler()
 
 def _setup_service(module):
     def _api_key_hook(conf: module.Configuration):
-        conf.api_key['jwt'] = auth_handler.token
+        conf.api_key['jwt'] = auth_handler.jwt_token
         conf.api_key['csrf'] = auth_handler.csrf_token
 
     config = module.Configuration(host=f"{auth_handler.domain}/api/data", api_key=dict(jwt=None, csrf=None))
