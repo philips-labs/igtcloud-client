@@ -19,3 +19,4 @@ var/
 .idea
 
 **/__version__.py
+**/.openapi-generator/**

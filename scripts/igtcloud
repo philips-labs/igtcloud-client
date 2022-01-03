@@ -14,10 +14,12 @@ def login(sub_args):
 def get_token(sub_args):
     from igtcloud.client.core.auth import AuthHandler
     auth_handler = AuthHandler()
-    if sub_args.type == 'access':
-        print(auth_handler.token)
+    if sub_args.type == 'jwt':
+        print(auth_handler.jwt_token)
     elif sub_args.type == 'csrf':
         print(auth_handler.csrf_token)
+    elif sub_args.type == 'access':
+        print(auth_handler.access_token)
     else:
         print('ERROR')
 
@@ -36,7 +38,7 @@ parser_login.add_argument('-u', '--user', required=False, type=str, default=None
 parser_login.set_defaults(func=login)
 
 parser_token = subparsers.add_parser('get-token')
-parser_token.add_argument('type', nargs='?', choices=['access', 'csrf'], default='access')
+parser_token.add_argument('type', nargs='?', choices=['jwt', 'access', 'csrf'], default='jwt')
 parser_token.set_defaults(func=get_token)
 
 parser_version = subparsers.add_parser('version')
