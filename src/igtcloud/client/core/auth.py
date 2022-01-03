@@ -20,9 +20,13 @@ from tenacity import retry, wait_exponential, stop_after_delay, retry_if_excepti
 logger = logging.getLogger(__name__)
 
 
+def _get_mmap_filename():
+    return os.environ.get('CLOUD_TOKEN_MMAP', os.path.join(tempfile.gettempdir(), 'igtcloud_auth_mmap'))
+
+
 class AuthHandler:
-    def __init__(self):
-        self._mmap_filename = os.environ.get('CLOUD_TOKEN_MMAP', os.path.join(tempfile.gettempdir(), 'igtcloud_auth_mmap'))
+    def __init__(self, filename=None):
+        self._mmap_filename = filename or _get_mmap_filename()
         self._token = None
         self._mmap = None
         self._file = None
@@ -93,24 +97,17 @@ class AuthHandler:
 
 class AuthRefresher:
     def __init__(self, **kwargs):
-        self._filename = os.environ.get('CLOUD_TOKEN_MMAP', os.path.join(tempfile.gettempdir(), 'igtcloud_auth_mmap'))
+        self._filename = _get_mmap_filename()
+        self._unique = kwargs.pop('unique', False)
+
         self._domain = None
         self._host = None
-
         self._token_data = dict()
+        self._file = None
+        self._m = None
 
-        # ensure the directory exists
-        dir_name = os.path.dirname(self._filename)
-        if not os.path.exists(dir_name):
-            os.makedirs(dir_name)
+        self._authhandler = None
 
-        self._file = open(self._filename, 'w+b', 0)
-        self._file.write(b'\x00' * 5 * mmap.PAGESIZE)
-        self._file.flush()
-        if sys.platform != "win32":
-            self._m = mmap.mmap(self._file.fileno(), 5 * mmap.PAGESIZE, mmap.MAP_SHARED, mmap.ACCESS_WRITE)
-        else:
-            self._m = mmap.mmap(self._file.fileno(), 5 * mmap.PAGESIZE, access=mmap.ACCESS_WRITE)
         self._rt = Periodic(-1, self._refresh_token, autostart=False)
         self._running = False
 
@@ -123,16 +120,12 @@ class AuthRefresher:
         self._start_kwargs = kwargs
 
     def __enter__(self):
+        self._unique = True
         self.start(blocking=False, **self._start_kwargs)
-        self._authhandler = AuthHandler()
+        self._authhandler = AuthHandler(filename=self._filename)
         return self._authhandler
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if self._authhandler:
-            try:
-                self._authhandler.close()
-            except Exception:
-                pass
         self.stop()
 
     def _save_data(self):
@@ -226,28 +219,36 @@ class AuthRefresher:
         self._token_data = self._oauth_token(None, 'refresh')
 
     def _signal_handler(self, signum, frame):
-        logger.debug('Signal handler called with signal', signum)
-        if self._running:
-            self.stop()
+        logger.debug('Signal handler called with signal %s', signal.strsignal(signum))
+        self.stop()
+        if signum == signal.SIGINT:
+            signal.default_int_handler(signum, frame)
 
     def stop(self):
-        self._rt.stop()
-        try:
-            self._m.close()
-            self._m = None
-            self._file.close()
-            self._file = None
-            os.remove(self._filename)
-        except:
-            logger.debug("Error during stop")
-        try:
-            self._logout()
-        except:
-            logger.debug("Error during logout")
-        self._running = False
-        logger.info("Stopped IGT Cloud authentication handler")
+        if self._running:
+            if self._authhandler:
+                try:
+                    self._authhandler.close()
+                except Exception:
+                    pass
+            self._rt.stop()
+            try:
+                self._m.close()
+                self._m = None
+                self._file.close()
+                self._file = None
+                os.remove(self._filename)
+            except:
+                logger.debug("Error during stop")
+            try:
+                self._logout()
+            except:
+                logger.debug("Error during logout")
+            self._running = False
+            logger.info("Stopped IGT Cloud authentication handler")
 
     def start(self, domain=None, username=None, blocking=True):
+        self._setup_mmap()
         try:
             logger.info("Starting IGT Cloud authentication handler...")
             self._running = True
@@ -266,8 +267,25 @@ class AuthRefresher:
             self._rt.start()
             while blocking and self._running:
                 sleep(1)
-        except InterruptedError:
+        except (InterruptedError, KeyboardInterrupt):
             pass
+
+    def _setup_mmap(self):
+        if self._file is None or self._m is None:
+            if self._unique:
+                fd, self._filename = tempfile.mkstemp(prefix=os.path.basename(self._filename),
+                                                      dir=os.path.dirname(self._filename))
+                self._file = open(fd, 'w+b', 0)
+            else:
+                os.makedirs(os.path.dirname(self._filename), exist_ok=True)
+                self._file = open(self._filename, 'w+b', 0)
+
+            self._file.write(b'\x00' * 5 * mmap.PAGESIZE)
+            self._file.flush()
+            if sys.platform != "win32":
+                self._m = mmap.mmap(self._file.fileno(), 5 * mmap.PAGESIZE, mmap.MAP_SHARED, mmap.ACCESS_WRITE)
+            else:
+                self._m = mmap.mmap(self._file.fileno(), 5 * mmap.PAGESIZE, access=mmap.ACCESS_WRITE)
 
 
 class Periodic(object):
