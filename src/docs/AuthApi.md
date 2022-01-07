@@ -185,7 +185,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_s3_credentials_resource**
-> [S3CredentialResponse] get_s3_credentials_resource(action)
+> S3CredentialResponse get_s3_credentials_resource(action)
 
 
 
@@ -259,7 +259,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[S3CredentialResponse]**](S3CredentialResponse.md)
+[**S3CredentialResponse**](S3CredentialResponse.md)
 
 ### Authorization
 

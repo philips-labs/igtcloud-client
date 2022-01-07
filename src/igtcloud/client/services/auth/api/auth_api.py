@@ -144,7 +144,7 @@ class AuthApi(object):
         )
         self.get_s3_credentials_resource_endpoint = _Endpoint(
             settings={
-                'response_type': ([S3CredentialResponse],),
+                'response_type': (S3CredentialResponse,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -584,7 +584,7 @@ class AuthApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            [S3CredentialResponse]
+            S3CredentialResponse
                 If the method is called asynchronously, returns the request
                 thread.
         """
