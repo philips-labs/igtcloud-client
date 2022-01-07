@@ -14,8 +14,6 @@ from igtcloud.client.services.entities.model.ai_suite_collection_all_of import A
 from igtcloud.client.services.entities.model.ai_suite_connection import AISuiteConnection
 from igtcloud.client.services.entities.model.ai_suite_project import AISuiteProject
 from igtcloud.client.services.entities.model.ai_suite_project_all_of import AISuiteProjectAllOf
-from igtcloud.client.services.entities.model.ai_suite_provider import AISuiteProvider
-from igtcloud.client.services.entities.model.ai_suite_provider_all_of import AISuiteProviderAllOf
 from igtcloud.client.services.entities.model.ai_suite_resource import AISuiteResource
 from igtcloud.client.services.entities.model.account_status_model import AccountStatusModel
 from igtcloud.client.services.entities.model.annotation_state_model import AnnotationStateModel

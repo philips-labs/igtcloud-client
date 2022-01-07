@@ -100,7 +100,7 @@ class AISuiteCollection(ModelComposed):
             'version': (str,),  # noqa: E501
             'create_date': (int,),  # noqa: E501
             'project': (ProjectModel,),  # noqa: E501
-            'hospital': (HospitalModel,),  # noqa: E501
+            'institute': (HospitalModel,),  # noqa: E501
         }
 
     @cached_property
@@ -116,7 +116,7 @@ class AISuiteCollection(ModelComposed):
         'version': 'version',  # noqa: E501
         'create_date': 'createDate',  # noqa: E501
         'project': 'project',  # noqa: E501
-        'hospital': 'hospital',  # noqa: E501
+        'institute': 'institute',  # noqa: E501
     }
 
     read_only_vars = {
@@ -165,7 +165,7 @@ class AISuiteCollection(ModelComposed):
             version (str): [optional]  # noqa: E501
             create_date (int): [optional]  # noqa: E501
             project (ProjectModel): [optional]  # noqa: E501
-            hospital (HospitalModel): [optional]  # noqa: E501
+            institute (HospitalModel): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -272,7 +272,7 @@ class AISuiteCollection(ModelComposed):
             version (str): [optional]  # noqa: E501
             create_date (int): [optional]  # noqa: E501
             project (ProjectModel): [optional]  # noqa: E501
-            hospital (HospitalModel): [optional]  # noqa: E501
+            institute (HospitalModel): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
