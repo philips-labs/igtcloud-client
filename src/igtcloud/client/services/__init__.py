@@ -13,7 +13,7 @@ class BaseService:
     def _get_auth_handler(self):
         if self._auth_handler is None:
             self._auth_handler = AuthHandler()
-            self.api_client.configuration.host = f"{self._auth_handler.domain}{self._host_path}"
+        self.api_client.configuration.host = f"{self._auth_handler.domain}{self._host_path}"
         return self._auth_handler
 
     @property
