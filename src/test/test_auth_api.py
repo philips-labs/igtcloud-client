@@ -48,8 +48,8 @@ class TestAuthApi(unittest.TestCase):
         """
         pass
 
-    def test_post_login_resource_auth_login(self):
-        """Test case for post_login_resource_auth_login
+    def test_post_login_resource_login(self):
+        """Test case for post_login_resource_login
 
         Authorize by using your IAM credentials  # noqa: E501
         """
