@@ -16,7 +16,6 @@
 # Import APIs into API package:
 from igtcloud.client.services.entities.api.applications_api import ApplicationsApi
 from igtcloud.client.services.entities.api.hospitals_api import HospitalsApi
-from igtcloud.client.services.entities.api.integrations_api import IntegrationsApi
 from igtcloud.client.services.entities.api.organizations_api import OrganizationsApi
 from igtcloud.client.services.entities.api.projects_api import ProjectsApi
 from igtcloud.client.services.entities.api.system_api import SystemApi

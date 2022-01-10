@@ -601,12 +601,10 @@ configuration.api_key['jwt'] = 'YOUR_API_KEY'
 with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = projects_api.ProjectsApi(api_client)
-    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
-    # example passing only required values which don't have defaults set
-    # and optional values
+    # example, this endpoint has no required or optional parameters
     try:
-        api_response = api_instance.get_project_types_resource(x_fields=x_fields)
+        api_response = api_instance.get_project_types_resource()
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling ProjectsApi->get_project_types_resource: %s\n" % e)
@@ -614,10 +612,7 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
 
 ### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **x_fields** | **str**| An optional fields mask | [optional]
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -637,7 +632,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad request |  -  |
 **404** | Not found |  -  |
 

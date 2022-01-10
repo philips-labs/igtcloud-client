@@ -621,7 +621,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_studies_resource**
-> get_studies_resource(hospital_id)
+> RootStudiesModel get_studies_resource(hospital_id)
 
 
 
@@ -635,6 +635,7 @@ import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import hospitals_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from igtcloud.client.services.entities.model.root_studies_model import RootStudiesModel
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -668,14 +669,16 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_studies_resource(hospital_id)
+        api_response = api_instance.get_studies_resource(hospital_id)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_studies_resource: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_instance.get_studies_resource(hospital_id, filter=filter)
+        api_response = api_instance.get_studies_resource(hospital_id, filter=filter)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_studies_resource: %s\n" % e)
 ```
@@ -690,7 +693,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**RootStudiesModel**](RootStudiesModel.md)
 
 ### Authorization
 
@@ -706,6 +709,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Study |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

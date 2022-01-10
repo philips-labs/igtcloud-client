@@ -48,15 +48,14 @@ def _setup_service(module):
 
 def _setup_entities():
     from . import entities
-    from .entities.apis import (ProjectsApi, HospitalsApi, IntegrationsApi)
+    from .entities.apis import (ProjectsApi, HospitalsApi)
     client = _setup_service(entities)
 
-    class EntitiesService(BaseService, ProjectsApi, HospitalsApi, IntegrationsApi):
+    class EntitiesService(BaseService, ProjectsApi, HospitalsApi):
         def __init__(self, api_client):
             BaseService.__init__(self, api_client, '/api/data')
             ProjectsApi.__init__(self, api_client)
             HospitalsApi.__init__(self, api_client)
-            IntegrationsApi.__init__(self, api_client)
 
     return EntitiesService(client)
 
