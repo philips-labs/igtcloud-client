@@ -635,7 +635,6 @@ import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import hospitals_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.root_studies_model import RootStudiesModel
 from igtcloud.client.services.entities.model.root_study_model import RootStudyModel
 from pprint import pprint
 # Defining the host is optional and defaults to /data
@@ -711,7 +710,6 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Study |  -  |
-**204** | Study |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

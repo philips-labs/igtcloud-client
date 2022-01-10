@@ -183,42 +183,6 @@
                     "type": "string"
                 }
             ],
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Study",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RootStudyModel"
-                            }
-                        }
-                    },
-                    "204": {
-                        "description": "Study",
-                        "schema": {
-                            "$ref": "#/definitions/RootStudiesModel"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/4xxMessage"
-                        }
-                    }
-                },
-                "operationId": "get_studies_resource",
-                "parameters": [
-                    {
-                        "name": "$filter",
-                        "in": "query",
-                        "type": "string"
-                    }
-                ],
-                "tags": [
-                    "Hospitals"
-                ]
-            },
             "post": {
                 "responses": {
                     "400": {
@@ -242,6 +206,36 @@
                 "tags": [
                     "Hospitals"
                 ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Study",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RootStudyModel"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/4xxMessage"
+                        }
+                    }
+                },
+                "operationId": "get_studies_resource",
+                "parameters": [
+                    {
+                        "name": "$filter",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Hospitals"
+                ]
             }
         },
         "/hospitals/{hospital_id}/studies/{study_id}": {
@@ -259,20 +253,6 @@
                     "type": "string"
                 }
             ],
-            "delete": {
-                "responses": {
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/4xxMessage"
-                        }
-                    }
-                },
-                "operationId": "delete_study_resource",
-                "tags": [
-                    "Hospitals"
-                ]
-            },
             "get": {
                 "responses": {
                     "400": {
@@ -287,7 +267,7 @@
                     "Hospitals"
                 ]
             },
-            "patch": {
+            "put": {
                 "responses": {
                     "400": {
                         "description": "Bad request",
@@ -296,7 +276,7 @@
                         }
                     }
                 },
-                "operationId": "patch_study_resource",
+                "operationId": "put_study_resource",
                 "parameters": [
                     {
                         "name": "payload",
@@ -311,7 +291,7 @@
                     "Hospitals"
                 ]
             },
-            "put": {
+            "delete": {
                 "responses": {
                     "400": {
                         "description": "Bad request",
@@ -320,7 +300,21 @@
                         }
                     }
                 },
-                "operationId": "put_study_resource",
+                "operationId": "delete_study_resource",
+                "tags": [
+                    "Hospitals"
+                ]
+            },
+            "patch": {
+                "responses": {
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/4xxMessage"
+                        }
+                    }
+                },
+                "operationId": "patch_study_resource",
                 "parameters": [
                     {
                         "name": "payload",
@@ -491,6 +485,32 @@
                     "type": "string"
                 }
             ],
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/FilesResponse"
+                        }
+                    }
+                },
+                "summary": "This create study files endpoint actually only stores the file size of a study_id + key combination",
+                "description": "Used only for retrieving progress percentage of uploads.",
+                "operationId": "post_study_files_resource",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/FileSizesModel"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Hospitals"
+                ]
+            },
             "delete": {
                 "responses": {
                     "400": {
@@ -534,32 +554,6 @@
                         "type": "string",
                         "format": "mask",
                         "description": "An optional fields mask"
-                    }
-                ],
-                "tags": [
-                    "Hospitals"
-                ]
-            },
-            "post": {
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/FilesResponse"
-                        }
-                    }
-                },
-                "summary": "This create study files endpoint actually only stores the file size of a study_id + key combination",
-                "description": "Used only for retrieving progress percentage of uploads.",
-                "operationId": "post_study_files_resource",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/FileSizesModel"
-                        }
                     }
                 ],
                 "tags": [
@@ -625,20 +619,6 @@
                     "type": "string"
                 }
             ],
-            "delete": {
-                "responses": {
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/4xxMessage"
-                        }
-                    }
-                },
-                "operationId": "delete_study_series_resource",
-                "tags": [
-                    "Hospitals"
-                ]
-            },
             "put": {
                 "responses": {
                     "400": {
@@ -659,6 +639,20 @@
                         }
                     }
                 ],
+                "tags": [
+                    "Hospitals"
+                ]
+            },
+            "delete": {
+                "responses": {
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/4xxMessage"
+                        }
+                    }
+                },
+                "operationId": "delete_study_series_resource",
                 "tags": [
                     "Hospitals"
                 ]
@@ -706,40 +700,6 @@
                     "type": "string"
                 }
             ],
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/ServiceModel"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/4xxMessage"
-                        }
-                    }
-                },
-                "operationId": "get_services_resource",
-                "parameters": [
-                    {
-                        "name": "$filter",
-                        "in": "query",
-                        "type": "string"
-                    },
-                    {
-                        "name": "X-Fields",
-                        "in": "header",
-                        "type": "string",
-                        "format": "mask",
-                        "description": "An optional fields mask"
-                    }
-                ],
-                "tags": [
-                    "Organizations"
-                ]
-            },
             "post": {
                 "responses": {
                     "201": {
@@ -764,6 +724,40 @@
                         "schema": {
                             "$ref": "#/definitions/ServiceCreateModel"
                         }
+                    },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "tags": [
+                    "Organizations"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceModel"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/4xxMessage"
+                        }
+                    }
+                },
+                "operationId": "get_services_resource",
+                "parameters": [
+                    {
+                        "name": "$filter",
+                        "in": "query",
+                        "type": "string"
                     },
                     {
                         "name": "X-Fields",
@@ -820,29 +814,6 @@
                     "type": "string"
                 }
             ],
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/UsersGroupsModels"
-                        }
-                    }
-                },
-                "operationId": "get_users_groups_resource",
-                "parameters": [
-                    {
-                        "name": "X-Fields",
-                        "in": "header",
-                        "type": "string",
-                        "format": "mask",
-                        "description": "An optional fields mask"
-                    }
-                ],
-                "tags": [
-                    "Organizations"
-                ]
-            },
             "put": {
                 "responses": {
                     "201": {
@@ -862,6 +833,29 @@
                             "$ref": "#/definitions/UsersGroupsModel"
                         }
                     },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "tags": [
+                    "Organizations"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UsersGroupsModels"
+                        }
+                    }
+                },
+                "operationId": "get_users_groups_resource",
+                "parameters": [
                     {
                         "name": "X-Fields",
                         "in": "header",
@@ -904,35 +898,6 @@
             }
         },
         "/projects": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/ProjectsResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/4xxMessage"
-                        }
-                    }
-                },
-                "operationId": "get_projects_resource",
-                "parameters": [
-                    {
-                        "name": "X-Fields",
-                        "in": "header",
-                        "type": "string",
-                        "format": "mask",
-                        "description": "An optional fields mask"
-                    }
-                ],
-                "tags": [
-                    "Projects"
-                ]
-            },
             "post": {
                 "responses": {
                     "200": {
@@ -961,6 +926,35 @@
                             "$ref": "#/definitions/ProjectCreateModel"
                         }
                     },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "tags": [
+                    "Projects"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ProjectsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/4xxMessage"
+                        }
+                    }
+                },
+                "operationId": "get_projects_resource",
+                "parameters": [
                     {
                         "name": "X-Fields",
                         "in": "header",
@@ -1103,6 +1097,32 @@
                     "type": "string"
                 }
             ],
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/FilesResponse"
+                        }
+                    }
+                },
+                "summary": "This create project files endpoint actually only stores the file size of a project_id + key combination",
+                "description": "Used only for retrieving progress percentage of uploads.",
+                "operationId": "post_project_files_resource",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/FileSizesModel"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Projects"
+                ]
+            },
             "delete": {
                 "responses": {
                     "400": {
@@ -1145,32 +1165,6 @@
                 "tags": [
                     "Projects"
                 ]
-            },
-            "post": {
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/FilesResponse"
-                        }
-                    }
-                },
-                "summary": "This create project files endpoint actually only stores the file size of a project_id + key combination",
-                "description": "Used only for retrieving progress percentage of uploads.",
-                "operationId": "post_project_files_resource",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/FileSizesModel"
-                        }
-                    }
-                ],
-                "tags": [
-                    "Projects"
-                ]
             }
         },
         "/projects/{project_id}/hospitals": {
@@ -1182,35 +1176,6 @@
                     "type": "string"
                 }
             ],
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/HospitalsResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/4xxMessage"
-                        }
-                    }
-                },
-                "operationId": "get_hospitals_resource",
-                "parameters": [
-                    {
-                        "name": "X-Fields",
-                        "in": "header",
-                        "type": "string",
-                        "format": "mask",
-                        "description": "An optional fields mask"
-                    }
-                ],
-                "tags": [
-                    "Projects"
-                ]
-            },
             "post": {
                 "responses": {
                     "201": {
@@ -1247,6 +1212,35 @@
                 "tags": [
                     "Projects"
                 ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/HospitalsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/4xxMessage"
+                        }
+                    }
+                },
+                "operationId": "get_hospitals_resource",
+                "parameters": [
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "tags": [
+                    "Projects"
+                ]
             }
         },
         "/system-maintenance/cleanup-download-links": {
@@ -1271,6 +1265,27 @@
                     "type": "string"
                 }
             ],
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "post_task_resource",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/TaskCompletedModel"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Tasks"
+                ]
+            },
             "get": {
                 "responses": {
                     "302": {
@@ -1311,27 +1326,6 @@
                         "in": "query",
                         "type": "boolean",
                         "default": true
-                    }
-                ],
-                "tags": [
-                    "Tasks"
-                ]
-            },
-            "post": {
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                },
-                "operationId": "post_task_resource",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/TaskCompletedModel"
-                        }
                     }
                 ],
                 "tags": [
@@ -1424,38 +1418,6 @@
             }
         },
         "/users": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/UserInfoModel"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/4xxMessage"
-                        }
-                    }
-                },
-                "operationId": "get_users_resource",
-                "parameters": [
-                    {
-                        "name": "X-Fields",
-                        "in": "header",
-                        "type": "string",
-                        "format": "mask",
-                        "description": "An optional fields mask"
-                    }
-                ],
-                "tags": [
-                    "Users"
-                ]
-            },
             "post": {
                 "responses": {
                     "200": {
@@ -1487,6 +1449,38 @@
                             "$ref": "#/definitions/UserCreateModel"
                         }
                     },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "tags": [
+                    "Users"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/UserInfoModel"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/4xxMessage"
+                        }
+                    }
+                },
+                "operationId": "get_users_resource",
+                "parameters": [
                     {
                         "name": "X-Fields",
                         "in": "header",
@@ -1663,6 +1657,30 @@
                     "type": "string"
                 }
             ],
+            "put": {
+                "responses": {
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/4xxMessage"
+                        }
+                    }
+                },
+                "operationId": "put_user_resource",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/UserCreateModel"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Users"
+                ]
+            },
             "delete": {
                 "responses": {
                     "400": {
@@ -1700,30 +1718,6 @@
                         "type": "string",
                         "format": "mask",
                         "description": "An optional fields mask"
-                    }
-                ],
-                "tags": [
-                    "Users"
-                ]
-            },
-            "put": {
-                "responses": {
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/4xxMessage"
-                        }
-                    }
-                },
-                "operationId": "put_user_resource",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/UserCreateModel"
-                        }
                     }
                 ],
                 "tags": [
@@ -1868,6 +1862,44 @@
             },
             "type": "object"
         },
+        "ServiceCreateResponse": {
+            "properties": {
+                "applicationId": {
+                    "type": "string"
+                },
+                "defaultScopes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "expiresOn": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "organizationId": {
+                    "type": "string"
+                },
+                "privateKey": {
+                    "type": "string"
+                },
+                "scopes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "serviceId": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "ServiceModel": {
             "properties": {
                 "entry": {
@@ -1903,44 +1935,6 @@
                     "type": "string"
                 },
                 "organizationId": {
-                    "type": "string"
-                },
-                "scopes": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "serviceId": {
-                    "type": "string"
-                }
-            },
-            "type": "object"
-        },
-        "ServiceCreateResponse": {
-            "properties": {
-                "applicationId": {
-                    "type": "string"
-                },
-                "defaultScopes": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "expiresOn": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "organizationId": {
-                    "type": "string"
-                },
-                "privateKey": {
                     "type": "string"
                 },
                 "scopes": {
@@ -2155,13 +2149,10 @@
             },
             "type": "object"
         },
-        "ProjectsResponse": {
+        "ProjectResponse": {
             "properties": {
-                "projects": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ProjectModel"
-                    }
+                "project": {
+                    "$ref": "#/definitions/ProjectModel"
                 }
             },
             "type": "object"
@@ -2189,10 +2180,13 @@
             },
             "type": "object"
         },
-        "ProjectResponse": {
+        "ProjectsResponse": {
             "properties": {
-                "project": {
-                    "$ref": "#/definitions/ProjectModel"
+                "projects": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ProjectModel"
+                    }
                 }
             },
             "type": "object"
@@ -2313,279 +2307,6 @@
                 }
             },
             "discriminator": "studyType",
-            "type": "object"
-        },
-        "RootStudiesModel": {
-            "properties": {
-                "studies": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/RootStudyModel"
-                    }
-                }
-            },
-            "type": "object"
-        },
-        "AnnotationStudyModel": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/CoreLabsStudyModel"
-                },
-                {
-                    "properties": {
-                        "annotationState": {
-                            "type": "string"
-                        }
-                    },
-                    "type": "object"
-                }
-            ]
-        },
-        "CoreLabsStudyModel": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/BaseStudyModel"
-                },
-                {
-                    "properties": {
-                        "isPhilipsData": {
-                            "type": "string"
-                        },
-                        "studyName": {
-                            "type": "string"
-                        },
-                        "applicationType": {
-                            "type": "string"
-                        },
-                        "operator": {
-                            "type": "string"
-                        },
-                        "cathlabnr": {
-                            "type": "string"
-                        },
-                        "usedMaterials": {
-                            "type": "string"
-                        },
-                        "studyStartDateTime": {
-                            "type": "string",
-                            "format": "date-time"
-                        },
-                        "studyEndDateTime": {
-                            "type": "string",
-                            "format": "date-time"
-                        }
-                    },
-                    "type": "object"
-                }
-            ]
-        },
-        "BaseStudyModel": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/RootStudyModel"
-                },
-                {
-                    "properties": {
-                        "studyId": {
-                            "type": "string"
-                        },
-                        "instanceUid": {
-                            "type": "string"
-                        },
-                        "state": {
-                            "type": "string"
-                        },
-                        "description": {
-                            "type": "string"
-                        },
-                        "studyDate": {
-                            "type": "string",
-                            "format": "date-time"
-                        },
-                        "accessionNumber": {
-                            "type": "string"
-                        },
-                        "s3Prefix": {
-                            "type": "string"
-                        },
-                        "hospitalId": {
-                            "type": "string"
-                        },
-                        "projectId": {
-                            "type": "string"
-                        },
-                        "patientDatabaseId": {
-                            "type": "string"
-                        },
-                        "patient": {
-                            "$ref": "#/definitions/PatientModel"
-                        }
-                    },
-                    "type": "object"
-                }
-            ]
-        },
-        "PatientModel": {
-            "properties": {
-                "patientDatabaseId": {
-                    "type": "string"
-                },
-                "patientId": {
-                    "type": "string"
-                },
-                "patientName": {
-                    "type": "string"
-                },
-                "givenName": {
-                    "type": "string"
-                },
-                "familyName": {
-                    "type": "string"
-                },
-                "middleName": {
-                    "type": "string"
-                },
-                "nameSuffix": {
-                    "type": "string"
-                },
-                "namePrefix": {
-                    "type": "string"
-                },
-                "dateOfBirth": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "gender": {
-                    "type": "string"
-                },
-                "patientIdIssuer": {
-                    "type": "string"
-                },
-                "patientIdValue": {
-                    "type": "string"
-                },
-                "s3Prefix": {
-                    "type": "string"
-                }
-            },
-            "type": "object"
-        },
-        "EpdStudyModel": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/RootStudyModel"
-                },
-                {
-                    "properties": {
-                        "age": {
-                            "type": "string"
-                        },
-                        "gender": {
-                            "type": "string"
-                        },
-                        "diseaseTypes": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "diseaseTypesOther": {
-                            "type": "string"
-                        },
-                        "datetime": {
-                            "type": "string",
-                            "format": "date-time"
-                        },
-                        "site": {
-                            "type": "string"
-                        },
-                        "subsite": {
-                            "type": "string"
-                        },
-                        "procedureTypes": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "procedureTypesOther": {
-                            "type": "string"
-                        },
-                        "comments": {
-                            "type": "string"
-                        },
-                        "computerName": {
-                            "type": "string"
-                        },
-                        "computerUsername": {
-                            "type": "string"
-                        },
-                        "macAddress": {
-                            "type": "string"
-                        },
-                        "driveId": {
-                            "type": "string"
-                        },
-                        "softwareVersion": {
-                            "type": "string"
-                        },
-                        "hardwareVersion": {
-                            "type": "string"
-                        },
-                        "duration": {
-                            "type": "integer"
-                        },
-                        "name": {
-                            "type": "string"
-                        },
-                        "FCS": {
-                            "type": "string"
-                        },
-                        "physician": {
-                            "type": "string"
-                        },
-                        "redo": {
-                            "type": "boolean"
-                        },
-                        "imagedChambers": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "imagedChambersOther": {
-                            "type": "string"
-                        },
-                        "events": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/EpdStudyEventModel"
-                            }
-                        }
-                    },
-                    "type": "object"
-                }
-            ]
-        },
-        "EpdStudyEventModel": {
-            "properties": {
-                "datetime": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "isMaster": {
-                    "type": "boolean"
-                },
-                "isSlave": {
-                    "type": "boolean"
-                },
-                "comments": {
-                    "type": "string"
-                }
-            },
             "type": "object"
         },
         "TaskCompletedModel": {
@@ -2826,6 +2547,952 @@
         },
         "CodingModel": {
             "properties": {},
+            "type": "object"
+        },
+        "ApplicationsResponse": {
+            "properties": {
+                "applications": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApplicationsResponse"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "TrainingApplicationsModel": {
+            "properties": {
+                "applicationId": {
+                    "type": "string"
+                },
+                "vmEnvironment": {
+                    "type": "string"
+                },
+                "hasGuide": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        },
+        "TrainingApplicationsResponse": {
+            "properties": {
+                "applications": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TrainingApplicationsModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "SeriesModel": {
+            "properties": {
+                "seriesDatabaseId": {
+                    "type": "string"
+                },
+                "createdOn": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "lastUpdatedOn": {
+                    "type": "string"
+                },
+                "lastUpdatedBy": {
+                    "type": "string"
+                },
+                "instanceUid": {
+                    "type": "string"
+                },
+                "modality": {
+                    "type": "string"
+                },
+                "previewUrl": {
+                    "type": "string"
+                },
+                "procedureDatabaseId": {
+                    "type": "string"
+                },
+                "s3Prefix": {
+                    "type": "string"
+                },
+                "seriesFormat": {
+                    "type": "string"
+                },
+                "studyDatabaseId": {
+                    "type": "string"
+                },
+                "relatedStudyInstanceUid": {
+                    "type": "string"
+                },
+                "relatedSeriesInstanceUid": {
+                    "type": "string"
+                },
+                "documentTitle": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "PatientModel": {
+            "properties": {
+                "patientDatabaseId": {
+                    "type": "string"
+                },
+                "patientId": {
+                    "type": "string"
+                },
+                "patientName": {
+                    "type": "string"
+                },
+                "givenName": {
+                    "type": "string"
+                },
+                "familyName": {
+                    "type": "string"
+                },
+                "middleName": {
+                    "type": "string"
+                },
+                "nameSuffix": {
+                    "type": "string"
+                },
+                "namePrefix": {
+                    "type": "string"
+                },
+                "dateOfBirth": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "patientIdIssuer": {
+                    "type": "string"
+                },
+                "patientIdValue": {
+                    "type": "string"
+                },
+                "s3Prefix": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "BaseStudyModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/RootStudyModel"
+                },
+                {
+                    "properties": {
+                        "studyId": {
+                            "type": "string"
+                        },
+                        "instanceUid": {
+                            "type": "string"
+                        },
+                        "state": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "studyDate": {
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "accessionNumber": {
+                            "type": "string"
+                        },
+                        "s3Prefix": {
+                            "type": "string"
+                        },
+                        "hospitalId": {
+                            "type": "string"
+                        },
+                        "projectId": {
+                            "type": "string"
+                        },
+                        "patientDatabaseId": {
+                            "type": "string"
+                        },
+                        "patient": {
+                            "$ref": "#/definitions/PatientModel"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "CoreLabsStudyModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BaseStudyModel"
+                },
+                {
+                    "properties": {
+                        "isPhilipsData": {
+                            "type": "string"
+                        },
+                        "studyName": {
+                            "type": "string"
+                        },
+                        "applicationType": {
+                            "type": "string"
+                        },
+                        "operator": {
+                            "type": "string"
+                        },
+                        "cathlabnr": {
+                            "type": "string"
+                        },
+                        "usedMaterials": {
+                            "type": "string"
+                        },
+                        "studyStartDateTime": {
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "studyEndDateTime": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "CoreLabsStudyResponse": {
+            "properties": {
+                "study": {
+                    "$ref": "#/definitions/CoreLabsStudyModel"
+                }
+            },
+            "type": "object"
+        },
+        "CoreLabsStudiesResponse": {
+            "properties": {
+                "studies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CoreLabsStudyModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "AnnotationStudyModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/CoreLabsStudyModel"
+                },
+                {
+                    "properties": {
+                        "annotationState": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "AnnotationStudyResponse": {
+            "properties": {
+                "study": {
+                    "$ref": "#/definitions/AnnotationStudyModel"
+                }
+            },
+            "type": "object"
+        },
+        "AnnotationStudiesResponse": {
+            "properties": {
+                "studies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AnnotationStudyModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "AnnotationSeriesModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/SeriesModel"
+                },
+                {
+                    "properties": {
+                        "study": {
+                            "$ref": "#/definitions/AnnotationStudyModel"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "AnnotationSeriesResponse": {
+            "properties": {
+                "series": {
+                    "$ref": "#/definitions/AnnotationSeriesModel"
+                }
+            },
+            "type": "object"
+        },
+        "AnnotationSeriesListResponse": {
+            "properties": {
+                "series": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AnnotationSeriesModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "CoreLabsSeriesModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/SeriesModel"
+                },
+                {
+                    "properties": {
+                        "study": {
+                            "$ref": "#/definitions/CoreLabsStudyModel"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "CoreLabsSeriesResponse": {
+            "properties": {
+                "series": {
+                    "$ref": "#/definitions/CoreLabsSeriesModel"
+                }
+            },
+            "type": "object"
+        },
+        "CoreLabsSeriesListResponse": {
+            "properties": {
+                "series": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CoreLabsSeriesModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "StudyModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BaseStudyModel"
+                },
+                {
+                    "properties": {},
+                    "type": "object"
+                }
+            ]
+        },
+        "StudyResponse": {
+            "properties": {
+                "study": {
+                    "$ref": "#/definitions/StudyModel"
+                }
+            },
+            "type": "object"
+        },
+        "StudiesResponse": {
+            "properties": {
+                "studies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/StudyModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "IgtCloudSeriesModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/SeriesModel"
+                },
+                {
+                    "properties": {
+                        "study": {
+                            "$ref": "#/definitions/StudyModel"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "IgtCloudSeriesResponse": {
+            "properties": {
+                "series": {
+                    "$ref": "#/definitions/IgtCloudSeriesModel"
+                }
+            },
+            "type": "object"
+        },
+        "IgtCloudSeriesListResponse": {
+            "properties": {
+                "series": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/IgtCloudSeriesModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "WeTrustStudyModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BaseStudyModel"
+                },
+                {
+                    "properties": {
+                        "subjectId": {
+                            "type": "string"
+                        },
+                        "corelabId": {
+                            "type": "string"
+                        },
+                        "classification": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "WeTrustStudyResponse": {
+            "properties": {
+                "study": {
+                    "$ref": "#/definitions/WeTrustStudyModel"
+                }
+            },
+            "type": "object"
+        },
+        "WeTrustStudiesResponse": {
+            "properties": {
+                "studies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/WeTrustStudyModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "WeTrustSeriesModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/SeriesModel"
+                },
+                {
+                    "properties": {
+                        "study": {
+                            "$ref": "#/definitions/WeTrustStudyModel"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "WeTrustSeriesResponse": {
+            "properties": {
+                "series": {
+                    "$ref": "#/definitions/WeTrustSeriesModel"
+                }
+            },
+            "type": "object"
+        },
+        "WeTrustSeriesListResponse": {
+            "properties": {
+                "series": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/WeTrustSeriesModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "EchoNavModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BaseStudyModel"
+                },
+                {
+                    "properties": {
+                        "subjectId": {
+                            "type": "string"
+                        },
+                        "xRaySystem": {
+                            "type": "string"
+                        },
+                        "xRaySoftwareRelease": {
+                            "type": "string"
+                        },
+                        "xRayConfiguration": {
+                            "type": "string"
+                        },
+                        "xRayDetector": {
+                            "type": "string"
+                        },
+                        "xRayTable": {
+                            "type": "string"
+                        },
+                        "ultrasoundSystem": {
+                            "type": "string"
+                        },
+                        "ultrasoundSoftwareRelease": {
+                            "type": "string"
+                        },
+                        "ultrasoundHardware": {
+                            "type": "string"
+                        },
+                        "echoNavigatorInvestigationalDevice": {
+                            "type": "string"
+                        },
+                        "echoNavigatorSoftwareRelease": {
+                            "type": "string"
+                        },
+                        "hemo": {
+                            "type": "string"
+                        },
+                        "recordedData": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "diseases": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "therapy": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "redo": {
+                            "type": "string"
+                        },
+                        "implant1Manufacturer": {
+                            "type": "string"
+                        },
+                        "implant1Type": {
+                            "type": "string"
+                        },
+                        "implant1Size": {
+                            "type": "string"
+                        },
+                        "implant2Manufacturer": {
+                            "type": "string"
+                        },
+                        "implant2Type": {
+                            "type": "string"
+                        },
+                        "implant2Size": {
+                            "type": "string"
+                        },
+                        "implant3Manufacturer": {
+                            "type": "string"
+                        },
+                        "implant3Type": {
+                            "type": "string"
+                        },
+                        "implant3Size": {
+                            "type": "string"
+                        },
+                        "implant4Manufacturer": {
+                            "type": "string"
+                        },
+                        "implant4Type": {
+                            "type": "string"
+                        },
+                        "implant4Size": {
+                            "type": "string"
+                        },
+                        "imageTransducers": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "comments": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "EchoNavStudyResponse": {
+            "properties": {
+                "study": {
+                    "$ref": "#/definitions/EchoNavModel"
+                }
+            },
+            "type": "object"
+        },
+        "EchoNavStudiesResponse": {
+            "properties": {
+                "studies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/EchoNavModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "EchoNavSeriesModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/SeriesModel"
+                },
+                {
+                    "properties": {
+                        "study": {
+                            "$ref": "#/definitions/EchoNavModel"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "EchoNavSeriesResponse": {
+            "properties": {
+                "series": {
+                    "$ref": "#/definitions/EchoNavSeriesModel"
+                }
+            },
+            "type": "object"
+        },
+        "EchoNavSeriesListResponse": {
+            "properties": {
+                "series": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/EchoNavSeriesModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "MarvelStudyModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BaseStudyModel"
+                },
+                {
+                    "properties": {
+                        "clinicalStudy": {
+                            "type": "string"
+                        },
+                        "date": {
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "anatomy": {
+                            "type": "string"
+                        },
+                        "site": {
+                            "type": "string"
+                        },
+                        "source": {
+                            "type": "string"
+                        },
+                        "pullbackPrePost": {
+                            "type": "string"
+                        },
+                        "pullbackLimb": {
+                            "type": "string"
+                        },
+                        "pullbackAccessPoint": {
+                            "type": "string"
+                        },
+                        "pullbackDirection": {
+                            "type": "string"
+                        },
+                        "pullbackStentType": {
+                            "type": "string"
+                        },
+                        "pullbackStentedRegion": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "MarvelStudyResponse": {
+            "properties": {
+                "study": {
+                    "$ref": "#/definitions/MarvelStudyModel"
+                }
+            },
+            "type": "object"
+        },
+        "MarvelStudiesResponse": {
+            "properties": {
+                "studies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MarvelStudyModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "MarvelSeriesModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/SeriesModel"
+                },
+                {
+                    "properties": {
+                        "study": {
+                            "$ref": "#/definitions/MarvelStudyModel"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "MarvelSeriesResponse": {
+            "properties": {
+                "series": {
+                    "$ref": "#/definitions/MarvelSeriesModel"
+                }
+            },
+            "type": "object"
+        },
+        "MarvelSeriesListResponse": {
+            "properties": {
+                "series": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MarvelSeriesModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "EpdStudyEventModel": {
+            "properties": {
+                "datetime": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "isMaster": {
+                    "type": "boolean"
+                },
+                "isSlave": {
+                    "type": "boolean"
+                },
+                "comments": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "EpdStudyModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/RootStudyModel"
+                },
+                {
+                    "properties": {
+                        "age": {
+                            "type": "string"
+                        },
+                        "gender": {
+                            "type": "string"
+                        },
+                        "diseaseTypes": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "diseaseTypesOther": {
+                            "type": "string"
+                        },
+                        "datetime": {
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "site": {
+                            "type": "string"
+                        },
+                        "subsite": {
+                            "type": "string"
+                        },
+                        "procedureTypes": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "procedureTypesOther": {
+                            "type": "string"
+                        },
+                        "comments": {
+                            "type": "string"
+                        },
+                        "computerName": {
+                            "type": "string"
+                        },
+                        "computerUsername": {
+                            "type": "string"
+                        },
+                        "macAddress": {
+                            "type": "string"
+                        },
+                        "driveId": {
+                            "type": "string"
+                        },
+                        "softwareVersion": {
+                            "type": "string"
+                        },
+                        "hardwareVersion": {
+                            "type": "string"
+                        },
+                        "duration": {
+                            "type": "integer"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "FCS": {
+                            "type": "string"
+                        },
+                        "physician": {
+                            "type": "string"
+                        },
+                        "redo": {
+                            "type": "boolean"
+                        },
+                        "imagedChambers": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "imagedChambersOther": {
+                            "type": "string"
+                        },
+                        "events": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/EpdStudyEventModel"
+                            }
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "EpdStudyResponse": {
+            "properties": {
+                "study": {
+                    "$ref": "#/definitions/EpdStudyModel"
+                }
+            },
+            "type": "object"
+        },
+        "EpdStudiesResponse": {
+            "properties": {
+                "studies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/EpdStudyModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "IGuideUStudyModel": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/RootStudyModel"
+                },
+                {
+                    "properties": {
+                        "hospitalId": {
+                            "type": "string"
+                        },
+                        "subjectId": {
+                            "type": "string"
+                        },
+                        "visitName": {
+                            "type": "string"
+                        },
+                        "procedureDate": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "IGuideUStudyResponse": {
+            "properties": {
+                "study": {
+                    "$ref": "#/definitions/IGuideUStudyModel"
+                }
+            },
+            "type": "object"
+        },
+        "IGuideUStudiesResponse": {
+            "properties": {
+                "studies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/IGuideUStudyModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "RootStudiesModel": {
+            "properties": {
+                "studies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RootStudyModel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "ProjectTypesResponse": {
+            "properties": {
+                "projectTypes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
             "type": "object"
         }
     },

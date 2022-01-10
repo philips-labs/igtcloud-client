@@ -33,11 +33,21 @@ def lazy_import():
     from igtcloud.client.services.entities.model.annotation_study_model import AnnotationStudyModel
     from igtcloud.client.services.entities.model.base_study_model import BaseStudyModel
     from igtcloud.client.services.entities.model.core_labs_study_model import CoreLabsStudyModel
+    from igtcloud.client.services.entities.model.echo_nav_model import EchoNavModel
     from igtcloud.client.services.entities.model.epd_study_model import EpdStudyModel
+    from igtcloud.client.services.entities.model.i_guide_u_study_model import IGuideUStudyModel
+    from igtcloud.client.services.entities.model.marvel_study_model import MarvelStudyModel
+    from igtcloud.client.services.entities.model.study_model import StudyModel
+    from igtcloud.client.services.entities.model.we_trust_study_model import WeTrustStudyModel
     globals()['AnnotationStudyModel'] = AnnotationStudyModel
     globals()['BaseStudyModel'] = BaseStudyModel
     globals()['CoreLabsStudyModel'] = CoreLabsStudyModel
+    globals()['EchoNavModel'] = EchoNavModel
     globals()['EpdStudyModel'] = EpdStudyModel
+    globals()['IGuideUStudyModel'] = IGuideUStudyModel
+    globals()['MarvelStudyModel'] = MarvelStudyModel
+    globals()['StudyModel'] = StudyModel
+    globals()['WeTrustStudyModel'] = WeTrustStudyModel
 
 
 class RootStudyModel(ModelNormal):
@@ -114,7 +124,12 @@ class RootStudyModel(ModelNormal):
             'AnnotationStudyModel': AnnotationStudyModel,
             'BaseStudyModel': BaseStudyModel,
             'CoreLabsStudyModel': CoreLabsStudyModel,
+            'EchoNavModel': EchoNavModel,
             'EpdStudyModel': EpdStudyModel,
+            'IGuideUStudyModel': IGuideUStudyModel,
+            'MarvelStudyModel': MarvelStudyModel,
+            'StudyModel': StudyModel,
+            'WeTrustStudyModel': WeTrustStudyModel,
         }
         if not val:
             return None
