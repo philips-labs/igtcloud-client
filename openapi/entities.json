@@ -188,6 +188,15 @@
                     "200": {
                         "description": "Study",
                         "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RootStudyModel"
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Study",
+                        "schema": {
                             "$ref": "#/definitions/RootStudiesModel"
                         }
                     },
@@ -250,6 +259,20 @@
                     "type": "string"
                 }
             ],
+            "delete": {
+                "responses": {
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/4xxMessage"
+                        }
+                    }
+                },
+                "operationId": "delete_study_resource",
+                "tags": [
+                    "Hospitals"
+                ]
+            },
             "get": {
                 "responses": {
                     "400": {
@@ -308,20 +331,6 @@
                         }
                     }
                 ],
-                "tags": [
-                    "Hospitals"
-                ]
-            },
-            "delete": {
-                "responses": {
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/4xxMessage"
-                        }
-                    }
-                },
-                "operationId": "delete_study_resource",
                 "tags": [
                     "Hospitals"
                 ]
@@ -482,6 +491,20 @@
                     "type": "string"
                 }
             ],
+            "delete": {
+                "responses": {
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/4xxMessage"
+                        }
+                    }
+                },
+                "operationId": "delete_study_files_resource",
+                "tags": [
+                    "Hospitals"
+                ]
+            },
             "get": {
                 "responses": {
                     "200": {
@@ -513,20 +536,6 @@
                         "description": "An optional fields mask"
                     }
                 ],
-                "tags": [
-                    "Hospitals"
-                ]
-            },
-            "delete": {
-                "responses": {
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/4xxMessage"
-                        }
-                    }
-                },
-                "operationId": "delete_study_files_resource",
                 "tags": [
                     "Hospitals"
                 ]
@@ -616,6 +625,20 @@
                     "type": "string"
                 }
             ],
+            "delete": {
+                "responses": {
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/4xxMessage"
+                        }
+                    }
+                },
+                "operationId": "delete_study_series_resource",
+                "tags": [
+                    "Hospitals"
+                ]
+            },
             "put": {
                 "responses": {
                     "400": {
@@ -636,20 +659,6 @@
                         }
                     }
                 ],
-                "tags": [
-                    "Hospitals"
-                ]
-            },
-            "delete": {
-                "responses": {
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/4xxMessage"
-                        }
-                    }
-                },
-                "operationId": "delete_study_series_resource",
                 "tags": [
                     "Hospitals"
                 ]
@@ -1094,6 +1103,20 @@
                     "type": "string"
                 }
             ],
+            "delete": {
+                "responses": {
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/4xxMessage"
+                        }
+                    }
+                },
+                "operationId": "delete_project_files_resource",
+                "tags": [
+                    "Projects"
+                ]
+            },
             "get": {
                 "responses": {
                     "200": {
@@ -1119,20 +1142,6 @@
                         "description": "An optional fields mask"
                     }
                 ],
-                "tags": [
-                    "Projects"
-                ]
-            },
-            "delete": {
-                "responses": {
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/4xxMessage"
-                        }
-                    }
-                },
-                "operationId": "delete_project_files_resource",
                 "tags": [
                     "Projects"
                 ]
@@ -1654,6 +1663,20 @@
                     "type": "string"
                 }
             ],
+            "delete": {
+                "responses": {
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/4xxMessage"
+                        }
+                    }
+                },
+                "operationId": "delete_user_resource",
+                "tags": [
+                    "Users"
+                ]
+            },
             "get": {
                 "responses": {
                     "200": {
@@ -1703,20 +1726,6 @@
                         }
                     }
                 ],
-                "tags": [
-                    "Users"
-                ]
-            },
-            "delete": {
-                "responses": {
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/4xxMessage"
-                        }
-                    }
-                },
-                "operationId": "delete_user_resource",
                 "tags": [
                     "Users"
                 ]
@@ -2252,6 +2261,60 @@
             },
             "type": "object"
         },
+        "RootStudyModel": {
+            "required": [
+                "studyType"
+            ],
+            "properties": {
+                "studyDatabaseId": {
+                    "type": "string"
+                },
+                "createdOn": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "lastUpdatedOn": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "lastUpdatedBy": {
+                    "type": "string"
+                },
+                "maxRetentionDate": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "legalBasis": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "legalBasisOther": {
+                    "type": "string"
+                },
+                "purpose": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "purposeOther": {
+                    "type": "string"
+                },
+                "electronicRecordState": {
+                    "type": "string"
+                },
+                "studyType": {
+                    "type": "string"
+                }
+            },
+            "discriminator": "studyType",
+            "type": "object"
+        },
         "RootStudiesModel": {
             "properties": {
                 "studies": {
@@ -2361,60 +2424,6 @@
                     "type": "object"
                 }
             ]
-        },
-        "RootStudyModel": {
-            "required": [
-                "studyType"
-            ],
-            "properties": {
-                "studyDatabaseId": {
-                    "type": "string"
-                },
-                "createdOn": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "createdBy": {
-                    "type": "string"
-                },
-                "lastUpdatedOn": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "lastUpdatedBy": {
-                    "type": "string"
-                },
-                "maxRetentionDate": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "legalBasis": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "legalBasisOther": {
-                    "type": "string"
-                },
-                "purpose": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "purposeOther": {
-                    "type": "string"
-                },
-                "electronicRecordState": {
-                    "type": "string"
-                },
-                "studyType": {
-                    "type": "string"
-                }
-            },
-            "discriminator": "studyType",
-            "type": "object"
         },
         "PatientModel": {
             "properties": {

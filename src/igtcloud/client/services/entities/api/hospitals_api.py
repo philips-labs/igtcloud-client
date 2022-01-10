@@ -28,6 +28,7 @@ from igtcloud.client.services.entities.model.files_response import FilesResponse
 from igtcloud.client.services.entities.model.hospitals_response import HospitalsResponse
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.entities.model.root_studies_model import RootStudiesModel
+from igtcloud.client.services.entities.model.root_study_model import RootStudyModel
 from igtcloud.client.services.entities.model.series_create_model import SeriesCreateModel
 
 
@@ -453,7 +454,7 @@ class HospitalsApi(object):
         )
         self.get_studies_resource_endpoint = _Endpoint(
             settings={
-                'response_type': (RootStudiesModel,),
+                'response_type': ([RootStudyModel],),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -1826,7 +1827,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            RootStudiesModel
+            [RootStudyModel]
                 If the method is called asynchronously, returns the request
                 thread.
         """
