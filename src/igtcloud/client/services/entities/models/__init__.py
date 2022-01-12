@@ -9,12 +9,21 @@
 # import sys
 # sys.setrecursionlimit(n)
 
+from igtcloud.client.services.entities.model.ai_suite_collection import AISuiteCollection
+from igtcloud.client.services.entities.model.ai_suite_collection_all_of import AISuiteCollectionAllOf
+from igtcloud.client.services.entities.model.ai_suite_connection import AISuiteConnection
+from igtcloud.client.services.entities.model.ai_suite_project import AISuiteProject
+from igtcloud.client.services.entities.model.ai_suite_project_all_of import AISuiteProjectAllOf
+from igtcloud.client.services.entities.model.ai_suite_provider import AISuiteProvider
+from igtcloud.client.services.entities.model.ai_suite_provider_all_of import AISuiteProviderAllOf
+from igtcloud.client.services.entities.model.ai_suite_resource import AISuiteResource
 from igtcloud.client.services.entities.model.account_status_model import AccountStatusModel
 from igtcloud.client.services.entities.model.annotation_series import AnnotationSeries
 from igtcloud.client.services.entities.model.annotation_series_all_of import AnnotationSeriesAllOf
 from igtcloud.client.services.entities.model.annotation_state import AnnotationState
 from igtcloud.client.services.entities.model.annotation_study import AnnotationStudy
 from igtcloud.client.services.entities.model.annotation_study_all_of import AnnotationStudyAllOf
+from igtcloud.client.services.entities.model.applications_model import ApplicationsModel
 from igtcloud.client.services.entities.model.applications_response import ApplicationsResponse
 from igtcloud.client.services.entities.model.base_study import BaseStudy
 from igtcloud.client.services.entities.model.base_study_all_of import BaseStudyAllOf

@@ -364,7 +364,7 @@ class UsersApi(object):
         )
         self.post_reset_mfa_resource_endpoint = _Endpoint(
             settings={
-                'response_type': (Model4xxMessage,),
+                'response_type': None,
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -1030,7 +1030,7 @@ class UsersApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            Model4xxMessage
+            None
                 If the method is called asynchronously, returns the request
                 thread.
         """

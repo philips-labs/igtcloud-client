@@ -105,6 +105,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**204** | No Content |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -274,6 +275,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**204** | No content |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -531,13 +533,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: image/jpg
 
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | File |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -794,13 +797,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/zip
 
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | File |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1429,6 +1433,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**202** | Accepted |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1582,11 +1587,21 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
             ),
         ],
     ) # FileSizesModel | 
+    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
     try:
         # This create study files endpoint actually only stores the file size of a study_id + key combination
         api_response = api_instance.post_study_files_resource(hospital_id, study_id, payload)
+        pprint(api_response)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling HospitalsApi->post_study_files_resource: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        # This create study files endpoint actually only stores the file size of a study_id + key combination
+        api_response = api_instance.post_study_files_resource(hospital_id, study_id, payload, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->post_study_files_resource: %s\n" % e)
@@ -1600,6 +1615,7 @@ Name | Type | Description  | Notes
  **hospital_id** | **str**|  |
  **study_id** | **str**|  |
  **payload** | [**FileSizesModel**](FileSizesModel.md)|  |
+ **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
 

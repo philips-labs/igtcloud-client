@@ -387,7 +387,7 @@ class HospitalsApi(object):
             },
             headers_map={
                 'accept': [
-                    'application/json'
+                    'image/jpg'
                 ],
                 'content_type': [],
             },
@@ -560,7 +560,7 @@ class HospitalsApi(object):
             },
             headers_map={
                 'accept': [
-                    'application/json'
+                    'application/zip'
                 ],
                 'content_type': [],
             },
@@ -1084,6 +1084,7 @@ class HospitalsApi(object):
                     'hospital_id',
                     'study_id',
                     'payload',
+                    'x_fields',
                 ],
                 'required': [
                     'hospital_id',
@@ -1109,15 +1110,19 @@ class HospitalsApi(object):
                         (str,),
                     'payload':
                         (FileSizesModel,),
+                    'x_fields':
+                        (str,),
                 },
                 'attribute_map': {
                     'hospital_id': 'hospital_id',
                     'study_id': 'study_id',
+                    'x_fields': 'X-Fields',
                 },
                 'location_map': {
                     'hospital_id': 'path',
                     'study_id': 'path',
                     'payload': 'body',
+                    'x_fields': 'header',
                 },
                 'collection_format_map': {
                 }
@@ -2558,6 +2563,7 @@ class HospitalsApi(object):
             payload (FileSizesModel):
 
         Keyword Args:
+            x_fields (str): An optional fields mask. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
