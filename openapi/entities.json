@@ -190,7 +190,10 @@
       "get": {
         "responses": {
           "200": {
-            "description": "File"
+            "description": "File",
+            "schema": {
+              "type": "file"
+            }
           },
           "400": {
             "description": "Bad request",
@@ -293,10 +296,13 @@
           "type": "string"
         }
       ],
-      "delete": {
+      "put": {
         "responses": {
-          "204": {
-            "description": "Study Deleted"
+          "200": {
+            "description": "Study",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
           },
           "400": {
             "description": "Bad request",
@@ -305,7 +311,17 @@
             }
           }
         },
-        "operationId": "delete_study_resource",
+        "operationId": "put_study_resource",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          }
+        ],
         "tags": [
           "Hospitals"
         ]
@@ -340,36 +356,6 @@
           "Hospitals"
         ]
       },
-      "put": {
-        "responses": {
-          "200": {
-            "description": "Study",
-            "schema": {
-              "$ref": "#/definitions/RootStudy"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "put_study_resource",
-        "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/RootStudy"
-            }
-          }
-        ],
-        "tags": [
-          "Hospitals"
-        ]
-      },
       "get": {
         "responses": {
           "200": {
@@ -386,6 +372,23 @@
           }
         },
         "operationId": "get_study_resource",
+        "tags": [
+          "Hospitals"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "Study Deleted"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_study_resource",
         "tags": [
           "Hospitals"
         ]
@@ -455,7 +458,10 @@
       "get": {
         "responses": {
           "200": {
-            "description": "File"
+            "description": "File",
+            "schema": {
+              "type": "file"
+            }
           },
           "400": {
             "description": "Bad request",
@@ -567,23 +573,6 @@
           "type": "string"
         }
       ],
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_study_files_resource",
-        "tags": [
-          "Hospitals"
-        ]
-      },
       "post": {
         "responses": {
           "200": {
@@ -648,6 +637,23 @@
             "description": "An optional fields mask"
           }
         ],
+        "tags": [
+          "Hospitals"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_study_files_resource",
         "tags": [
           "Hospitals"
         ]
@@ -720,23 +726,6 @@
           "type": "string"
         }
       ],
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No content"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_study_series_resource",
-        "tags": [
-          "Hospitals"
-        ]
-      },
       "put": {
         "responses": {
           "200": {
@@ -763,6 +752,23 @@
             }
           }
         ],
+        "tags": [
+          "Hospitals"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_study_series_resource",
         "tags": [
           "Hospitals"
         ]
@@ -1339,7 +1345,10 @@
       "get": {
         "responses": {
           "200": {
-            "description": "File"
+            "description": "File",
+            "schema": {
+              "type": "file"
+            }
           },
           "400": {
             "description": "Bad request",
@@ -1366,23 +1375,6 @@
           "type": "string"
         }
       ],
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No Data"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_project_files_resource",
-        "tags": [
-          "Projects"
-        ]
-      },
       "post": {
         "responses": {
           "200": {
@@ -1441,6 +1433,23 @@
             "description": "An optional fields mask"
           }
         ],
+        "tags": [
+          "Projects"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No Data"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_project_files_resource",
         "tags": [
           "Projects"
         ]
@@ -1686,7 +1695,10 @@
       "get": {
         "responses": {
           "200": {
-            "description": "File"
+            "description": "File",
+            "schema": {
+              "type": "file"
+            }
           },
           "400": {
             "description": "Bad request",
@@ -1944,23 +1956,6 @@
           "type": "string"
         }
       ],
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_user_resource",
-        "tags": [
-          "Users"
-        ]
-      },
       "put": {
         "responses": {
           "204": {
@@ -2013,6 +2008,23 @@
             "description": "An optional fields mask"
           }
         ],
+        "tags": [
+          "Users"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_user_resource",
         "tags": [
           "Users"
         ]

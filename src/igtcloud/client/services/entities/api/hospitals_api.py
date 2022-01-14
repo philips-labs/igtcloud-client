@@ -331,7 +331,7 @@ class HospitalsApi(object):
         )
         self.get_series_preview_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (file_type,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -510,7 +510,7 @@ class HospitalsApi(object):
         )
         self.get_study_download_file_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (file_type,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -1682,7 +1682,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            file_type
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1903,7 +1903,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            file_type
                 If the method is called asynchronously, returns the request
                 thread.
         """

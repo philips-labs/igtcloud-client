@@ -12,6 +12,8 @@ import sys
 import unittest
 
 import igtcloud.client.services.entities
+from igtcloud.client.services.entities.model.root_study import RootStudy
+globals()['RootStudy'] = RootStudy
 from igtcloud.client.services.entities.model.hospital_model import HospitalModel
 
 

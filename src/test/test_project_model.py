@@ -12,6 +12,8 @@ import sys
 import unittest
 
 import igtcloud.client.services.entities
+from igtcloud.client.services.entities.model.hospital_model import HospitalModel
+globals()['HospitalModel'] = HospitalModel
 from igtcloud.client.services.entities.model.project_model import ProjectModel
 
 

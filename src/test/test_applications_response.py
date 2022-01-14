@@ -12,6 +12,8 @@ import sys
 import unittest
 
 import igtcloud.client.services.entities
+from igtcloud.client.services.entities.model.applications_model import ApplicationsModel
+globals()['ApplicationsModel'] = ApplicationsModel
 from igtcloud.client.services.entities.model.applications_response import ApplicationsResponse
 
 

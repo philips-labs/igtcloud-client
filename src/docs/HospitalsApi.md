@@ -460,7 +460,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_series_preview_resource**
-> get_series_preview_resource(hospital_id, series_id, file_name)
+> file_type get_series_preview_resource(hospital_id, series_id, file_name)
 
 
 
@@ -508,7 +508,8 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_series_preview_resource(hospital_id, series_id, file_name)
+        api_response = api_instance.get_series_preview_resource(hospital_id, series_id, file_name)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_series_preview_resource: %s\n" % e)
 ```
@@ -524,7 +525,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**file_type**
 
 ### Authorization
 
@@ -726,7 +727,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_study_download_file_resource**
-> get_study_download_file_resource(hospital_id, study_id)
+> file_type get_study_download_file_resource(hospital_id, study_id)
 
 
 
@@ -773,7 +774,8 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_study_download_file_resource(hospital_id, study_id)
+        api_response = api_instance.get_study_download_file_resource(hospital_id, study_id)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_study_download_file_resource: %s\n" % e)
 ```
@@ -788,7 +790,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**file_type**
 
 ### Authorization
 

@@ -288,7 +288,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_project_download_file_resource**
-> get_project_download_file_resource(project_id)
+> file_type get_project_download_file_resource(project_id)
 
 
 
@@ -334,7 +334,8 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_project_download_file_resource(project_id)
+        api_response = api_instance.get_project_download_file_resource(project_id)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling ProjectsApi->get_project_download_file_resource: %s\n" % e)
 ```
@@ -348,7 +349,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**file_type**
 
 ### Authorization
 

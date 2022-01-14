@@ -212,7 +212,7 @@ class ProjectsApi(object):
         )
         self.get_project_download_file_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (file_type,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -921,7 +921,7 @@ class ProjectsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            file_type
                 If the method is called asynchronously, returns the request
                 thread.
         """

@@ -113,7 +113,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_training_application_guide_resource**
-> get_training_application_guide_resource(training_application)
+> file_type get_training_application_guide_resource(training_application)
 
 
 
@@ -159,7 +159,8 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_training_application_guide_resource(training_application)
+        api_response = api_instance.get_training_application_guide_resource(training_application)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling ApplicationsApi->get_training_application_guide_resource: %s\n" % e)
 ```
@@ -173,7 +174,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**file_type**
 
 ### Authorization
 
