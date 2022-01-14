@@ -4,16 +4,16 @@ All URIs are relative to */data*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**delete_service_resource**](OrganizationsApi.md#delete_service_resource) | **DELETE** /organizations/{organization_id}/services/{service_id} | 
-[**get_groups_resource**](OrganizationsApi.md#get_groups_resource) | **GET** /organizations/{organization_id}/groups | 
-[**get_services_resource**](OrganizationsApi.md#get_services_resource) | **GET** /organizations/{organization_id}/services | 
-[**get_users_groups_resource**](OrganizationsApi.md#get_users_groups_resource) | **GET** /organizations/{organization_id}/users-groups | 
-[**post_services_resource**](OrganizationsApi.md#post_services_resource) | **POST** /organizations/{organization_id}/services | 
-[**put_users_groups_resource**](OrganizationsApi.md#put_users_groups_resource) | **PUT** /organizations/{organization_id}/users-groups | 
+[**delete_service**](OrganizationsApi.md#delete_service) | **DELETE** /organizations/{organization_id}/services/{service_id} | 
+[**get_groups**](OrganizationsApi.md#get_groups) | **GET** /organizations/{organization_id}/groups | 
+[**get_services**](OrganizationsApi.md#get_services) | **GET** /organizations/{organization_id}/services | 
+[**get_users_groups**](OrganizationsApi.md#get_users_groups) | **GET** /organizations/{organization_id}/users-groups | 
+[**post_services**](OrganizationsApi.md#post_services) | **POST** /organizations/{organization_id}/services | 
+[**put_users_groups**](OrganizationsApi.md#put_users_groups) | **PUT** /organizations/{organization_id}/users-groups | 
 
 
-# **delete_service_resource**
-> delete_service_resource(organization_id, service_id)
+# **delete_service**
+> delete_service(organization_id, service_id)
 
 
 
@@ -60,9 +60,9 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.delete_service_resource(organization_id, service_id)
+        api_instance.delete_service(organization_id, service_id)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling OrganizationsApi->delete_service_resource: %s\n" % e)
+        print("Exception when calling OrganizationsApi->delete_service: %s\n" % e)
 ```
 
 
@@ -96,8 +96,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_groups_resource**
-> GroupsModels get_groups_resource(organization_id)
+# **get_groups**
+> [Group] get_groups(organization_id)
 
 
 
@@ -110,7 +110,7 @@ void (empty response body)
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import organizations_api
-from igtcloud.client.services.entities.model.groups_models import GroupsModels
+from igtcloud.client.services.entities.model.group import Group
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -144,18 +144,18 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.get_groups_resource(organization_id)
+        api_response = api_instance.get_groups(organization_id)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling OrganizationsApi->get_groups_resource: %s\n" % e)
+        print("Exception when calling OrganizationsApi->get_groups: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_groups_resource(organization_id, x_fields=x_fields)
+        api_response = api_instance.get_groups(organization_id, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling OrganizationsApi->get_groups_resource: %s\n" % e)
+        print("Exception when calling OrganizationsApi->get_groups: %s\n" % e)
 ```
 
 
@@ -168,7 +168,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GroupsModels**](GroupsModels.md)
+[**[Group]**](Group.md)
 
 ### Authorization
 
@@ -188,8 +188,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_services_resource**
-> ServiceModel get_services_resource(organization_id)
+# **get_services**
+> [Service] get_services(organization_id)
 
 
 
@@ -202,8 +202,8 @@ Name | Type | Description  | Notes
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import organizations_api
+from igtcloud.client.services.entities.model.service import Service
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.service_model import ServiceModel
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -238,18 +238,18 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.get_services_resource(organization_id)
+        api_response = api_instance.get_services(organization_id)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling OrganizationsApi->get_services_resource: %s\n" % e)
+        print("Exception when calling OrganizationsApi->get_services: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_services_resource(organization_id, filter=filter, x_fields=x_fields)
+        api_response = api_instance.get_services(organization_id, filter=filter, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling OrganizationsApi->get_services_resource: %s\n" % e)
+        print("Exception when calling OrganizationsApi->get_services: %s\n" % e)
 ```
 
 
@@ -263,7 +263,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ServiceModel**](ServiceModel.md)
+[**[Service]**](Service.md)
 
 ### Authorization
 
@@ -284,8 +284,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_users_groups_resource**
-> UsersGroupsModels get_users_groups_resource(organization_id)
+# **get_users_groups**
+> [UsersGroups] get_users_groups(organization_id)
 
 
 
@@ -298,7 +298,7 @@ Name | Type | Description  | Notes
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import organizations_api
-from igtcloud.client.services.entities.model.users_groups_models import UsersGroupsModels
+from igtcloud.client.services.entities.model.users_groups import UsersGroups
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -332,18 +332,18 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.get_users_groups_resource(organization_id)
+        api_response = api_instance.get_users_groups(organization_id)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling OrganizationsApi->get_users_groups_resource: %s\n" % e)
+        print("Exception when calling OrganizationsApi->get_users_groups: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_users_groups_resource(organization_id, x_fields=x_fields)
+        api_response = api_instance.get_users_groups(organization_id, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling OrganizationsApi->get_users_groups_resource: %s\n" % e)
+        print("Exception when calling OrganizationsApi->get_users_groups: %s\n" % e)
 ```
 
 
@@ -356,7 +356,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**UsersGroupsModels**](UsersGroupsModels.md)
+[**[UsersGroups]**](UsersGroups.md)
 
 ### Authorization
 
@@ -376,8 +376,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **post_services_resource**
-> ServiceCreateResponse post_services_resource(organization_id, payload)
+# **post_services**
+> Service post_services(organization_id, payload)
 
 
 
@@ -390,9 +390,8 @@ Name | Type | Description  | Notes
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import organizations_api
+from igtcloud.client.services.entities.model.service import Service
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.service_create_response import ServiceCreateResponse
-from igtcloud.client.services.entities.model.service_create_model import ServiceCreateModel
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -422,25 +421,25 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = organizations_api.OrganizationsApi(api_client)
     organization_id = "organization_id_example" # str | 
-    payload = ServiceCreateModel(
-        service_name="service_name_example",
-    ) # ServiceCreateModel | 
+    payload = Service(
+        name="name_example",
+    ) # Service | 
     x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.post_services_resource(organization_id, payload)
+        api_response = api_instance.post_services(organization_id, payload)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling OrganizationsApi->post_services_resource: %s\n" % e)
+        print("Exception when calling OrganizationsApi->post_services: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.post_services_resource(organization_id, payload, x_fields=x_fields)
+        api_response = api_instance.post_services(organization_id, payload, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling OrganizationsApi->post_services_resource: %s\n" % e)
+        print("Exception when calling OrganizationsApi->post_services: %s\n" % e)
 ```
 
 
@@ -449,12 +448,12 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **organization_id** | **str**|  |
- **payload** | [**ServiceCreateModel**](ServiceCreateModel.md)|  |
+ **payload** | [**Service**](Service.md)|  |
  **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
 
-[**ServiceCreateResponse**](ServiceCreateResponse.md)
+[**Service**](Service.md)
 
 ### Authorization
 
@@ -475,8 +474,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **put_users_groups_resource**
-> UsersGroupsModels put_users_groups_resource(organization_id, payload)
+# **put_users_groups**
+> [UsersGroups] put_users_groups(organization_id, payload)
 
 
 
@@ -489,8 +488,7 @@ Name | Type | Description  | Notes
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import organizations_api
-from igtcloud.client.services.entities.model.users_groups_models import UsersGroupsModels
-from igtcloud.client.services.entities.model.users_groups_model import UsersGroupsModel
+from igtcloud.client.services.entities.model.users_groups import UsersGroups
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -520,28 +518,28 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = organizations_api.OrganizationsApi(api_client)
     organization_id = "organization_id_example" # str | 
-    payload = UsersGroupsModel(
+    payload = UsersGroups(
         user_id="user_id_example",
         group_ids=[
             "group_ids_example",
         ],
-    ) # UsersGroupsModel | 
+    ) # UsersGroups | 
     x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.put_users_groups_resource(organization_id, payload)
+        api_response = api_instance.put_users_groups(organization_id, payload)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling OrganizationsApi->put_users_groups_resource: %s\n" % e)
+        print("Exception when calling OrganizationsApi->put_users_groups: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.put_users_groups_resource(organization_id, payload, x_fields=x_fields)
+        api_response = api_instance.put_users_groups(organization_id, payload, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling OrganizationsApi->put_users_groups_resource: %s\n" % e)
+        print("Exception when calling OrganizationsApi->put_users_groups: %s\n" % e)
 ```
 
 
@@ -550,12 +548,12 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **organization_id** | **str**|  |
- **payload** | [**UsersGroupsModel**](UsersGroupsModel.md)|  |
+ **payload** | [**UsersGroups**](UsersGroups.md)|  |
  **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
 
-[**UsersGroupsModels**](UsersGroupsModels.md)
+[**[UsersGroups]**](UsersGroups.md)
 
 ### Authorization
 

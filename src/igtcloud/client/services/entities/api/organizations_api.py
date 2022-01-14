@@ -21,13 +21,10 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from igtcloud.client.services.entities.model.groups_models import GroupsModels
+from igtcloud.client.services.entities.model.group import Group
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.service_create_model import ServiceCreateModel
-from igtcloud.client.services.entities.model.service_create_response import ServiceCreateResponse
-from igtcloud.client.services.entities.model.service_model import ServiceModel
-from igtcloud.client.services.entities.model.users_groups_model import UsersGroupsModel
-from igtcloud.client.services.entities.model.users_groups_models import UsersGroupsModels
+from igtcloud.client.services.entities.model.service import Service
+from igtcloud.client.services.entities.model.users_groups import UsersGroups
 
 
 class OrganizationsApi(object):
@@ -41,7 +38,7 @@ class OrganizationsApi(object):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
-        self.delete_service_resource_endpoint = _Endpoint(
+        self.delete_service_endpoint = _Endpoint(
             settings={
                 'response_type': None,
                 'auth': [
@@ -49,7 +46,7 @@ class OrganizationsApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/organizations/{organization_id}/services/{service_id}',
-                'operation_id': 'delete_service_resource',
+                'operation_id': 'delete_service',
                 'http_method': 'DELETE',
                 'servers': None,
             },
@@ -99,15 +96,15 @@ class OrganizationsApi(object):
             },
             api_client=api_client
         )
-        self.get_groups_resource_endpoint = _Endpoint(
+        self.get_groups_endpoint = _Endpoint(
             settings={
-                'response_type': (GroupsModels,),
+                'response_type': ([Group],),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/organizations/{organization_id}/groups',
-                'operation_id': 'get_groups_resource',
+                'operation_id': 'get_groups',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -156,15 +153,15 @@ class OrganizationsApi(object):
             },
             api_client=api_client
         )
-        self.get_services_resource_endpoint = _Endpoint(
+        self.get_services_endpoint = _Endpoint(
             settings={
-                'response_type': (ServiceModel,),
+                'response_type': ([Service],),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/organizations/{organization_id}/services',
-                'operation_id': 'get_services_resource',
+                'operation_id': 'get_services',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -218,15 +215,15 @@ class OrganizationsApi(object):
             },
             api_client=api_client
         )
-        self.get_users_groups_resource_endpoint = _Endpoint(
+        self.get_users_groups_endpoint = _Endpoint(
             settings={
-                'response_type': (UsersGroupsModels,),
+                'response_type': ([UsersGroups],),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/organizations/{organization_id}/users-groups',
-                'operation_id': 'get_users_groups_resource',
+                'operation_id': 'get_users_groups',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -275,15 +272,15 @@ class OrganizationsApi(object):
             },
             api_client=api_client
         )
-        self.post_services_resource_endpoint = _Endpoint(
+        self.post_services_endpoint = _Endpoint(
             settings={
-                'response_type': (ServiceCreateResponse,),
+                'response_type': (Service,),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/organizations/{organization_id}/services',
-                'operation_id': 'post_services_resource',
+                'operation_id': 'post_services',
                 'http_method': 'POST',
                 'servers': None,
             },
@@ -313,7 +310,7 @@ class OrganizationsApi(object):
                     'organization_id':
                         (str,),
                     'payload':
-                        (ServiceCreateModel,),
+                        (Service,),
                     'x_fields':
                         (str,),
                 },
@@ -339,15 +336,15 @@ class OrganizationsApi(object):
             },
             api_client=api_client
         )
-        self.put_users_groups_resource_endpoint = _Endpoint(
+        self.put_users_groups_endpoint = _Endpoint(
             settings={
-                'response_type': (UsersGroupsModels,),
+                'response_type': ([UsersGroups],),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/organizations/{organization_id}/users-groups',
-                'operation_id': 'put_users_groups_resource',
+                'operation_id': 'put_users_groups',
                 'http_method': 'PUT',
                 'servers': None,
             },
@@ -377,7 +374,7 @@ class OrganizationsApi(object):
                     'organization_id':
                         (str,),
                     'payload':
-                        (UsersGroupsModel,),
+                        (UsersGroups,),
                     'x_fields':
                         (str,),
                 },
@@ -404,18 +401,18 @@ class OrganizationsApi(object):
             api_client=api_client
         )
 
-    def delete_service_resource(
+    def delete_service(
         self,
         organization_id,
         service_id,
         **kwargs
     ):
-        """delete_service_resource  # noqa: E501
+        """delete_service  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.delete_service_resource(organization_id, service_id, async_req=True)
+        >>> thread = api.delete_service(organization_id, service_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -476,19 +473,19 @@ class OrganizationsApi(object):
             organization_id
         kwargs['service_id'] = \
             service_id
-        return self.delete_service_resource_endpoint.call_with_http_info(**kwargs)
+        return self.delete_service_endpoint.call_with_http_info(**kwargs)
 
-    def get_groups_resource(
+    def get_groups(
         self,
         organization_id,
         **kwargs
     ):
-        """get_groups_resource  # noqa: E501
+        """get_groups  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_groups_resource(organization_id, async_req=True)
+        >>> thread = api.get_groups(organization_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -520,7 +517,7 @@ class OrganizationsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            GroupsModels
+            [Group]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -547,19 +544,19 @@ class OrganizationsApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['organization_id'] = \
             organization_id
-        return self.get_groups_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_groups_endpoint.call_with_http_info(**kwargs)
 
-    def get_services_resource(
+    def get_services(
         self,
         organization_id,
         **kwargs
     ):
-        """get_services_resource  # noqa: E501
+        """get_services  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_services_resource(organization_id, async_req=True)
+        >>> thread = api.get_services(organization_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -592,7 +589,7 @@ class OrganizationsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            ServiceModel
+            [Service]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -619,19 +616,19 @@ class OrganizationsApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['organization_id'] = \
             organization_id
-        return self.get_services_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_services_endpoint.call_with_http_info(**kwargs)
 
-    def get_users_groups_resource(
+    def get_users_groups(
         self,
         organization_id,
         **kwargs
     ):
-        """get_users_groups_resource  # noqa: E501
+        """get_users_groups  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_users_groups_resource(organization_id, async_req=True)
+        >>> thread = api.get_users_groups(organization_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -663,7 +660,7 @@ class OrganizationsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            UsersGroupsModels
+            [UsersGroups]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -690,25 +687,25 @@ class OrganizationsApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['organization_id'] = \
             organization_id
-        return self.get_users_groups_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_users_groups_endpoint.call_with_http_info(**kwargs)
 
-    def post_services_resource(
+    def post_services(
         self,
         organization_id,
         payload,
         **kwargs
     ):
-        """post_services_resource  # noqa: E501
+        """post_services  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_services_resource(organization_id, payload, async_req=True)
+        >>> thread = api.post_services(organization_id, payload, async_req=True)
         >>> result = thread.get()
 
         Args:
             organization_id (str):
-            payload (ServiceCreateModel):
+            payload (Service):
 
         Keyword Args:
             x_fields (str): An optional fields mask. [optional]
@@ -736,7 +733,7 @@ class OrganizationsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            ServiceCreateResponse
+            Service
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -765,25 +762,25 @@ class OrganizationsApi(object):
             organization_id
         kwargs['payload'] = \
             payload
-        return self.post_services_resource_endpoint.call_with_http_info(**kwargs)
+        return self.post_services_endpoint.call_with_http_info(**kwargs)
 
-    def put_users_groups_resource(
+    def put_users_groups(
         self,
         organization_id,
         payload,
         **kwargs
     ):
-        """put_users_groups_resource  # noqa: E501
+        """put_users_groups  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_users_groups_resource(organization_id, payload, async_req=True)
+        >>> thread = api.put_users_groups(organization_id, payload, async_req=True)
         >>> result = thread.get()
 
         Args:
             organization_id (str):
-            payload (UsersGroupsModel):
+            payload (UsersGroups):
 
         Keyword Args:
             x_fields (str): An optional fields mask. [optional]
@@ -811,7 +808,7 @@ class OrganizationsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            UsersGroupsModels
+            [UsersGroups]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -840,5 +837,5 @@ class OrganizationsApi(object):
             organization_id
         kwargs['payload'] = \
             payload
-        return self.put_users_groups_resource_endpoint.call_with_http_info(**kwargs)
+        return self.put_users_groups_endpoint.call_with_http_info(**kwargs)
 

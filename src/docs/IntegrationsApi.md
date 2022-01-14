@@ -4,14 +4,14 @@ All URIs are relative to */data*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_ai_suite_collections_resource**](IntegrationsApi.md#get_ai_suite_collections_resource) | **GET** /integrations/aisuite/{connection_name}/projects/{aisuite_project_id} | 
-[**get_ai_suite_connections_resource**](IntegrationsApi.md#get_ai_suite_connections_resource) | **GET** /integrations/aisuite | 
-[**get_ai_suite_projects_resource**](IntegrationsApi.md#get_ai_suite_projects_resource) | **GET** /integrations/aisuite/{connection_name}/projects | 
-[**post_ai_suite_collections_resource**](IntegrationsApi.md#post_ai_suite_collections_resource) | **POST** /integrations/aisuite/{connection_name}/projects/{aisuite_project_id} | 
+[**get_ai_suite_collections**](IntegrationsApi.md#get_ai_suite_collections) | **GET** /integrations/aisuite/{connection_name}/projects/{aisuite_project_id} | 
+[**get_ai_suite_connections**](IntegrationsApi.md#get_ai_suite_connections) | **GET** /integrations/aisuite | 
+[**get_ai_suite_projects**](IntegrationsApi.md#get_ai_suite_projects) | **GET** /integrations/aisuite/{connection_name}/projects | 
+[**post_ai_suite_collections**](IntegrationsApi.md#post_ai_suite_collections) | **POST** /integrations/aisuite/{connection_name}/projects/{aisuite_project_id} | 
 
 
-# **get_ai_suite_collections_resource**
-> [AISuiteCollection] get_ai_suite_collections_resource(connection_name, aisuite_project_id)
+# **get_ai_suite_collections**
+> [AISuiteCollection] get_ai_suite_collections(connection_name, aisuite_project_id)
 
 
 
@@ -60,18 +60,18 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.get_ai_suite_collections_resource(connection_name, aisuite_project_id)
+        api_response = api_instance.get_ai_suite_collections(connection_name, aisuite_project_id)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->get_ai_suite_collections_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->get_ai_suite_collections: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_ai_suite_collections_resource(connection_name, aisuite_project_id, x_fields=x_fields)
+        api_response = api_instance.get_ai_suite_collections(connection_name, aisuite_project_id, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->get_ai_suite_collections_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->get_ai_suite_collections: %s\n" % e)
 ```
 
 
@@ -106,8 +106,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_ai_suite_connections_resource**
-> [AISuiteConnection] get_ai_suite_connections_resource()
+# **get_ai_suite_connections**
+> [AISuiteConnection] get_ai_suite_connections()
 
 
 
@@ -154,10 +154,10 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_ai_suite_connections_resource(x_fields=x_fields)
+        api_response = api_instance.get_ai_suite_connections(x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->get_ai_suite_connections_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->get_ai_suite_connections: %s\n" % e)
 ```
 
 
@@ -189,8 +189,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_ai_suite_projects_resource**
-> [AISuiteProject] get_ai_suite_projects_resource(connection_name)
+# **get_ai_suite_projects**
+> [AISuiteProject] get_ai_suite_projects(connection_name)
 
 
 
@@ -238,18 +238,18 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.get_ai_suite_projects_resource(connection_name)
+        api_response = api_instance.get_ai_suite_projects(connection_name)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->get_ai_suite_projects_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->get_ai_suite_projects: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_ai_suite_projects_resource(connection_name, x_fields=x_fields)
+        api_response = api_instance.get_ai_suite_projects(connection_name, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->get_ai_suite_projects_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->get_ai_suite_projects: %s\n" % e)
 ```
 
 
@@ -283,8 +283,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **post_ai_suite_collections_resource**
-> AISuiteCollection post_ai_suite_collections_resource(connection_name, aisuite_project_id)
+# **post_ai_suite_collections**
+> AISuiteCollection post_ai_suite_collections(connection_name, aisuite_project_id)
 
 
 
@@ -333,18 +333,18 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.post_ai_suite_collections_resource(connection_name, aisuite_project_id)
+        api_response = api_instance.post_ai_suite_collections(connection_name, aisuite_project_id)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->post_ai_suite_collections_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->post_ai_suite_collections: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.post_ai_suite_collections_resource(connection_name, aisuite_project_id, x_fields=x_fields)
+        api_response = api_instance.post_ai_suite_collections(connection_name, aisuite_project_id, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->post_ai_suite_collections_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->post_ai_suite_collections: %s\n" % e)
 ```
 
 

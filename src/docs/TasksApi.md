@@ -4,12 +4,12 @@ All URIs are relative to */data*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_task_resource**](TasksApi.md#get_task_resource) | **GET** /tasks/completed/{token} | 
-[**post_task_resource**](TasksApi.md#post_task_resource) | **POST** /tasks/completed/{token} | 
+[**get_task**](TasksApi.md#get_task) | **GET** /tasks/completed/{token} | 
+[**post_task**](TasksApi.md#post_task) | **POST** /tasks/completed/{token} | 
 
 
-# **get_task_resource**
-> get_task_resource(token)
+# **get_task**
+> get_task(token)
 
 
 
@@ -56,16 +56,16 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_task_resource(token)
+        api_instance.get_task(token)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling TasksApi->get_task_resource: %s\n" % e)
+        print("Exception when calling TasksApi->get_task: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_instance.get_task_resource(token, redirect=redirect)
+        api_instance.get_task(token, redirect=redirect)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling TasksApi->get_task_resource: %s\n" % e)
+        print("Exception when calling TasksApi->get_task: %s\n" % e)
 ```
 
 
@@ -103,8 +103,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **post_task_resource**
-> post_task_resource(token, payload)
+# **post_task**
+> post_task(token, payload)
 
 
 
@@ -117,7 +117,7 @@ void (empty response body)
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import tasks_api
-from igtcloud.client.services.entities.model.task_completed_model import TaskCompletedModel
+from igtcloud.client.services.entities.model.task_completed import TaskCompleted
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -147,16 +147,16 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tasks_api.TasksApi(api_client)
     token = "token_example" # str | 
-    payload = TaskCompletedModel(
+    payload = TaskCompleted(
         status="status_example",
         message="message_example",
-    ) # TaskCompletedModel | 
+    ) # TaskCompleted | 
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.post_task_resource(token, payload)
+        api_instance.post_task(token, payload)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling TasksApi->post_task_resource: %s\n" % e)
+        print("Exception when calling TasksApi->post_task: %s\n" % e)
 ```
 
 
@@ -165,7 +165,7 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **token** | **str**|  |
- **payload** | [**TaskCompletedModel**](TaskCompletedModel.md)|  |
+ **payload** | [**TaskCompleted**](TaskCompleted.md)|  |
 
 ### Return type
 

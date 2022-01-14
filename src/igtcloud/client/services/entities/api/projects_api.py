@@ -21,16 +21,11 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from igtcloud.client.services.entities.model.file_sizes_model import FileSizesModel
-from igtcloud.client.services.entities.model.files_response import FilesResponse
-from igtcloud.client.services.entities.model.hospital_create_model import HospitalCreateModel
-from igtcloud.client.services.entities.model.hospital_response import HospitalResponse
-from igtcloud.client.services.entities.model.hospitals_response import HospitalsResponse
+from igtcloud.client.services.entities.model.file_sizes import FileSizes
+from igtcloud.client.services.entities.model.files import Files
+from igtcloud.client.services.entities.model.institute import Institute
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.project_create_model import ProjectCreateModel
-from igtcloud.client.services.entities.model.project_response import ProjectResponse
-from igtcloud.client.services.entities.model.project_types_response import ProjectTypesResponse
-from igtcloud.client.services.entities.model.projects_response import ProjectsResponse
+from igtcloud.client.services.entities.model.project import Project
 
 
 class ProjectsApi(object):
@@ -44,7 +39,7 @@ class ProjectsApi(object):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
-        self.delete_project_files_resource_endpoint = _Endpoint(
+        self.delete_project_files_endpoint = _Endpoint(
             settings={
                 'response_type': None,
                 'auth': [
@@ -52,7 +47,7 @@ class ProjectsApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/projects/{project_id}/files',
-                'operation_id': 'delete_project_files_resource',
+                'operation_id': 'delete_project_files',
                 'http_method': 'DELETE',
                 'servers': None,
             },
@@ -96,15 +91,15 @@ class ProjectsApi(object):
             },
             api_client=api_client
         )
-        self.get_hospital_resource_endpoint = _Endpoint(
+        self.get_institute_endpoint = _Endpoint(
             settings={
-                'response_type': (HospitalResponse,),
+                'response_type': (Institute,),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/projects/hospitals/{hospital_id}',
-                'operation_id': 'get_hospital_resource',
+                'operation_id': 'get_institute',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -153,15 +148,15 @@ class ProjectsApi(object):
             },
             api_client=api_client
         )
-        self.get_hospitals_resource_endpoint = _Endpoint(
+        self.get_institutes_endpoint = _Endpoint(
             settings={
-                'response_type': (HospitalsResponse,),
+                'response_type': ([Institute],),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/projects/{project_id}/hospitals',
-                'operation_id': 'get_hospitals_resource',
+                'operation_id': 'get_institutes',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -210,124 +205,15 @@ class ProjectsApi(object):
             },
             api_client=api_client
         )
-        self.get_project_download_file_resource_endpoint = _Endpoint(
+        self.get_project_endpoint = _Endpoint(
             settings={
-                'response_type': (file_type,),
-                'auth': [
-                    'csrf_token',
-                    'jwt'
-                ],
-                'endpoint_path': '/projects/{project_id}/download-files',
-                'operation_id': 'get_project_download_file_resource',
-                'http_method': 'GET',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'project_id',
-                ],
-                'required': [
-                    'project_id',
-                ],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'project_id':
-                        (str,),
-                },
-                'attribute_map': {
-                    'project_id': 'project_id',
-                },
-                'location_map': {
-                    'project_id': 'path',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'application/zip'
-                ],
-                'content_type': [],
-            },
-            api_client=api_client
-        )
-        self.get_project_files_resource_endpoint = _Endpoint(
-            settings={
-                'response_type': (FilesResponse,),
-                'auth': [
-                    'csrf_token',
-                    'jwt'
-                ],
-                'endpoint_path': '/projects/{project_id}/files',
-                'operation_id': 'get_project_files_resource',
-                'http_method': 'GET',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'project_id',
-                    'x_fields',
-                ],
-                'required': [
-                    'project_id',
-                ],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'project_id':
-                        (str,),
-                    'x_fields':
-                        (str,),
-                },
-                'attribute_map': {
-                    'project_id': 'project_id',
-                    'x_fields': 'X-Fields',
-                },
-                'location_map': {
-                    'project_id': 'path',
-                    'x_fields': 'header',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'application/json'
-                ],
-                'content_type': [],
-            },
-            api_client=api_client
-        )
-        self.get_project_resource_endpoint = _Endpoint(
-            settings={
-                'response_type': (ProjectResponse,),
+                'response_type': (Project,),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/projects/{project_id}',
-                'operation_id': 'get_project_resource',
+                'operation_id': 'get_project',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -381,127 +267,24 @@ class ProjectsApi(object):
             },
             api_client=api_client
         )
-        self.get_project_types_resource_endpoint = _Endpoint(
+        self.get_project_download_file_endpoint = _Endpoint(
             settings={
-                'response_type': (ProjectTypesResponse,),
+                'response_type': (file_type,),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
-                'endpoint_path': '/project-types',
-                'operation_id': 'get_project_types_resource',
+                'endpoint_path': '/projects/{project_id}/download-files',
+                'operation_id': 'get_project_download_file',
                 'http_method': 'GET',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'x_fields',
-                ],
-                'required': [],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'x_fields':
-                        (str,),
-                },
-                'attribute_map': {
-                    'x_fields': 'X-Fields',
-                },
-                'location_map': {
-                    'x_fields': 'header',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'application/json'
-                ],
-                'content_type': [],
-            },
-            api_client=api_client
-        )
-        self.get_projects_resource_endpoint = _Endpoint(
-            settings={
-                'response_type': (ProjectsResponse,),
-                'auth': [
-                    'csrf_token',
-                    'jwt'
-                ],
-                'endpoint_path': '/projects',
-                'operation_id': 'get_projects_resource',
-                'http_method': 'GET',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'x_fields',
-                ],
-                'required': [],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'x_fields':
-                        (str,),
-                },
-                'attribute_map': {
-                    'x_fields': 'X-Fields',
-                },
-                'location_map': {
-                    'x_fields': 'header',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'application/json'
-                ],
-                'content_type': [],
-            },
-            api_client=api_client
-        )
-        self.post_hospitals_resource_endpoint = _Endpoint(
-            settings={
-                'response_type': (HospitalResponse,),
-                'auth': [
-                    'csrf_token',
-                    'jwt'
-                ],
-                'endpoint_path': '/projects/{project_id}/hospitals',
-                'operation_id': 'post_hospitals_resource',
-                'http_method': 'POST',
                 'servers': None,
             },
             params_map={
                 'all': [
                     'project_id',
-                    'payload',
-                    'x_fields',
                 ],
                 'required': [
                     'project_id',
-                    'payload',
                 ],
                 'nullable': [
                 ],
@@ -518,42 +301,185 @@ class ProjectsApi(object):
                 'openapi_types': {
                     'project_id':
                         (str,),
-                    'payload':
-                        (HospitalCreateModel,),
-                    'x_fields':
-                        (str,),
                 },
                 'attribute_map': {
                     'project_id': 'project_id',
-                    'x_fields': 'X-Fields',
                 },
                 'location_map': {
                     'project_id': 'path',
-                    'payload': 'body',
-                    'x_fields': 'header',
                 },
                 'collection_format_map': {
                 }
             },
             headers_map={
                 'accept': [
-                    'application/json'
+                    'application/zip'
                 ],
-                'content_type': [
-                    'application/json'
-                ]
+                'content_type': [],
             },
             api_client=api_client
         )
-        self.post_project_files_resource_endpoint = _Endpoint(
+        self.get_project_files_endpoint = _Endpoint(
             settings={
-                'response_type': (FilesResponse,),
+                'response_type': (Files,),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/projects/{project_id}/files',
-                'operation_id': 'post_project_files_resource',
+                'operation_id': 'get_project_files',
+                'http_method': 'GET',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'project_id',
+                    'x_fields',
+                ],
+                'required': [
+                    'project_id',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'project_id':
+                        (str,),
+                    'x_fields':
+                        (str,),
+                },
+                'attribute_map': {
+                    'project_id': 'project_id',
+                    'x_fields': 'X-Fields',
+                },
+                'location_map': {
+                    'project_id': 'path',
+                    'x_fields': 'header',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client
+        )
+        self.get_project_types_endpoint = _Endpoint(
+            settings={
+                'response_type': ([str],),
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/project-types',
+                'operation_id': 'get_project_types',
+                'http_method': 'GET',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                ],
+                'required': [],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                },
+                'attribute_map': {
+                },
+                'location_map': {
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client
+        )
+        self.get_projects_endpoint = _Endpoint(
+            settings={
+                'response_type': ([Project],),
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/projects',
+                'operation_id': 'get_projects',
+                'http_method': 'GET',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'x_fields',
+                ],
+                'required': [],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'x_fields':
+                        (str,),
+                },
+                'attribute_map': {
+                    'x_fields': 'X-Fields',
+                },
+                'location_map': {
+                    'x_fields': 'header',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client
+        )
+        self.post_institutes_endpoint = _Endpoint(
+            settings={
+                'response_type': (Institute,),
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/projects/{project_id}/hospitals',
+                'operation_id': 'post_institutes',
                 'http_method': 'POST',
                 'servers': None,
             },
@@ -583,7 +509,7 @@ class ProjectsApi(object):
                     'project_id':
                         (str,),
                     'payload':
-                        (FileSizesModel,),
+                        (Institute,),
                     'x_fields':
                         (str,),
                 },
@@ -609,15 +535,79 @@ class ProjectsApi(object):
             },
             api_client=api_client
         )
-        self.post_projects_resource_endpoint = _Endpoint(
+        self.post_project_files_endpoint = _Endpoint(
             settings={
-                'response_type': ([ProjectResponse],),
+                'response_type': (Files,),
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/projects/{project_id}/files',
+                'operation_id': 'post_project_files',
+                'http_method': 'POST',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'project_id',
+                    'payload',
+                    'x_fields',
+                ],
+                'required': [
+                    'project_id',
+                    'payload',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'project_id':
+                        (str,),
+                    'payload':
+                        (FileSizes,),
+                    'x_fields':
+                        (str,),
+                },
+                'attribute_map': {
+                    'project_id': 'project_id',
+                    'x_fields': 'X-Fields',
+                },
+                'location_map': {
+                    'project_id': 'path',
+                    'payload': 'body',
+                    'x_fields': 'header',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [
+                    'application/json'
+                ]
+            },
+            api_client=api_client
+        )
+        self.post_projects_endpoint = _Endpoint(
+            settings={
+                'response_type': ([Project],),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/projects',
-                'operation_id': 'post_projects_resource',
+                'operation_id': 'post_projects',
                 'http_method': 'POST',
                 'servers': None,
             },
@@ -643,7 +633,7 @@ class ProjectsApi(object):
                 },
                 'openapi_types': {
                     'payload':
-                        (ProjectCreateModel,),
+                        (Project,),
                     'x_fields':
                         (str,),
                 },
@@ -668,17 +658,17 @@ class ProjectsApi(object):
             api_client=api_client
         )
 
-    def delete_project_files_resource(
+    def delete_project_files(
         self,
         project_id,
         **kwargs
     ):
-        """delete_project_files_resource  # noqa: E501
+        """delete_project_files  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.delete_project_files_resource(project_id, async_req=True)
+        >>> thread = api.delete_project_files(project_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -736,19 +726,19 @@ class ProjectsApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['project_id'] = \
             project_id
-        return self.delete_project_files_resource_endpoint.call_with_http_info(**kwargs)
+        return self.delete_project_files_endpoint.call_with_http_info(**kwargs)
 
-    def get_hospital_resource(
+    def get_institute(
         self,
         hospital_id,
         **kwargs
     ):
-        """get_hospital_resource  # noqa: E501
+        """get_institute  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_hospital_resource(hospital_id, async_req=True)
+        >>> thread = api.get_institute(hospital_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -780,7 +770,7 @@ class ProjectsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            HospitalResponse
+            Institute
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -807,19 +797,19 @@ class ProjectsApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['hospital_id'] = \
             hospital_id
-        return self.get_hospital_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_institute_endpoint.call_with_http_info(**kwargs)
 
-    def get_hospitals_resource(
+    def get_institutes(
         self,
         project_id,
         **kwargs
     ):
-        """get_hospitals_resource  # noqa: E501
+        """get_institutes  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_hospitals_resource(project_id, async_req=True)
+        >>> thread = api.get_institutes(project_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -851,7 +841,7 @@ class ProjectsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            HospitalsResponse
+            [Institute]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -878,19 +868,91 @@ class ProjectsApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['project_id'] = \
             project_id
-        return self.get_hospitals_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_institutes_endpoint.call_with_http_info(**kwargs)
 
-    def get_project_download_file_resource(
+    def get_project(
         self,
         project_id,
         **kwargs
     ):
-        """get_project_download_file_resource  # noqa: E501
+        """get_project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_project_download_file_resource(project_id, async_req=True)
+        >>> thread = api.get_project(project_id, async_req=True)
+        >>> result = thread.get()
+
+        Args:
+            project_id (str):
+
+        Keyword Args:
+            include_child_relations (bool): [optional] if omitted the server will use the default value of False
+            x_fields (str): An optional fields mask. [optional]
+            _return_http_data_only (bool): response data without head status
+                code and headers. Default is True.
+            _preload_content (bool): if False, the urllib3.HTTPResponse object
+                will be returned without reading/decoding response data.
+                Default is True.
+            _request_timeout (int/float/tuple): timeout setting for this request. If
+                one number provided, it will be total request timeout. It can also
+                be a pair (tuple) of (connection, read) timeouts.
+                Default is None.
+            _check_input_type (bool): specifies if type checking
+                should be done one the data sent to the server.
+                Default is True.
+            _check_return_type (bool): specifies if type checking
+                should be done one the data received from the server.
+                Default is True.
+            _content_type (str/None): force body content-type.
+                Default is None and content-type will be predicted by allowed
+                content-types and body.
+            _host_index (int/None): specifies the index of the server
+                that we want to use.
+                Default is read from the configuration.
+            async_req (bool): execute request asynchronously
+
+        Returns:
+            Project
+                If the method is called asynchronously, returns the request
+                thread.
+        """
+        kwargs['async_req'] = kwargs.get(
+            'async_req', False
+        )
+        kwargs['_return_http_data_only'] = kwargs.get(
+            '_return_http_data_only', True
+        )
+        kwargs['_preload_content'] = kwargs.get(
+            '_preload_content', True
+        )
+        kwargs['_request_timeout'] = kwargs.get(
+            '_request_timeout', None
+        )
+        kwargs['_check_input_type'] = kwargs.get(
+            '_check_input_type', True
+        )
+        kwargs['_check_return_type'] = kwargs.get(
+            '_check_return_type', True
+        )
+        kwargs['_content_type'] = kwargs.get(
+            '_content_type')
+        kwargs['_host_index'] = kwargs.get('_host_index')
+        kwargs['project_id'] = \
+            project_id
+        return self.get_project_endpoint.call_with_http_info(**kwargs)
+
+    def get_project_download_file(
+        self,
+        project_id,
+        **kwargs
+    ):
+        """get_project_download_file  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_project_download_file(project_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -948,19 +1010,19 @@ class ProjectsApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['project_id'] = \
             project_id
-        return self.get_project_download_file_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_project_download_file_endpoint.call_with_http_info(**kwargs)
 
-    def get_project_files_resource(
+    def get_project_files(
         self,
         project_id,
         **kwargs
     ):
-        """get_project_files_resource  # noqa: E501
+        """get_project_files  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_project_files_resource(project_id, async_req=True)
+        >>> thread = api.get_project_files(project_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -992,7 +1054,7 @@ class ProjectsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            FilesResponse
+            Files
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1019,27 +1081,22 @@ class ProjectsApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['project_id'] = \
             project_id
-        return self.get_project_files_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_project_files_endpoint.call_with_http_info(**kwargs)
 
-    def get_project_resource(
+    def get_project_types(
         self,
-        project_id,
         **kwargs
     ):
-        """get_project_resource  # noqa: E501
+        """get_project_types  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_project_resource(project_id, async_req=True)
+        >>> thread = api.get_project_types(async_req=True)
         >>> result = thread.get()
 
-        Args:
-            project_id (str):
 
         Keyword Args:
-            include_child_relations (bool): [optional] if omitted the server will use the default value of False
-            x_fields (str): An optional fields mask. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -1064,7 +1121,7 @@ class ProjectsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            ProjectResponse
+            [str]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1089,20 +1146,18 @@ class ProjectsApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        kwargs['project_id'] = \
-            project_id
-        return self.get_project_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_project_types_endpoint.call_with_http_info(**kwargs)
 
-    def get_project_types_resource(
+    def get_projects(
         self,
         **kwargs
     ):
-        """get_project_types_resource  # noqa: E501
+        """get_projects  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_project_types_resource(async_req=True)
+        >>> thread = api.get_projects(async_req=True)
         >>> result = thread.get()
 
 
@@ -1132,7 +1187,7 @@ class ProjectsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            ProjectTypesResponse
+            [Project]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1157,91 +1212,25 @@ class ProjectsApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.get_project_types_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_projects_endpoint.call_with_http_info(**kwargs)
 
-    def get_projects_resource(
-        self,
-        **kwargs
-    ):
-        """get_projects_resource  # noqa: E501
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.get_projects_resource(async_req=True)
-        >>> result = thread.get()
-
-
-        Keyword Args:
-            x_fields (str): An optional fields mask. [optional]
-            _return_http_data_only (bool): response data without head status
-                code and headers. Default is True.
-            _preload_content (bool): if False, the urllib3.HTTPResponse object
-                will be returned without reading/decoding response data.
-                Default is True.
-            _request_timeout (int/float/tuple): timeout setting for this request. If
-                one number provided, it will be total request timeout. It can also
-                be a pair (tuple) of (connection, read) timeouts.
-                Default is None.
-            _check_input_type (bool): specifies if type checking
-                should be done one the data sent to the server.
-                Default is True.
-            _check_return_type (bool): specifies if type checking
-                should be done one the data received from the server.
-                Default is True.
-            _content_type (str/None): force body content-type.
-                Default is None and content-type will be predicted by allowed
-                content-types and body.
-            _host_index (int/None): specifies the index of the server
-                that we want to use.
-                Default is read from the configuration.
-            async_req (bool): execute request asynchronously
-
-        Returns:
-            ProjectsResponse
-                If the method is called asynchronously, returns the request
-                thread.
-        """
-        kwargs['async_req'] = kwargs.get(
-            'async_req', False
-        )
-        kwargs['_return_http_data_only'] = kwargs.get(
-            '_return_http_data_only', True
-        )
-        kwargs['_preload_content'] = kwargs.get(
-            '_preload_content', True
-        )
-        kwargs['_request_timeout'] = kwargs.get(
-            '_request_timeout', None
-        )
-        kwargs['_check_input_type'] = kwargs.get(
-            '_check_input_type', True
-        )
-        kwargs['_check_return_type'] = kwargs.get(
-            '_check_return_type', True
-        )
-        kwargs['_content_type'] = kwargs.get(
-            '_content_type')
-        kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.get_projects_resource_endpoint.call_with_http_info(**kwargs)
-
-    def post_hospitals_resource(
+    def post_institutes(
         self,
         project_id,
         payload,
         **kwargs
     ):
-        """post_hospitals_resource  # noqa: E501
+        """post_institutes  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_hospitals_resource(project_id, payload, async_req=True)
+        >>> thread = api.post_institutes(project_id, payload, async_req=True)
         >>> result = thread.get()
 
         Args:
             project_id (str):
-            payload (HospitalCreateModel):
+            payload (Institute):
 
         Keyword Args:
             x_fields (str): An optional fields mask. [optional]
@@ -1269,7 +1258,7 @@ class ProjectsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            HospitalResponse
+            Institute
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1298,9 +1287,9 @@ class ProjectsApi(object):
             project_id
         kwargs['payload'] = \
             payload
-        return self.post_hospitals_resource_endpoint.call_with_http_info(**kwargs)
+        return self.post_institutes_endpoint.call_with_http_info(**kwargs)
 
-    def post_project_files_resource(
+    def post_project_files(
         self,
         project_id,
         payload,
@@ -1312,12 +1301,12 @@ class ProjectsApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_project_files_resource(project_id, payload, async_req=True)
+        >>> thread = api.post_project_files(project_id, payload, async_req=True)
         >>> result = thread.get()
 
         Args:
             project_id (str):
-            payload (FileSizesModel):
+            payload (FileSizes):
 
         Keyword Args:
             x_fields (str): An optional fields mask. [optional]
@@ -1345,7 +1334,7 @@ class ProjectsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            FilesResponse
+            Files
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1374,23 +1363,23 @@ class ProjectsApi(object):
             project_id
         kwargs['payload'] = \
             payload
-        return self.post_project_files_resource_endpoint.call_with_http_info(**kwargs)
+        return self.post_project_files_endpoint.call_with_http_info(**kwargs)
 
-    def post_projects_resource(
+    def post_projects(
         self,
         payload,
         **kwargs
     ):
-        """post_projects_resource  # noqa: E501
+        """post_projects  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_projects_resource(payload, async_req=True)
+        >>> thread = api.post_projects(payload, async_req=True)
         >>> result = thread.get()
 
         Args:
-            payload (ProjectCreateModel):
+            payload (Project):
 
         Keyword Args:
             x_fields (str): An optional fields mask. [optional]
@@ -1418,7 +1407,7 @@ class ProjectsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            [ProjectResponse]
+            [Project]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1445,5 +1434,5 @@ class ProjectsApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['payload'] = \
             payload
-        return self.post_projects_resource_endpoint.call_with_http_info(**kwargs)
+        return self.post_projects_endpoint.call_with_http_info(**kwargs)
 

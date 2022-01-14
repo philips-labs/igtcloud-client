@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **series_type** | **str** |  | 
-**study** | [**EchoNav**](EchoNav.md) |  | [optional] 
+**study** | [**EchoNavStudy**](EchoNavStudy.md) |  | [optional] 
 **series_database_id** | **str** |  | [optional] 
 **created_on** | **str** |  | [optional] 
 **created_by** | **str** |  | [optional] 

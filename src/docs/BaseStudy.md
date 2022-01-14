@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **hospital_id** | **str** |  | [optional] 
 **project_id** | **str** |  | [optional] 
 **patient_database_id** | **str** |  | [optional] 
-**patient** | [**PatientModel**](PatientModel.md) |  | [optional] 
+**patient** | [**Patient**](Patient.md) |  | [optional] 
 **study_database_id** | **str** |  | [optional] 
 **created_on** | **datetime** |  | [optional] 
 **created_by** | **str** |  | [optional] 

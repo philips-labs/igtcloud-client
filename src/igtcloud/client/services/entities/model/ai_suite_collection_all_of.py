@@ -30,10 +30,10 @@ from igtcloud.client.services.entities.exceptions import ApiAttributeError
 
 
 def lazy_import():
-    from igtcloud.client.services.entities.model.hospital_model import HospitalModel
-    from igtcloud.client.services.entities.model.project_model import ProjectModel
-    globals()['HospitalModel'] = HospitalModel
-    globals()['ProjectModel'] = ProjectModel
+    from igtcloud.client.services.entities.model.institute import Institute
+    from igtcloud.client.services.entities.model.project import Project
+    globals()['Institute'] = Institute
+    globals()['Project'] = Project
 
 
 class AISuiteCollectionAllOf(ModelNormal):
@@ -91,8 +91,8 @@ class AISuiteCollectionAllOf(ModelNormal):
         return {
             'version': (str,),  # noqa: E501
             'create_date': (int,),  # noqa: E501
-            'project': (ProjectModel,),  # noqa: E501
-            'institute': (HospitalModel,),  # noqa: E501
+            'project': (Project,),  # noqa: E501
+            'institute': (Institute,),  # noqa: E501
         }
 
     @cached_property
@@ -150,8 +150,8 @@ class AISuiteCollectionAllOf(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             version (str): [optional]  # noqa: E501
             create_date (int): [optional]  # noqa: E501
-            project (ProjectModel): [optional]  # noqa: E501
-            institute (HospitalModel): [optional]  # noqa: E501
+            project (Project): [optional]  # noqa: E501
+            institute (Institute): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -235,8 +235,8 @@ class AISuiteCollectionAllOf(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             version (str): [optional]  # noqa: E501
             create_date (int): [optional]  # noqa: E501
-            project (ProjectModel): [optional]  # noqa: E501
-            institute (HospitalModel): [optional]  # noqa: E501
+            project (Project): [optional]  # noqa: E501
+            institute (Institute): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

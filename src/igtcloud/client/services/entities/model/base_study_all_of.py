@@ -30,8 +30,8 @@ from igtcloud.client.services.entities.exceptions import ApiAttributeError
 
 
 def lazy_import():
-    from igtcloud.client.services.entities.model.patient_model import PatientModel
-    globals()['PatientModel'] = PatientModel
+    from igtcloud.client.services.entities.model.patient import Patient
+    globals()['Patient'] = Patient
 
 
 class BaseStudyAllOf(ModelNormal):
@@ -97,7 +97,7 @@ class BaseStudyAllOf(ModelNormal):
             'hospital_id': (str,),  # noqa: E501
             'project_id': (str,),  # noqa: E501
             'patient_database_id': (str,),  # noqa: E501
-            'patient': (PatientModel,),  # noqa: E501
+            'patient': (Patient,),  # noqa: E501
         }
 
     @cached_property
@@ -170,7 +170,7 @@ class BaseStudyAllOf(ModelNormal):
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
-            patient (PatientModel): [optional]  # noqa: E501
+            patient (Patient): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -262,7 +262,7 @@ class BaseStudyAllOf(ModelNormal):
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
-            patient (PatientModel): [optional]  # noqa: E501
+            patient (Patient): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

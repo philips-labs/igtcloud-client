@@ -30,11 +30,11 @@ from igtcloud.client.services.entities.exceptions import ApiAttributeError
 
 
 def lazy_import():
-    from igtcloud.client.services.entities.model.echo_nav import EchoNav
     from igtcloud.client.services.entities.model.echo_nav_series_all_of import EchoNavSeriesAllOf
+    from igtcloud.client.services.entities.model.echo_nav_study import EchoNavStudy
     from igtcloud.client.services.entities.model.series import Series
-    globals()['EchoNav'] = EchoNav
     globals()['EchoNavSeriesAllOf'] = EchoNavSeriesAllOf
+    globals()['EchoNavStudy'] = EchoNavStudy
     globals()['Series'] = Series
 
 
@@ -92,7 +92,7 @@ class EchoNavSeries(ModelComposed):
         lazy_import()
         return {
             'series_type': (str,),  # noqa: E501
-            'study': (EchoNav,),  # noqa: E501
+            'study': (EchoNavStudy,),  # noqa: E501
             'series_database_id': (str,),  # noqa: E501
             'created_on': (str,),  # noqa: E501
             'created_by': (str,),  # noqa: E501
@@ -180,7 +180,7 @@ class EchoNavSeries(ModelComposed):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            study (EchoNav): [optional]  # noqa: E501
+            study (EchoNavStudy): [optional]  # noqa: E501
             series_database_id (str): [optional]  # noqa: E501
             created_on (str): [optional]  # noqa: E501
             created_by (str): [optional]  # noqa: E501
@@ -297,7 +297,7 @@ class EchoNavSeries(ModelComposed):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            study (EchoNav): [optional]  # noqa: E501
+            study (EchoNavStudy): [optional]  # noqa: E501
             series_database_id (str): [optional]  # noqa: E501
             created_on (str): [optional]  # noqa: E501
             created_by (str): [optional]  # noqa: E501

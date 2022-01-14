@@ -32,10 +32,10 @@ from igtcloud.client.services.entities.exceptions import ApiAttributeError
 def lazy_import():
     from igtcloud.client.services.entities.model.annotation_study_all_of import AnnotationStudyAllOf
     from igtcloud.client.services.entities.model.core_labs_study import CoreLabsStudy
-    from igtcloud.client.services.entities.model.patient_model import PatientModel
+    from igtcloud.client.services.entities.model.patient import Patient
     globals()['AnnotationStudyAllOf'] = AnnotationStudyAllOf
     globals()['CoreLabsStudy'] = CoreLabsStudy
-    globals()['PatientModel'] = PatientModel
+    globals()['Patient'] = Patient
 
 
 class AnnotationStudy(ModelComposed):
@@ -114,7 +114,7 @@ class AnnotationStudy(ModelComposed):
             'hospital_id': (str,),  # noqa: E501
             'project_id': (str,),  # noqa: E501
             'patient_database_id': (str,),  # noqa: E501
-            'patient': (PatientModel,),  # noqa: E501
+            'patient': (Patient,),  # noqa: E501
             'is_philips_data': (str,),  # noqa: E501
             'study_name': (str,),  # noqa: E501
             'application_type': (str,),  # noqa: E501
@@ -230,7 +230,7 @@ class AnnotationStudy(ModelComposed):
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
-            patient (PatientModel): [optional]  # noqa: E501
+            patient (Patient): [optional]  # noqa: E501
             is_philips_data (str): [optional]  # noqa: E501
             study_name (str): [optional]  # noqa: E501
             application_type (str): [optional]  # noqa: E501
@@ -361,7 +361,7 @@ class AnnotationStudy(ModelComposed):
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
-            patient (PatientModel): [optional]  # noqa: E501
+            patient (Patient): [optional]  # noqa: E501
             is_philips_data (str): [optional]  # noqa: E501
             study_name (str): [optional]  # noqa: E501
             application_type (str): [optional]  # noqa: E501

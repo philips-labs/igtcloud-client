@@ -21,10 +21,10 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from igtcloud.client.services.entities.model.applications_response import ApplicationsResponse
+from igtcloud.client.services.entities.model.application import Application
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.storage_model import StorageModel
-from igtcloud.client.services.entities.model.training_applications_response import TrainingApplicationsResponse
+from igtcloud.client.services.entities.model.storage import Storage
+from igtcloud.client.services.entities.model.training_application import TrainingApplication
 
 
 class ApplicationsApi(object):
@@ -38,15 +38,15 @@ class ApplicationsApi(object):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
-        self.get_applications_resource_endpoint = _Endpoint(
+        self.get_applications_endpoint = _Endpoint(
             settings={
-                'response_type': (ApplicationsResponse,),
+                'response_type': ([Application],),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/applications',
-                'operation_id': 'get_applications_resource',
+                'operation_id': 'get_applications',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -115,7 +115,7 @@ class ApplicationsApi(object):
             },
             api_client=api_client
         )
-        self.get_training_application_guide_resource_endpoint = _Endpoint(
+        self.get_training_application_guide_endpoint = _Endpoint(
             settings={
                 'response_type': (file_type,),
                 'auth': [
@@ -123,7 +123,7 @@ class ApplicationsApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/training-applications/{training_application}/guide',
-                'operation_id': 'get_training_application_guide_resource',
+                'operation_id': 'get_training_application_guide',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -167,15 +167,15 @@ class ApplicationsApi(object):
             },
             api_client=api_client
         )
-        self.get_training_application_storage_resource_endpoint = _Endpoint(
+        self.get_training_application_storage_endpoint = _Endpoint(
             settings={
-                'response_type': (StorageModel,),
+                'response_type': (Storage,),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/training-applications/{training_application}/$storage',
-                'operation_id': 'get_training_application_storage_resource',
+                'operation_id': 'get_training_application_storage',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -229,15 +229,15 @@ class ApplicationsApi(object):
             },
             api_client=api_client
         )
-        self.get_training_applications_resource_endpoint = _Endpoint(
+        self.get_training_applications_endpoint = _Endpoint(
             settings={
-                'response_type': (TrainingApplicationsResponse,),
+                'response_type': ([TrainingApplication],),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/training-applications',
-                'operation_id': 'get_training_applications_resource',
+                'operation_id': 'get_training_applications',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -280,17 +280,17 @@ class ApplicationsApi(object):
             api_client=api_client
         )
 
-    def get_applications_resource(
+    def get_applications(
         self,
         project_id,
         **kwargs
     ):
-        """get_applications_resource  # noqa: E501
+        """get_applications  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_applications_resource(project_id, async_req=True)
+        >>> thread = api.get_applications(project_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -326,7 +326,7 @@ class ApplicationsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            ApplicationsResponse
+            [Application]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -353,19 +353,19 @@ class ApplicationsApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['project_id'] = \
             project_id
-        return self.get_applications_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_applications_endpoint.call_with_http_info(**kwargs)
 
-    def get_training_application_guide_resource(
+    def get_training_application_guide(
         self,
         training_application,
         **kwargs
     ):
-        """get_training_application_guide_resource  # noqa: E501
+        """get_training_application_guide  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_training_application_guide_resource(training_application, async_req=True)
+        >>> thread = api.get_training_application_guide(training_application, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -423,19 +423,19 @@ class ApplicationsApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['training_application'] = \
             training_application
-        return self.get_training_application_guide_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_training_application_guide_endpoint.call_with_http_info(**kwargs)
 
-    def get_training_application_storage_resource(
+    def get_training_application_storage(
         self,
         training_application,
         **kwargs
     ):
-        """get_training_application_storage_resource  # noqa: E501
+        """get_training_application_storage  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_training_application_storage_resource(training_application, async_req=True)
+        >>> thread = api.get_training_application_storage(training_application, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -468,7 +468,7 @@ class ApplicationsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            StorageModel
+            Storage
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -495,18 +495,18 @@ class ApplicationsApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['training_application'] = \
             training_application
-        return self.get_training_application_storage_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_training_application_storage_endpoint.call_with_http_info(**kwargs)
 
-    def get_training_applications_resource(
+    def get_training_applications(
         self,
         **kwargs
     ):
-        """get_training_applications_resource  # noqa: E501
+        """get_training_applications  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_training_applications_resource(async_req=True)
+        >>> thread = api.get_training_applications(async_req=True)
         >>> result = thread.get()
 
 
@@ -536,7 +536,7 @@ class ApplicationsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            TrainingApplicationsResponse
+            [TrainingApplication]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -561,5 +561,5 @@ class ApplicationsApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.get_training_applications_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_training_applications_endpoint.call_with_http_info(**kwargs)
 

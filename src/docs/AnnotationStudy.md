@@ -27,7 +27,7 @@ Name | Type | Description | Notes
 **hospital_id** | **str** |  | [optional] 
 **project_id** | **str** |  | [optional] 
 **patient_database_id** | **str** |  | [optional] 
-**patient** | [**PatientModel**](PatientModel.md) |  | [optional] 
+**patient** | [**Patient**](Patient.md) |  | [optional] 
 **is_philips_data** | **str** |  | [optional] 
 **study_name** | **str** |  | [optional] 
 **application_type** | **str** |  | [optional] 

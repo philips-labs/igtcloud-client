@@ -8,7 +8,10 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/ApplicationsResponse"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Application"
+              }
             }
           },
           "400": {
@@ -18,7 +21,7 @@
             }
           }
         },
-        "operationId": "get_applications_resource",
+        "operationId": "get_applications",
         "parameters": [
           {
             "name": "application",
@@ -65,7 +68,10 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/HospitalsResponse"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Institute"
+              }
             }
           },
           "400": {
@@ -75,7 +81,7 @@
             }
           }
         },
-        "operationId": "get_all_hospitals_resource",
+        "operationId": "get_all_institutes",
         "parameters": [
           {
             "name": "X-Fields",
@@ -86,7 +92,7 @@
           }
         ],
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       }
     },
@@ -117,7 +123,7 @@
             }
           }
         },
-        "operationId": "get_series_list_resource",
+        "operationId": "get_series_list",
         "parameters": [
           {
             "name": "$filter",
@@ -126,7 +132,7 @@
           }
         ],
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       }
     },
@@ -160,9 +166,9 @@
             }
           }
         },
-        "operationId": "get_series_resource",
+        "operationId": "get_series",
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       }
     },
@@ -202,12 +208,12 @@
             }
           }
         },
-        "operationId": "get_series_preview_resource",
+        "operationId": "get_series_preview",
         "produces": [
           "image/jpg"
         ],
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       }
     },
@@ -220,36 +226,6 @@
           "type": "string"
         }
       ],
-      "post": {
-        "responses": {
-          "201": {
-            "description": "Study",
-            "schema": {
-              "$ref": "#/definitions/RootStudy"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "post_studies_resource",
-        "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/RootStudy"
-            }
-          }
-        ],
-        "tags": [
-          "Hospitals"
-        ]
-      },
       "get": {
         "responses": {
           "200": {
@@ -268,7 +244,7 @@
             }
           }
         },
-        "operationId": "get_studies_resource",
+        "operationId": "get_studies",
         "parameters": [
           {
             "name": "$filter",
@@ -277,7 +253,37 @@
           }
         ],
         "tags": [
-          "Hospitals"
+          "Institutes"
+        ]
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "Study",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "post_studies",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          }
+        ],
+        "tags": [
+          "Institutes"
         ]
       }
     },
@@ -296,7 +302,7 @@
           "type": "string"
         }
       ],
-      "put": {
+      "get": {
         "responses": {
           "200": {
             "description": "Study",
@@ -311,19 +317,9 @@
             }
           }
         },
-        "operationId": "put_study_resource",
-        "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/RootStudy"
-            }
-          }
-        ],
+        "operationId": "get_study",
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       },
       "patch": {
@@ -341,7 +337,7 @@
             }
           }
         },
-        "operationId": "patch_study_resource",
+        "operationId": "patch_study",
         "parameters": [
           {
             "name": "payload",
@@ -353,10 +349,10 @@
           }
         ],
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       },
-      "get": {
+      "put": {
         "responses": {
           "200": {
             "description": "Study",
@@ -371,9 +367,19 @@
             }
           }
         },
-        "operationId": "get_study_resource",
+        "operationId": "put_study",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          }
+        ],
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       },
       "delete": {
@@ -388,9 +394,9 @@
             }
           }
         },
-        "operationId": "delete_study_resource",
+        "operationId": "delete_study",
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       }
     },
@@ -424,7 +430,7 @@
             }
           }
         },
-        "operationId": "post_study_annotation_state_resource",
+        "operationId": "post_study_annotation_state",
         "parameters": [
           {
             "name": "payload",
@@ -436,7 +442,7 @@
           }
         ],
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       }
     },
@@ -470,12 +476,12 @@
             }
           }
         },
-        "operationId": "get_study_download_file_resource",
+        "operationId": "get_study_download_file",
         "produces": [
           "application/zip"
         ],
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       }
     },
@@ -506,9 +512,9 @@
             }
           }
         },
-        "operationId": "post_study_download_link_resource",
+        "operationId": "post_study_download_link",
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       }
     },
@@ -542,7 +548,7 @@
             }
           }
         },
-        "operationId": "post_study_electronic_record_state_resource",
+        "operationId": "post_study_electronic_record_state",
         "parameters": [
           {
             "name": "payload",
@@ -554,7 +560,7 @@
           }
         ],
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       }
     },
@@ -573,45 +579,12 @@
           "type": "string"
         }
       ],
-      "post": {
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/FilesResponse"
-            }
-          }
-        },
-        "summary": "This create study files endpoint actually only stores the file size of a study_id + key combination",
-        "description": "Used only for retrieving progress percentage of uploads.",
-        "operationId": "post_study_files_resource",
-        "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/FileSizesModel"
-            }
-          },
-          {
-            "name": "X-Fields",
-            "in": "header",
-            "type": "string",
-            "format": "mask",
-            "description": "An optional fields mask"
-          }
-        ],
-        "tags": [
-          "Hospitals"
-        ]
-      },
       "get": {
         "responses": {
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/FilesResponse"
+              "$ref": "#/definitions/Files"
             }
           },
           "400": {
@@ -621,7 +594,7 @@
             }
           }
         },
-        "operationId": "get_study_files_resource",
+        "operationId": "get_study_files",
         "parameters": [
           {
             "name": "auxiliary",
@@ -638,7 +611,7 @@
           }
         ],
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       },
       "delete": {
@@ -653,9 +626,42 @@
             }
           }
         },
-        "operationId": "delete_study_files_resource",
+        "operationId": "delete_study_files",
         "tags": [
-          "Hospitals"
+          "Institutes"
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Files"
+            }
+          }
+        },
+        "summary": "This create study files endpoint actually only stores the file size of a study_id + key combination",
+        "description": "Used only for retrieving progress percentage of uploads.",
+        "operationId": "post_study_files",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/FileSizes"
+            }
+          },
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "Institutes"
         ]
       }
     },
@@ -692,7 +698,7 @@
             }
           }
         },
-        "operationId": "get_study_series_list_resource",
+        "operationId": "get_study_series_list",
         "parameters": [
           {
             "name": "$filter",
@@ -701,7 +707,7 @@
           }
         ],
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       }
     },
@@ -741,7 +747,7 @@
             }
           }
         },
-        "operationId": "put_study_series_resource",
+        "operationId": "put_study_series",
         "parameters": [
           {
             "name": "payload",
@@ -753,7 +759,7 @@
           }
         ],
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       },
       "delete": {
@@ -768,9 +774,9 @@
             }
           }
         },
-        "operationId": "delete_study_series_resource",
+        "operationId": "delete_study_series",
         "tags": [
-          "Hospitals"
+          "Institutes"
         ]
       }
     },
@@ -787,7 +793,7 @@
             }
           }
         },
-        "operationId": "get_ai_suite_connections_resource",
+        "operationId": "get_ai_suite_connections",
         "parameters": [
           {
             "name": "X-Fields",
@@ -830,7 +836,7 @@
             }
           }
         },
-        "operationId": "get_ai_suite_projects_resource",
+        "operationId": "get_ai_suite_projects",
         "parameters": [
           {
             "name": "X-Fields",
@@ -862,35 +868,6 @@
           "type": "string"
         }
       ],
-      "post": {
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/AISuiteCollection"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "post_ai_suite_collections_resource",
-        "parameters": [
-          {
-            "name": "X-Fields",
-            "in": "header",
-            "type": "string",
-            "format": "mask",
-            "description": "An optional fields mask"
-          }
-        ],
-        "tags": [
-          "Integrations"
-        ]
-      },
       "get": {
         "responses": {
           "200": {
@@ -909,7 +886,36 @@
             }
           }
         },
-        "operationId": "get_ai_suite_collections_resource",
+        "operationId": "get_ai_suite_collections",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "Integrations"
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AISuiteCollection"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "post_ai_suite_collections",
         "parameters": [
           {
             "name": "X-Fields",
@@ -938,11 +944,14 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/GroupsModels"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Group"
+              }
             }
           }
         },
-        "operationId": "get_groups_resource",
+        "operationId": "get_groups",
         "parameters": [
           {
             "name": "X-Fields",
@@ -966,12 +975,15 @@
           "type": "string"
         }
       ],
-      "post": {
+      "get": {
         "responses": {
-          "201": {
+          "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/ServiceCreateResponse"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Service"
+              }
             }
           },
           "400": {
@@ -981,15 +993,12 @@
             }
           }
         },
-        "operationId": "post_services_resource",
+        "operationId": "get_services",
         "parameters": [
           {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/ServiceCreateModel"
-            }
+            "name": "$filter",
+            "in": "query",
+            "type": "string"
           },
           {
             "name": "X-Fields",
@@ -1003,12 +1012,12 @@
           "Organizations"
         ]
       },
-      "get": {
+      "post": {
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/ServiceModel"
+              "$ref": "#/definitions/Service"
             }
           },
           "400": {
@@ -1018,12 +1027,15 @@
             }
           }
         },
-        "operationId": "get_services_resource",
+        "operationId": "post_services",
         "parameters": [
           {
-            "name": "$filter",
-            "in": "query",
-            "type": "string"
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Service"
+            }
           },
           {
             "name": "X-Fields",
@@ -1065,7 +1077,7 @@
             }
           }
         },
-        "operationId": "delete_service_resource",
+        "operationId": "delete_service",
         "tags": [
           "Organizations"
         ]
@@ -1080,25 +1092,20 @@
           "type": "string"
         }
       ],
-      "put": {
+      "get": {
         "responses": {
-          "201": {
+          "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/UsersGroupsModels"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UsersGroups"
+              }
             }
           }
         },
-        "operationId": "put_users_groups_resource",
+        "operationId": "get_users_groups",
         "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/UsersGroupsModel"
-            }
-          },
           {
             "name": "X-Fields",
             "in": "header",
@@ -1111,17 +1118,28 @@
           "Organizations"
         ]
       },
-      "get": {
+      "put": {
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/UsersGroupsModels"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UsersGroups"
+              }
             }
           }
         },
-        "operationId": "get_users_groups_resource",
+        "operationId": "put_users_groups",
         "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UsersGroups"
+            }
+          },
           {
             "name": "X-Fields",
             "in": "header",
@@ -1139,9 +1157,12 @@
       "get": {
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Project types",
             "schema": {
-              "$ref": "#/definitions/ProjectTypesResponse"
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           "404": {
@@ -1157,30 +1178,21 @@
             }
           }
         },
-        "operationId": "get_project_types_resource",
-        "parameters": [
-          {
-            "name": "X-Fields",
-            "in": "header",
-            "type": "string",
-            "format": "mask",
-            "description": "An optional fields mask"
-          }
-        ],
+        "operationId": "get_project_types",
         "tags": [
           "Projects"
         ]
       }
     },
     "/projects": {
-      "post": {
+      "get": {
         "responses": {
           "200": {
             "description": "Success",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/ProjectResponse"
+                "$ref": "#/definitions/Project"
               }
             }
           },
@@ -1191,16 +1203,8 @@
             }
           }
         },
-        "operationId": "post_projects_resource",
+        "operationId": "get_projects",
         "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/ProjectCreateModel"
-            }
-          },
           {
             "name": "X-Fields",
             "in": "header",
@@ -1213,12 +1217,15 @@
           "Projects"
         ]
       },
-      "get": {
+      "post": {
         "responses": {
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/ProjectsResponse"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Project"
+              }
             }
           },
           "400": {
@@ -1228,8 +1235,16 @@
             }
           }
         },
-        "operationId": "get_projects_resource",
+        "operationId": "post_projects",
         "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Project"
+            }
+          },
           {
             "name": "X-Fields",
             "in": "header",
@@ -1257,7 +1272,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/HospitalResponse"
+              "$ref": "#/definitions/Institute"
             }
           },
           "400": {
@@ -1267,7 +1282,7 @@
             }
           }
         },
-        "operationId": "get_hospital_resource",
+        "operationId": "get_institute",
         "parameters": [
           {
             "name": "X-Fields",
@@ -1296,7 +1311,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/ProjectResponse"
+              "$ref": "#/definitions/Project"
             }
           },
           "404": {
@@ -1312,7 +1327,7 @@
             }
           }
         },
-        "operationId": "get_project_resource",
+        "operationId": "get_project",
         "parameters": [
           {
             "name": "includeChildRelations",
@@ -1357,7 +1372,7 @@
             }
           }
         },
-        "operationId": "get_project_download_file_resource",
+        "operationId": "get_project_download_file",
         "produces": [
           "application/zip"
         ],
@@ -1375,45 +1390,12 @@
           "type": "string"
         }
       ],
-      "post": {
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/FilesResponse"
-            }
-          }
-        },
-        "summary": "This create project files endpoint actually only stores the file size of a project_id + key combination",
-        "description": "Used only for retrieving progress percentage of uploads.",
-        "operationId": "post_project_files_resource",
-        "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/FileSizesModel"
-            }
-          },
-          {
-            "name": "X-Fields",
-            "in": "header",
-            "type": "string",
-            "format": "mask",
-            "description": "An optional fields mask"
-          }
-        ],
-        "tags": [
-          "Projects"
-        ]
-      },
       "get": {
         "responses": {
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/FilesResponse"
+              "$ref": "#/definitions/Files"
             }
           },
           "400": {
@@ -1423,7 +1405,7 @@
             }
           }
         },
-        "operationId": "get_project_files_resource",
+        "operationId": "get_project_files",
         "parameters": [
           {
             "name": "X-Fields",
@@ -1449,7 +1431,40 @@
             }
           }
         },
-        "operationId": "delete_project_files_resource",
+        "operationId": "delete_project_files",
+        "tags": [
+          "Projects"
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Files"
+            }
+          }
+        },
+        "summary": "This create project files endpoint actually only stores the file size of a project_id + key combination",
+        "description": "Used only for retrieving progress percentage of uploads.",
+        "operationId": "post_project_files",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/FileSizes"
+            }
+          },
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
         "tags": [
           "Projects"
         ]
@@ -1464,12 +1479,15 @@
           "type": "string"
         }
       ],
-      "post": {
+      "get": {
         "responses": {
-          "201": {
+          "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/HospitalResponse"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Institute"
+              }
             }
           },
           "400": {
@@ -1479,16 +1497,8 @@
             }
           }
         },
-        "operationId": "post_hospitals_resource",
+        "operationId": "get_institutes",
         "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/HospitalCreateModel"
-            }
-          },
           {
             "name": "X-Fields",
             "in": "header",
@@ -1501,12 +1511,12 @@
           "Projects"
         ]
       },
-      "get": {
+      "post": {
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/HospitalsResponse"
+              "$ref": "#/definitions/Institute"
             }
           },
           "400": {
@@ -1516,8 +1526,16 @@
             }
           }
         },
-        "operationId": "get_hospitals_resource",
+        "operationId": "post_institutes",
         "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Institute"
+            }
+          },
           {
             "name": "X-Fields",
             "in": "header",
@@ -1540,27 +1558,6 @@
           "type": "string"
         }
       ],
-      "post": {
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "operationId": "post_task_resource",
-        "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/TaskCompletedModel"
-            }
-          }
-        ],
-        "tags": [
-          "Tasks"
-        ]
-      },
       "get": {
         "responses": {
           "302": {
@@ -1594,13 +1591,34 @@
             }
           }
         },
-        "operationId": "get_task_resource",
+        "operationId": "get_task",
         "parameters": [
           {
             "name": "redirect",
             "in": "query",
             "type": "boolean",
             "default": true
+          }
+        ],
+        "tags": [
+          "Tasks"
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "post_task",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/TaskCompleted"
+            }
           }
         ],
         "tags": [
@@ -1614,7 +1632,10 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/TrainingApplicationsResponse"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TrainingApplication"
+              }
             }
           },
           "400": {
@@ -1624,7 +1645,7 @@
             }
           }
         },
-        "operationId": "get_training_applications_resource",
+        "operationId": "get_training_applications",
         "parameters": [
           {
             "name": "X-Fields",
@@ -1653,7 +1674,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/StorageModel"
+              "$ref": "#/definitions/Storage"
             }
           },
           "400": {
@@ -1663,7 +1684,7 @@
             }
           }
         },
-        "operationId": "get_training_application_storage_resource",
+        "operationId": "get_training_application_storage",
         "parameters": [
           {
             "name": "region",
@@ -1707,7 +1728,7 @@
             }
           }
         },
-        "operationId": "get_training_application_guide_resource",
+        "operationId": "get_training_application_guide",
         "produces": [
           "application/pdf"
         ],
@@ -1717,18 +1738,15 @@
       }
     },
     "/users": {
-      "post": {
+      "get": {
         "responses": {
           "200": {
-            "description": "Existing user found, onboarded",
+            "description": "Success",
             "schema": {
-              "$ref": "#/definitions/UserInfoModel"
-            }
-          },
-          "201": {
-            "description": "User created and onboarded",
-            "schema": {
-              "$ref": "#/definitions/UserInfoModel"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
             }
           },
           "400": {
@@ -1738,16 +1756,8 @@
             }
           }
         },
-        "operationId": "post_users_resource",
+        "operationId": "get_users",
         "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/UserCreateModel"
-            }
-          },
           {
             "name": "X-Fields",
             "in": "header",
@@ -1760,15 +1770,18 @@
           "Users"
         ]
       },
-      "get": {
+      "post": {
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Existing user found, onboarded",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/UserInfoModel"
-              }
+              "$ref": "#/definitions/User"
+            }
+          },
+          "201": {
+            "description": "User created and onboarded",
+            "schema": {
+              "$ref": "#/definitions/User"
             }
           },
           "400": {
@@ -1778,8 +1791,16 @@
             }
           }
         },
-        "operationId": "get_users_resource",
+        "operationId": "post_users",
         "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UserRequest"
+            }
+          },
           {
             "name": "X-Fields",
             "in": "header",
@@ -1806,14 +1827,14 @@
             }
           }
         },
-        "operationId": "post_reset_mfa_resource",
+        "operationId": "post_reset_mfa",
         "parameters": [
           {
             "name": "payload",
             "required": true,
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/UserActivationCreateModel"
+              "$ref": "#/definitions/UserActivationRequest"
             }
           }
         ],
@@ -1835,7 +1856,7 @@
             }
           }
         },
-        "operationId": "post_user_profile_resource",
+        "operationId": "post_user_profile",
         "tags": [
           "Users"
         ]
@@ -1847,7 +1868,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/UserActivationModel"
+              "$ref": "#/definitions/HsdpResponse"
             }
           },
           "400": {
@@ -1857,14 +1878,14 @@
             }
           }
         },
-        "operationId": "post_resend_activation_resource",
+        "operationId": "post_resend_activation",
         "parameters": [
           {
             "name": "payload",
             "required": true,
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/UserActivationCreateModel"
+              "$ref": "#/definitions/UserActivationRequest"
             }
           },
           {
@@ -1886,7 +1907,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/StorageModel"
+              "$ref": "#/definitions/Storage"
             }
           },
           "400": {
@@ -1896,7 +1917,7 @@
             }
           }
         },
-        "operationId": "get_user_storage_resource",
+        "operationId": "get_user_storage",
         "parameters": [
           {
             "name": "region",
@@ -1922,7 +1943,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/UserInfoModel"
+              "$ref": "#/definitions/User"
             }
           },
           "400": {
@@ -1932,7 +1953,7 @@
             }
           }
         },
-        "operationId": "get_me_resource",
+        "operationId": "get_me",
         "parameters": [
           {
             "name": "X-Fields",
@@ -1956,6 +1977,35 @@
           "type": "string"
         }
       ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "get_user",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "Users"
+        ]
+      },
       "put": {
         "responses": {
           "204": {
@@ -1968,44 +2018,15 @@
             }
           }
         },
-        "operationId": "put_user_resource",
+        "operationId": "put_user",
         "parameters": [
           {
             "name": "payload",
             "required": true,
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/UserCreateModel"
+              "$ref": "#/definitions/UserRequest"
             }
-          }
-        ],
-        "tags": [
-          "Users"
-        ]
-      },
-      "get": {
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/UserInfoModel"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "get_user_resource",
-        "parameters": [
-          {
-            "name": "X-Fields",
-            "in": "header",
-            "type": "string",
-            "format": "mask",
-            "description": "An optional fields mask"
           }
         ],
         "tags": [
@@ -2024,7 +2045,7 @@
             }
           }
         },
-        "operationId": "delete_user_resource",
+        "operationId": "delete_user",
         "tags": [
           "Users"
         ]
@@ -2079,7 +2100,7 @@
       "name": "Projects"
     },
     {
-      "name": "Hospitals"
+      "name": "Institutes"
     },
     {
       "name": "Tasks"
@@ -2092,18 +2113,7 @@
     }
   ],
   "definitions": {
-    "ApplicationsResponse": {
-      "properties": {
-        "applications": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ApplicationsModel"
-          }
-        }
-      },
-      "type": "object"
-    },
-    "ApplicationsModel": {
+    "Application": {
       "properties": {
         "applicationId": {
           "type": "string"
@@ -2128,18 +2138,7 @@
       },
       "type": "object"
     },
-    "TrainingApplicationsResponse": {
-      "properties": {
-        "applications": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TrainingApplicationsModel"
-          }
-        }
-      },
-      "type": "object"
-    },
-    "TrainingApplicationsModel": {
+    "TrainingApplication": {
       "properties": {
         "applicationId": {
           "type": "string"
@@ -2153,18 +2152,18 @@
       },
       "type": "object"
     },
-    "StorageModel": {
+    "Storage": {
       "properties": {
         "credentials": {
-          "$ref": "#/definitions/CredentialsModel"
+          "$ref": "#/definitions/StorageCredentials"
         },
         "config": {
-          "$ref": "#/definitions/ConfigModel"
+          "$ref": "#/definitions/StorageConfig"
         }
       },
       "type": "object"
     },
-    "CredentialsModel": {
+    "StorageCredentials": {
       "properties": {
         "accessKey": {
           "type": "string"
@@ -2182,7 +2181,7 @@
       },
       "type": "object"
     },
-    "ConfigModel": {
+    "StorageConfig": {
       "properties": {
         "bucket": {
           "type": "string"
@@ -2196,102 +2195,53 @@
       },
       "type": "object"
     },
-    "ServiceCreateModel": {
-      "properties": {
-        "serviceName": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ServiceCreateResponse": {
+    "Service": {
       "properties": {
         "applicationId": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "defaultScopes": {
           "type": "array",
+          "readOnly": true,
           "items": {
             "type": "string"
           }
         },
         "expiresOn": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "name": {
           "type": "string"
         },
         "organizationId": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "privateKey": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "scopes": {
           "type": "array",
+          "readOnly": true,
           "items": {
             "type": "string"
           }
         },
         "serviceId": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         }
       },
       "type": "object"
     },
-    "ServiceModel": {
-      "properties": {
-        "entry": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/EntryModel"
-          }
-        },
-        "total": {
-          "type": "integer"
-        }
-      },
-      "type": "object"
-    },
-    "EntryModel": {
-      "properties": {
-        "applicationId": {
-          "type": "string"
-        },
-        "defaultScopes": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "expiresOn": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "organizationId": {
-          "type": "string"
-        },
-        "scopes": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "serviceId": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "UsersGroupsModel": {
+    "UsersGroups": {
       "properties": {
         "userId": {
           "type": "string"
@@ -2305,29 +2255,7 @@
       },
       "type": "object"
     },
-    "UsersGroupsModels": {
-      "properties": {
-        "usersGroups": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UsersGroupsModel"
-          }
-        }
-      },
-      "type": "object"
-    },
-    "GroupsModels": {
-      "properties": {
-        "groups": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GroupModel"
-          }
-        }
-      },
-      "type": "object"
-    },
-    "GroupModel": {
+    "Group": {
       "properties": {
         "id": {
           "type": "string"
@@ -2338,18 +2266,11 @@
       },
       "type": "object"
     },
-    "HospitalResponse": {
-      "properties": {
-        "hospital": {
-          "$ref": "#/definitions/HospitalModel"
-        }
-      },
-      "type": "object"
-    },
-    "HospitalModel": {
+    "Institute": {
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "name": {
           "type": "string"
@@ -2358,16 +2279,20 @@
           "type": "string"
         },
         "parentId": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "hasSeries": {
-          "type": "boolean"
+          "type": "boolean",
+          "readOnly": true
         },
         "projectTypeName": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "studies": {
           "type": "array",
+          "readOnly": true,
           "items": {
             "$ref": "#/definitions/RootStudy"
           }
@@ -2452,7 +2377,7 @@
               "type": "string"
             },
             "patient": {
-              "$ref": "#/definitions/PatientModel"
+              "$ref": "#/definitions/Patient"
             }
           },
           "type": "object"
@@ -2513,7 +2438,7 @@
       "discriminator": "studyType",
       "type": "object"
     },
-    "PatientModel": {
+    "Patient": {
       "properties": {
         "patientDatabaseId": {
           "type": "string"
@@ -2748,7 +2673,7 @@
         }
       ]
     },
-    "EchoNav": {
+    "EchoNavStudy": {
       "allOf": [
         {
           "$ref": "#/definitions/BaseStudy"
@@ -2908,140 +2833,90 @@
         }
       ]
     },
-    "HospitalCreateModel": {
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "HospitalsResponse": {
-      "properties": {
-        "hospitals": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/HospitalModel"
-          }
-        }
-      },
-      "type": "object"
-    },
-    "FileSizesModel": {
+    "FileSizes": {
       "properties": {
         "fileSizes": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/FileSizeModel"
+            "$ref": "#/definitions/File"
           }
         }
       },
       "type": "object"
     },
-    "FileSizeModel": {
-      "properties": {
-        "key": {
-          "type": "string"
-        },
-        "fileSize": {
-          "type": "integer"
-        }
-      },
-      "type": "object"
-    },
-    "FilesResponse": {
-      "properties": {
-        "files": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/FileModel"
-          }
-        },
-        "dicom": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/FileModel"
-          }
-        },
-        "annotations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/FileModel"
-          }
-        },
-        "pathis": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/FileModel"
-          }
-        }
-      },
-      "type": "object"
-    },
-    "FileModel": {
+    "File": {
       "properties": {
         "key": {
           "type": "string"
         },
         "fileName": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "isCompleted": {
-          "type": "boolean"
+          "type": "boolean",
+          "readOnly": true
         },
         "isNew": {
-          "type": "boolean"
+          "type": "boolean",
+          "readOnly": true
         },
         "uploadId": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "progressPercentage": {
-          "type": "integer"
+          "type": "integer",
+          "readOnly": true
         },
         "type": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "fileSize": {
           "type": "integer"
         },
         "progressInBytes": {
-          "type": "integer"
+          "type": "integer",
+          "readOnly": true
         }
       },
       "type": "object"
     },
-    "ProjectCreateModel": {
+    "Files": {
       "properties": {
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "continents": {
+        "files": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/File"
+          }
+        },
+        "dicom": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/File"
+          }
+        },
+        "annotations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/File"
+          }
+        },
+        "pathis": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/File"
           }
         }
       },
       "type": "object"
     },
-    "ProjectResponse": {
-      "properties": {
-        "project": {
-          "$ref": "#/definitions/ProjectModel"
-        }
-      },
-      "type": "object"
-    },
-    "ProjectModel": {
+    "Project": {
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "name": {
           "type": "string"
@@ -3060,30 +2935,9 @@
         },
         "institutes": {
           "type": "array",
+          "readOnly": true,
           "items": {
-            "$ref": "#/definitions/HospitalModel"
-          }
-        }
-      },
-      "type": "object"
-    },
-    "ProjectsResponse": {
-      "properties": {
-        "projects": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ProjectModel"
-          }
-        }
-      },
-      "type": "object"
-    },
-    "ProjectTypesResponse": {
-      "properties": {
-        "projectTypes": {
-          "type": "array",
-          "items": {
-            "type": "string"
+            "$ref": "#/definitions/Institute"
           }
         }
       },
@@ -3171,7 +3025,7 @@
       },
       "type": "object"
     },
-    "TaskCompletedModel": {
+    "TaskCompleted": {
       "properties": {
         "status": {
           "type": "string"
@@ -3182,7 +3036,7 @@
       },
       "type": "object"
     },
-    "UserCreateModel": {
+    "UserRequest": {
       "properties": {
         "name": {
           "type": "string"
@@ -3202,7 +3056,7 @@
       },
       "type": "object"
     },
-    "UserInfoModel": {
+    "User": {
       "properties": {
         "loginId": {
           "type": "string"
@@ -3211,18 +3065,18 @@
           "type": "string"
         },
         "profile": {
-          "$ref": "#/definitions/ProfileModel"
+          "$ref": "#/definitions/Profile"
         },
         "settings": {
-          "$ref": "#/definitions/UserSettingsModel"
+          "$ref": "#/definitions/UserSettings"
         },
         "accountStatus": {
-          "$ref": "#/definitions/AccountStatusModel"
+          "$ref": "#/definitions/AccountStatus"
         }
       },
       "type": "object"
     },
-    "ProfileModel": {
+    "Profile": {
       "properties": {
         "addresses": {
           "type": "array",
@@ -3231,7 +3085,7 @@
           }
         },
         "contact": {
-          "$ref": "#/definitions/ContactModel"
+          "$ref": "#/definitions/Contact"
         },
         "disabled": {
           "type": "boolean"
@@ -3245,7 +3099,7 @@
         "organizationRoles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/OrganizationRoleModel"
+            "$ref": "#/definitions/OrganizationRole"
           }
         },
         "preferredLanguage": {
@@ -3260,7 +3114,7 @@
       },
       "type": "object"
     },
-    "ContactModel": {
+    "Contact": {
       "properties": {
         "emailAddress": {
           "type": "string"
@@ -3271,7 +3125,7 @@
       },
       "type": "object"
     },
-    "OrganizationRoleModel": {
+    "OrganizationRole": {
       "properties": {
         "groups": {
           "type": "array",
@@ -3300,7 +3154,7 @@
       },
       "type": "object"
     },
-    "UserSettingsModel": {
+    "UserSettings": {
       "properties": {
         "istLevel": {
           "type": "string"
@@ -3319,7 +3173,7 @@
       },
       "type": "object"
     },
-    "AccountStatusModel": {
+    "AccountStatus": {
       "properties": {
         "lastLoginTime": {
           "type": "string",
@@ -3360,7 +3214,7 @@
       },
       "type": "object"
     },
-    "UserActivationCreateModel": {
+    "UserActivationRequest": {
       "properties": {
         "loginId": {
           "type": "string"
@@ -3368,7 +3222,7 @@
       },
       "type": "object"
     },
-    "UserActivationModel": {
+    "HsdpResponse": {
       "properties": {
         "resourceType": {
           "type": "string"
@@ -3376,13 +3230,13 @@
         "issue": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/IssueModel"
+            "$ref": "#/definitions/HsdpIssue"
           }
         }
       },
       "type": "object"
     },
-    "IssueModel": {
+    "HsdpIssue": {
       "properties": {
         "severity": {
           "type": "string"
@@ -3391,15 +3245,15 @@
           "type": "string"
         },
         "details": {
-          "$ref": "#/definitions/DetailsModel"
+          "$ref": "#/definitions/HsdpDetails"
         }
       },
       "type": "object"
     },
-    "DetailsModel": {
+    "HsdpDetails": {
       "properties": {
         "coding": {
-          "$ref": "#/definitions/CodingModel"
+          "$ref": "#/definitions/HsdpCoding"
         },
         "text": {
           "type": "string"
@@ -3407,7 +3261,7 @@
       },
       "type": "object"
     },
-    "CodingModel": {
+    "HsdpCoding": {
       "properties": {},
       "type": "object"
     },
@@ -3468,10 +3322,10 @@
               "type": "integer"
             },
             "project": {
-              "$ref": "#/definitions/ProjectModel"
+              "$ref": "#/definitions/Project"
             },
             "institute": {
-              "$ref": "#/definitions/HospitalModel"
+              "$ref": "#/definitions/Institute"
             }
           },
           "type": "object"
@@ -3516,7 +3370,7 @@
         {
           "properties": {
             "study": {
-              "$ref": "#/definitions/EchoNav"
+              "$ref": "#/definitions/EchoNavStudy"
             }
           },
           "type": "object"

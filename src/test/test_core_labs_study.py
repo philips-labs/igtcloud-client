@@ -15,11 +15,11 @@ import igtcloud.client.services.entities
 from igtcloud.client.services.entities.model.annotation_study import AnnotationStudy
 from igtcloud.client.services.entities.model.base_study import BaseStudy
 from igtcloud.client.services.entities.model.core_labs_study_all_of import CoreLabsStudyAllOf
-from igtcloud.client.services.entities.model.patient_model import PatientModel
+from igtcloud.client.services.entities.model.patient import Patient
 globals()['AnnotationStudy'] = AnnotationStudy
 globals()['BaseStudy'] = BaseStudy
 globals()['CoreLabsStudyAllOf'] = CoreLabsStudyAllOf
-globals()['PatientModel'] = PatientModel
+globals()['Patient'] = Patient
 from igtcloud.client.services.entities.model.core_labs_study import CoreLabsStudy
 
 

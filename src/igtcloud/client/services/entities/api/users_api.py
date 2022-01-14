@@ -21,12 +21,12 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
+from igtcloud.client.services.entities.model.hsdp_response import HsdpResponse
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.storage_model import StorageModel
-from igtcloud.client.services.entities.model.user_activation_create_model import UserActivationCreateModel
-from igtcloud.client.services.entities.model.user_activation_model import UserActivationModel
-from igtcloud.client.services.entities.model.user_create_model import UserCreateModel
-from igtcloud.client.services.entities.model.user_info_model import UserInfoModel
+from igtcloud.client.services.entities.model.storage import Storage
+from igtcloud.client.services.entities.model.user import User
+from igtcloud.client.services.entities.model.user_activation_request import UserActivationRequest
+from igtcloud.client.services.entities.model.user_request import UserRequest
 
 
 class UsersApi(object):
@@ -40,7 +40,7 @@ class UsersApi(object):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
-        self.delete_user_resource_endpoint = _Endpoint(
+        self.delete_user_endpoint = _Endpoint(
             settings={
                 'response_type': None,
                 'auth': [
@@ -48,7 +48,7 @@ class UsersApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/users/{user_uuid}',
-                'operation_id': 'delete_user_resource',
+                'operation_id': 'delete_user',
                 'http_method': 'DELETE',
                 'servers': None,
             },
@@ -92,15 +92,15 @@ class UsersApi(object):
             },
             api_client=api_client
         )
-        self.get_me_resource_endpoint = _Endpoint(
+        self.get_me_endpoint = _Endpoint(
             settings={
-                'response_type': (UserInfoModel,),
+                'response_type': (User,),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/users/me',
-                'operation_id': 'get_me_resource',
+                'operation_id': 'get_me',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -142,15 +142,15 @@ class UsersApi(object):
             },
             api_client=api_client
         )
-        self.get_user_resource_endpoint = _Endpoint(
+        self.get_user_endpoint = _Endpoint(
             settings={
-                'response_type': (UserInfoModel,),
+                'response_type': (User,),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/users/{user_uuid}',
-                'operation_id': 'get_user_resource',
+                'operation_id': 'get_user',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -199,15 +199,15 @@ class UsersApi(object):
             },
             api_client=api_client
         )
-        self.get_user_storage_resource_endpoint = _Endpoint(
+        self.get_user_storage_endpoint = _Endpoint(
             settings={
-                'response_type': (StorageModel,),
+                'response_type': (Storage,),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/users/$storage',
-                'operation_id': 'get_user_storage_resource',
+                'operation_id': 'get_user_storage',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -254,15 +254,15 @@ class UsersApi(object):
             },
             api_client=api_client
         )
-        self.get_users_resource_endpoint = _Endpoint(
+        self.get_users_endpoint = _Endpoint(
             settings={
-                'response_type': ([UserInfoModel],),
+                'response_type': ([User],),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/users',
-                'operation_id': 'get_users_resource',
+                'operation_id': 'get_users',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -304,15 +304,15 @@ class UsersApi(object):
             },
             api_client=api_client
         )
-        self.post_resend_activation_resource_endpoint = _Endpoint(
+        self.post_resend_activation_endpoint = _Endpoint(
             settings={
-                'response_type': (UserActivationModel,),
+                'response_type': (HsdpResponse,),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/users/$resend-activation',
-                'operation_id': 'post_resend_activation_resource',
+                'operation_id': 'post_resend_activation',
                 'http_method': 'POST',
                 'servers': None,
             },
@@ -338,7 +338,7 @@ class UsersApi(object):
                 },
                 'openapi_types': {
                     'payload':
-                        (UserActivationCreateModel,),
+                        (UserActivationRequest,),
                     'x_fields':
                         (str,),
                 },
@@ -362,7 +362,7 @@ class UsersApi(object):
             },
             api_client=api_client
         )
-        self.post_reset_mfa_resource_endpoint = _Endpoint(
+        self.post_reset_mfa_endpoint = _Endpoint(
             settings={
                 'response_type': None,
                 'auth': [
@@ -370,7 +370,7 @@ class UsersApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/users/$mfa-reset',
-                'operation_id': 'post_reset_mfa_resource',
+                'operation_id': 'post_reset_mfa',
                 'http_method': 'POST',
                 'servers': None,
             },
@@ -395,7 +395,7 @@ class UsersApi(object):
                 },
                 'openapi_types': {
                     'payload':
-                        (UserActivationCreateModel,),
+                        (UserActivationRequest,),
                 },
                 'attribute_map': {
                 },
@@ -415,7 +415,7 @@ class UsersApi(object):
             },
             api_client=api_client
         )
-        self.post_user_profile_resource_endpoint = _Endpoint(
+        self.post_user_profile_endpoint = _Endpoint(
             settings={
                 'response_type': None,
                 'auth': [
@@ -423,7 +423,7 @@ class UsersApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/users/$profile',
-                'operation_id': 'post_user_profile_resource',
+                'operation_id': 'post_user_profile',
                 'http_method': 'POST',
                 'servers': None,
             },
@@ -460,15 +460,15 @@ class UsersApi(object):
             },
             api_client=api_client
         )
-        self.post_users_resource_endpoint = _Endpoint(
+        self.post_users_endpoint = _Endpoint(
             settings={
-                'response_type': (UserInfoModel,),
+                'response_type': (User,),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/users',
-                'operation_id': 'post_users_resource',
+                'operation_id': 'post_users',
                 'http_method': 'POST',
                 'servers': None,
             },
@@ -494,7 +494,7 @@ class UsersApi(object):
                 },
                 'openapi_types': {
                     'payload':
-                        (UserCreateModel,),
+                        (UserRequest,),
                     'x_fields':
                         (str,),
                 },
@@ -518,7 +518,7 @@ class UsersApi(object):
             },
             api_client=api_client
         )
-        self.put_user_resource_endpoint = _Endpoint(
+        self.put_user_endpoint = _Endpoint(
             settings={
                 'response_type': None,
                 'auth': [
@@ -526,7 +526,7 @@ class UsersApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/users/{user_uuid}',
-                'operation_id': 'put_user_resource',
+                'operation_id': 'put_user',
                 'http_method': 'PUT',
                 'servers': None,
             },
@@ -555,7 +555,7 @@ class UsersApi(object):
                     'user_uuid':
                         (str,),
                     'payload':
-                        (UserCreateModel,),
+                        (UserRequest,),
                 },
                 'attribute_map': {
                     'user_uuid': 'user_uuid',
@@ -578,17 +578,17 @@ class UsersApi(object):
             api_client=api_client
         )
 
-    def delete_user_resource(
+    def delete_user(
         self,
         user_uuid,
         **kwargs
     ):
-        """delete_user_resource  # noqa: E501
+        """delete_user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.delete_user_resource(user_uuid, async_req=True)
+        >>> thread = api.delete_user(user_uuid, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -646,18 +646,18 @@ class UsersApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['user_uuid'] = \
             user_uuid
-        return self.delete_user_resource_endpoint.call_with_http_info(**kwargs)
+        return self.delete_user_endpoint.call_with_http_info(**kwargs)
 
-    def get_me_resource(
+    def get_me(
         self,
         **kwargs
     ):
-        """get_me_resource  # noqa: E501
+        """get_me  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_me_resource(async_req=True)
+        >>> thread = api.get_me(async_req=True)
         >>> result = thread.get()
 
 
@@ -687,7 +687,7 @@ class UsersApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            UserInfoModel
+            User
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -712,19 +712,19 @@ class UsersApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.get_me_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_me_endpoint.call_with_http_info(**kwargs)
 
-    def get_user_resource(
+    def get_user(
         self,
         user_uuid,
         **kwargs
     ):
-        """get_user_resource  # noqa: E501
+        """get_user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_user_resource(user_uuid, async_req=True)
+        >>> thread = api.get_user(user_uuid, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -756,7 +756,7 @@ class UsersApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            UserInfoModel
+            User
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -783,18 +783,18 @@ class UsersApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['user_uuid'] = \
             user_uuid
-        return self.get_user_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_user_endpoint.call_with_http_info(**kwargs)
 
-    def get_user_storage_resource(
+    def get_user_storage(
         self,
         **kwargs
     ):
-        """get_user_storage_resource  # noqa: E501
+        """get_user_storage  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_user_storage_resource(async_req=True)
+        >>> thread = api.get_user_storage(async_req=True)
         >>> result = thread.get()
 
 
@@ -825,7 +825,7 @@ class UsersApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            StorageModel
+            Storage
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -850,18 +850,18 @@ class UsersApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.get_user_storage_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_user_storage_endpoint.call_with_http_info(**kwargs)
 
-    def get_users_resource(
+    def get_users(
         self,
         **kwargs
     ):
-        """get_users_resource  # noqa: E501
+        """get_users  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_users_resource(async_req=True)
+        >>> thread = api.get_users(async_req=True)
         >>> result = thread.get()
 
 
@@ -891,7 +891,7 @@ class UsersApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            [UserInfoModel]
+            [User]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -916,23 +916,23 @@ class UsersApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.get_users_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_users_endpoint.call_with_http_info(**kwargs)
 
-    def post_resend_activation_resource(
+    def post_resend_activation(
         self,
         payload,
         **kwargs
     ):
-        """post_resend_activation_resource  # noqa: E501
+        """post_resend_activation  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_resend_activation_resource(payload, async_req=True)
+        >>> thread = api.post_resend_activation(payload, async_req=True)
         >>> result = thread.get()
 
         Args:
-            payload (UserActivationCreateModel):
+            payload (UserActivationRequest):
 
         Keyword Args:
             x_fields (str): An optional fields mask. [optional]
@@ -960,7 +960,7 @@ class UsersApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            UserActivationModel
+            HsdpResponse
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -987,23 +987,23 @@ class UsersApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['payload'] = \
             payload
-        return self.post_resend_activation_resource_endpoint.call_with_http_info(**kwargs)
+        return self.post_resend_activation_endpoint.call_with_http_info(**kwargs)
 
-    def post_reset_mfa_resource(
+    def post_reset_mfa(
         self,
         payload,
         **kwargs
     ):
-        """post_reset_mfa_resource  # noqa: E501
+        """post_reset_mfa  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_reset_mfa_resource(payload, async_req=True)
+        >>> thread = api.post_reset_mfa(payload, async_req=True)
         >>> result = thread.get()
 
         Args:
-            payload (UserActivationCreateModel):
+            payload (UserActivationRequest):
 
         Keyword Args:
             _return_http_data_only (bool): response data without head status
@@ -1057,18 +1057,18 @@ class UsersApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['payload'] = \
             payload
-        return self.post_reset_mfa_resource_endpoint.call_with_http_info(**kwargs)
+        return self.post_reset_mfa_endpoint.call_with_http_info(**kwargs)
 
-    def post_user_profile_resource(
+    def post_user_profile(
         self,
         **kwargs
     ):
-        """post_user_profile_resource  # noqa: E501
+        """post_user_profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_user_profile_resource(async_req=True)
+        >>> thread = api.post_user_profile(async_req=True)
         >>> result = thread.get()
 
 
@@ -1122,23 +1122,23 @@ class UsersApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.post_user_profile_resource_endpoint.call_with_http_info(**kwargs)
+        return self.post_user_profile_endpoint.call_with_http_info(**kwargs)
 
-    def post_users_resource(
+    def post_users(
         self,
         payload,
         **kwargs
     ):
-        """post_users_resource  # noqa: E501
+        """post_users  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_users_resource(payload, async_req=True)
+        >>> thread = api.post_users(payload, async_req=True)
         >>> result = thread.get()
 
         Args:
-            payload (UserCreateModel):
+            payload (UserRequest):
 
         Keyword Args:
             x_fields (str): An optional fields mask. [optional]
@@ -1166,7 +1166,7 @@ class UsersApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            UserInfoModel
+            User
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1193,25 +1193,25 @@ class UsersApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['payload'] = \
             payload
-        return self.post_users_resource_endpoint.call_with_http_info(**kwargs)
+        return self.post_users_endpoint.call_with_http_info(**kwargs)
 
-    def put_user_resource(
+    def put_user(
         self,
         user_uuid,
         payload,
         **kwargs
     ):
-        """put_user_resource  # noqa: E501
+        """put_user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_user_resource(user_uuid, payload, async_req=True)
+        >>> thread = api.put_user(user_uuid, payload, async_req=True)
         >>> result = thread.get()
 
         Args:
             user_uuid (str):
-            payload (UserCreateModel):
+            payload (UserRequest):
 
         Keyword Args:
             _return_http_data_only (bool): response data without head status
@@ -1267,5 +1267,5 @@ class UsersApi(object):
             user_uuid
         kwargs['payload'] = \
             payload
-        return self.put_user_resource_endpoint.call_with_http_info(**kwargs)
+        return self.put_user_endpoint.call_with_http_info(**kwargs)
 

@@ -30,8 +30,8 @@ from igtcloud.client.services.entities.exceptions import ApiAttributeError
 
 
 def lazy_import():
-    from igtcloud.client.services.entities.model.echo_nav import EchoNav
-    globals()['EchoNav'] = EchoNav
+    from igtcloud.client.services.entities.model.echo_nav_study import EchoNavStudy
+    globals()['EchoNavStudy'] = EchoNavStudy
 
 
 class EchoNavSeriesAllOf(ModelNormal):
@@ -87,7 +87,7 @@ class EchoNavSeriesAllOf(ModelNormal):
         """
         lazy_import()
         return {
-            'study': (EchoNav,),  # noqa: E501
+            'study': (EchoNavStudy,),  # noqa: E501
         }
 
     @cached_property
@@ -140,7 +140,7 @@ class EchoNavSeriesAllOf(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            study (EchoNav): [optional]  # noqa: E501
+            study (EchoNavStudy): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -222,7 +222,7 @@ class EchoNavSeriesAllOf(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            study (EchoNav): [optional]  # noqa: E501
+            study (EchoNavStudy): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

@@ -38,7 +38,7 @@ class IntegrationsApi(object):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
-        self.get_ai_suite_collections_resource_endpoint = _Endpoint(
+        self.get_ai_suite_collections_endpoint = _Endpoint(
             settings={
                 'response_type': ([AISuiteCollection],),
                 'auth': [
@@ -46,7 +46,7 @@ class IntegrationsApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/integrations/aisuite/{connection_name}/projects/{aisuite_project_id}',
-                'operation_id': 'get_ai_suite_collections_resource',
+                'operation_id': 'get_ai_suite_collections',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -101,7 +101,7 @@ class IntegrationsApi(object):
             },
             api_client=api_client
         )
-        self.get_ai_suite_connections_resource_endpoint = _Endpoint(
+        self.get_ai_suite_connections_endpoint = _Endpoint(
             settings={
                 'response_type': ([AISuiteConnection],),
                 'auth': [
@@ -109,7 +109,7 @@ class IntegrationsApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/integrations/aisuite',
-                'operation_id': 'get_ai_suite_connections_resource',
+                'operation_id': 'get_ai_suite_connections',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -151,7 +151,7 @@ class IntegrationsApi(object):
             },
             api_client=api_client
         )
-        self.get_ai_suite_projects_resource_endpoint = _Endpoint(
+        self.get_ai_suite_projects_endpoint = _Endpoint(
             settings={
                 'response_type': ([AISuiteProject],),
                 'auth': [
@@ -159,7 +159,7 @@ class IntegrationsApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/integrations/aisuite/{connection_name}/projects',
-                'operation_id': 'get_ai_suite_projects_resource',
+                'operation_id': 'get_ai_suite_projects',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -208,7 +208,7 @@ class IntegrationsApi(object):
             },
             api_client=api_client
         )
-        self.post_ai_suite_collections_resource_endpoint = _Endpoint(
+        self.post_ai_suite_collections_endpoint = _Endpoint(
             settings={
                 'response_type': (AISuiteCollection,),
                 'auth': [
@@ -216,7 +216,7 @@ class IntegrationsApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/integrations/aisuite/{connection_name}/projects/{aisuite_project_id}',
-                'operation_id': 'post_ai_suite_collections_resource',
+                'operation_id': 'post_ai_suite_collections',
                 'http_method': 'POST',
                 'servers': None,
             },
@@ -272,18 +272,18 @@ class IntegrationsApi(object):
             api_client=api_client
         )
 
-    def get_ai_suite_collections_resource(
+    def get_ai_suite_collections(
         self,
         connection_name,
         aisuite_project_id,
         **kwargs
     ):
-        """get_ai_suite_collections_resource  # noqa: E501
+        """get_ai_suite_collections  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_ai_suite_collections_resource(connection_name, aisuite_project_id, async_req=True)
+        >>> thread = api.get_ai_suite_collections(connection_name, aisuite_project_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -345,18 +345,18 @@ class IntegrationsApi(object):
             connection_name
         kwargs['aisuite_project_id'] = \
             aisuite_project_id
-        return self.get_ai_suite_collections_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_ai_suite_collections_endpoint.call_with_http_info(**kwargs)
 
-    def get_ai_suite_connections_resource(
+    def get_ai_suite_connections(
         self,
         **kwargs
     ):
-        """get_ai_suite_connections_resource  # noqa: E501
+        """get_ai_suite_connections  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_ai_suite_connections_resource(async_req=True)
+        >>> thread = api.get_ai_suite_connections(async_req=True)
         >>> result = thread.get()
 
 
@@ -411,19 +411,19 @@ class IntegrationsApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.get_ai_suite_connections_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_ai_suite_connections_endpoint.call_with_http_info(**kwargs)
 
-    def get_ai_suite_projects_resource(
+    def get_ai_suite_projects(
         self,
         connection_name,
         **kwargs
     ):
-        """get_ai_suite_projects_resource  # noqa: E501
+        """get_ai_suite_projects  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_ai_suite_projects_resource(connection_name, async_req=True)
+        >>> thread = api.get_ai_suite_projects(connection_name, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -482,20 +482,20 @@ class IntegrationsApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['connection_name'] = \
             connection_name
-        return self.get_ai_suite_projects_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_ai_suite_projects_endpoint.call_with_http_info(**kwargs)
 
-    def post_ai_suite_collections_resource(
+    def post_ai_suite_collections(
         self,
         connection_name,
         aisuite_project_id,
         **kwargs
     ):
-        """post_ai_suite_collections_resource  # noqa: E501
+        """post_ai_suite_collections  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_ai_suite_collections_resource(connection_name, aisuite_project_id, async_req=True)
+        >>> thread = api.post_ai_suite_collections(connection_name, aisuite_project_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -557,5 +557,5 @@ class IntegrationsApi(object):
             connection_name
         kwargs['aisuite_project_id'] = \
             aisuite_project_id
-        return self.post_ai_suite_collections_resource_endpoint.call_with_http_info(**kwargs)
+        return self.post_ai_suite_collections_endpoint.call_with_http_info(**kwargs)
 

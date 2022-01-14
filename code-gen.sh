@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+rm -rf src/docs/ src/test/ src/igtcloud/client/services/auth src/igtcloud/client/services/entities
+
 docker run --user $(id -u):$(id -g) --rm -v $(pwd):/local openapitools/openapi-generator-cli generate \
     -i /local/openapi/entities.json \
     -g python \

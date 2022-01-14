@@ -32,12 +32,12 @@ from igtcloud.client.services.entities.exceptions import ApiAttributeError
 def lazy_import():
     from igtcloud.client.services.entities.model.ai_suite_collection_all_of import AISuiteCollectionAllOf
     from igtcloud.client.services.entities.model.ai_suite_resource import AISuiteResource
-    from igtcloud.client.services.entities.model.hospital_model import HospitalModel
-    from igtcloud.client.services.entities.model.project_model import ProjectModel
+    from igtcloud.client.services.entities.model.institute import Institute
+    from igtcloud.client.services.entities.model.project import Project
     globals()['AISuiteCollectionAllOf'] = AISuiteCollectionAllOf
     globals()['AISuiteResource'] = AISuiteResource
-    globals()['HospitalModel'] = HospitalModel
-    globals()['ProjectModel'] = ProjectModel
+    globals()['Institute'] = Institute
+    globals()['Project'] = Project
 
 
 class AISuiteCollection(ModelComposed):
@@ -99,8 +99,8 @@ class AISuiteCollection(ModelComposed):
             'reference': (str,),  # noqa: E501
             'version': (str,),  # noqa: E501
             'create_date': (int,),  # noqa: E501
-            'project': (ProjectModel,),  # noqa: E501
-            'institute': (HospitalModel,),  # noqa: E501
+            'project': (Project,),  # noqa: E501
+            'institute': (Institute,),  # noqa: E501
         }
 
     @cached_property
@@ -164,8 +164,8 @@ class AISuiteCollection(ModelComposed):
             reference (str): [optional]  # noqa: E501
             version (str): [optional]  # noqa: E501
             create_date (int): [optional]  # noqa: E501
-            project (ProjectModel): [optional]  # noqa: E501
-            institute (HospitalModel): [optional]  # noqa: E501
+            project (Project): [optional]  # noqa: E501
+            institute (Institute): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -271,8 +271,8 @@ class AISuiteCollection(ModelComposed):
             reference (str): [optional]  # noqa: E501
             version (str): [optional]  # noqa: E501
             create_date (int): [optional]  # noqa: E501
-            project (ProjectModel): [optional]  # noqa: E501
-            institute (HospitalModel): [optional]  # noqa: E501
+            project (Project): [optional]  # noqa: E501
+            institute (Institute): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

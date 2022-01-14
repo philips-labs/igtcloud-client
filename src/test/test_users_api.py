@@ -23,62 +23,62 @@ class TestUsersApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_delete_user_resource(self):
-        """Test case for delete_user_resource
+    def test_delete_user(self):
+        """Test case for delete_user
 
         """
         pass
 
-    def test_get_me_resource(self):
-        """Test case for get_me_resource
+    def test_get_me(self):
+        """Test case for get_me
 
         """
         pass
 
-    def test_get_user_resource(self):
-        """Test case for get_user_resource
+    def test_get_user(self):
+        """Test case for get_user
 
         """
         pass
 
-    def test_get_user_storage_resource(self):
-        """Test case for get_user_storage_resource
+    def test_get_user_storage(self):
+        """Test case for get_user_storage
 
         """
         pass
 
-    def test_get_users_resource(self):
-        """Test case for get_users_resource
+    def test_get_users(self):
+        """Test case for get_users
 
         """
         pass
 
-    def test_post_resend_activation_resource(self):
-        """Test case for post_resend_activation_resource
+    def test_post_resend_activation(self):
+        """Test case for post_resend_activation
 
         """
         pass
 
-    def test_post_reset_mfa_resource(self):
-        """Test case for post_reset_mfa_resource
+    def test_post_reset_mfa(self):
+        """Test case for post_reset_mfa
 
         """
         pass
 
-    def test_post_user_profile_resource(self):
-        """Test case for post_user_profile_resource
+    def test_post_user_profile(self):
+        """Test case for post_user_profile
 
         """
         pass
 
-    def test_post_users_resource(self):
-        """Test case for post_users_resource
+    def test_post_users(self):
+        """Test case for post_users
 
         """
         pass
 
-    def test_put_user_resource(self):
-        """Test case for put_user_resource
+    def test_put_user(self):
+        """Test case for put_user
 
         """
         pass

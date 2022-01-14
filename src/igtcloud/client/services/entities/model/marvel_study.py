@@ -32,10 +32,10 @@ from igtcloud.client.services.entities.exceptions import ApiAttributeError
 def lazy_import():
     from igtcloud.client.services.entities.model.base_study import BaseStudy
     from igtcloud.client.services.entities.model.marvel_study_all_of import MarvelStudyAllOf
-    from igtcloud.client.services.entities.model.patient_model import PatientModel
+    from igtcloud.client.services.entities.model.patient import Patient
     globals()['BaseStudy'] = BaseStudy
     globals()['MarvelStudyAllOf'] = MarvelStudyAllOf
-    globals()['PatientModel'] = PatientModel
+    globals()['Patient'] = Patient
 
 
 class MarvelStudy(ModelComposed):
@@ -124,7 +124,7 @@ class MarvelStudy(ModelComposed):
             'hospital_id': (str,),  # noqa: E501
             'project_id': (str,),  # noqa: E501
             'patient_database_id': (str,),  # noqa: E501
-            'patient': (PatientModel,),  # noqa: E501
+            'patient': (Patient,),  # noqa: E501
         }
 
     @cached_property
@@ -244,7 +244,7 @@ class MarvelStudy(ModelComposed):
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
-            patient (PatientModel): [optional]  # noqa: E501
+            patient (Patient): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -377,7 +377,7 @@ class MarvelStudy(ModelComposed):
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
-            patient (PatientModel): [optional]  # noqa: E501
+            patient (Patient): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

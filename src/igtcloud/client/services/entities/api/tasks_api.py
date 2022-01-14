@@ -22,7 +22,7 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
     validate_and_convert_types
 )
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.task_completed_model import TaskCompletedModel
+from igtcloud.client.services.entities.model.task_completed import TaskCompleted
 
 
 class TasksApi(object):
@@ -36,7 +36,7 @@ class TasksApi(object):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
-        self.get_task_resource_endpoint = _Endpoint(
+        self.get_task_endpoint = _Endpoint(
             settings={
                 'response_type': None,
                 'auth': [
@@ -44,7 +44,7 @@ class TasksApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/tasks/completed/{token}',
-                'operation_id': 'get_task_resource',
+                'operation_id': 'get_task',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -93,7 +93,7 @@ class TasksApi(object):
             },
             api_client=api_client
         )
-        self.post_task_resource_endpoint = _Endpoint(
+        self.post_task_endpoint = _Endpoint(
             settings={
                 'response_type': None,
                 'auth': [
@@ -101,7 +101,7 @@ class TasksApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/tasks/completed/{token}',
-                'operation_id': 'post_task_resource',
+                'operation_id': 'post_task',
                 'http_method': 'POST',
                 'servers': None,
             },
@@ -130,7 +130,7 @@ class TasksApi(object):
                     'token':
                         (str,),
                     'payload':
-                        (TaskCompletedModel,),
+                        (TaskCompleted,),
                 },
                 'attribute_map': {
                     'token': 'token',
@@ -151,17 +151,17 @@ class TasksApi(object):
             api_client=api_client
         )
 
-    def get_task_resource(
+    def get_task(
         self,
         token,
         **kwargs
     ):
-        """get_task_resource  # noqa: E501
+        """get_task  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_task_resource(token, async_req=True)
+        >>> thread = api.get_task(token, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -220,25 +220,25 @@ class TasksApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['token'] = \
             token
-        return self.get_task_resource_endpoint.call_with_http_info(**kwargs)
+        return self.get_task_endpoint.call_with_http_info(**kwargs)
 
-    def post_task_resource(
+    def post_task(
         self,
         token,
         payload,
         **kwargs
     ):
-        """post_task_resource  # noqa: E501
+        """post_task  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_task_resource(token, payload, async_req=True)
+        >>> thread = api.post_task(token, payload, async_req=True)
         >>> result = thread.get()
 
         Args:
             token (str):
-            payload (TaskCompletedModel):
+            payload (TaskCompleted):
 
         Keyword Args:
             _return_http_data_only (bool): response data without head status
@@ -294,5 +294,5 @@ class TasksApi(object):
             token
         kwargs['payload'] = \
             payload
-        return self.post_task_resource_endpoint.call_with_http_info(**kwargs)
+        return self.post_task_endpoint.call_with_http_info(**kwargs)
 

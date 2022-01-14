@@ -33,11 +33,11 @@ def lazy_import():
     from igtcloud.client.services.entities.model.annotation_study import AnnotationStudy
     from igtcloud.client.services.entities.model.base_study import BaseStudy
     from igtcloud.client.services.entities.model.core_labs_study_all_of import CoreLabsStudyAllOf
-    from igtcloud.client.services.entities.model.patient_model import PatientModel
+    from igtcloud.client.services.entities.model.patient import Patient
     globals()['AnnotationStudy'] = AnnotationStudy
     globals()['BaseStudy'] = BaseStudy
     globals()['CoreLabsStudyAllOf'] = CoreLabsStudyAllOf
-    globals()['PatientModel'] = PatientModel
+    globals()['Patient'] = Patient
 
 
 class CoreLabsStudy(ModelComposed):
@@ -123,7 +123,7 @@ class CoreLabsStudy(ModelComposed):
             'hospital_id': (str,),  # noqa: E501
             'project_id': (str,),  # noqa: E501
             'patient_database_id': (str,),  # noqa: E501
-            'patient': (PatientModel,),  # noqa: E501
+            'patient': (Patient,),  # noqa: E501
         }
 
     @cached_property
@@ -239,7 +239,7 @@ class CoreLabsStudy(ModelComposed):
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
-            patient (PatientModel): [optional]  # noqa: E501
+            patient (Patient): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -369,7 +369,7 @@ class CoreLabsStudy(ModelComposed):
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
-            patient (PatientModel): [optional]  # noqa: E501
+            patient (Patient): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
