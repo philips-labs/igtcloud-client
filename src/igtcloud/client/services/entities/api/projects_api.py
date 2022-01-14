@@ -389,6 +389,7 @@ class ProjectsApi(object):
             },
             params_map={
                 'all': [
+                    'x_fields',
                 ],
                 'required': [],
                 'nullable': [
@@ -404,10 +405,14 @@ class ProjectsApi(object):
                 'allowed_values': {
                 },
                 'openapi_types': {
+                    'x_fields':
+                        (str,),
                 },
                 'attribute_map': {
+                    'x_fields': 'X-Fields',
                 },
                 'location_map': {
+                    'x_fields': 'header',
                 },
                 'collection_format_map': {
                 }
@@ -1133,6 +1138,7 @@ class ProjectsApi(object):
 
 
         Keyword Args:
+            x_fields (str): An optional fields mask. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object

@@ -24,7 +24,6 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
 from igtcloud.client.services.entities.model.ai_suite_collection import AISuiteCollection
 from igtcloud.client.services.entities.model.ai_suite_connection import AISuiteConnection
 from igtcloud.client.services.entities.model.ai_suite_project import AISuiteProject
-from igtcloud.client.services.entities.model.ai_suite_provider import AISuiteProvider
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 
 
@@ -56,7 +55,7 @@ class IntegrationsApi(object):
                     'connection_name',
                     'aisuite_project_id',
                     'project_id',
-                    'hospital_id',
+                    'institute_id',
                     'x_fields',
                 ],
                 'required': [
@@ -82,7 +81,7 @@ class IntegrationsApi(object):
                         (str,),
                     'project_id':
                         (str,),
-                    'hospital_id':
+                    'institute_id':
                         (str,),
                     'x_fields':
                         (str,),
@@ -90,15 +89,15 @@ class IntegrationsApi(object):
                 'attribute_map': {
                     'connection_name': 'connection_name',
                     'aisuite_project_id': 'aisuite_project_id',
-                    'project_id': 'project_id',
-                    'hospital_id': 'hospital_id',
+                    'project_id': 'projectId',
+                    'institute_id': 'instituteId',
                     'x_fields': 'X-Fields',
                 },
                 'location_map': {
                     'connection_name': 'path',
                     'aisuite_project_id': 'path',
                     'project_id': 'query',
-                    'hospital_id': 'query',
+                    'institute_id': 'query',
                     'x_fields': 'header',
                 },
                 'collection_format_map': {
@@ -219,63 +218,6 @@ class IntegrationsApi(object):
             },
             api_client=api_client
         )
-        self.get_ai_suite_providers_resource_endpoint = _Endpoint(
-            settings={
-                'response_type': ([AISuiteProvider],),
-                'auth': [
-                    'csrf_token',
-                    'jwt'
-                ],
-                'endpoint_path': '/integrations/aisuite/{connection_name}/providers',
-                'operation_id': 'get_ai_suite_providers_resource',
-                'http_method': 'GET',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'connection_name',
-                    'x_fields',
-                ],
-                'required': [
-                    'connection_name',
-                ],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'connection_name':
-                        (str,),
-                    'x_fields':
-                        (str,),
-                },
-                'attribute_map': {
-                    'connection_name': 'connection_name',
-                    'x_fields': 'X-Fields',
-                },
-                'location_map': {
-                    'connection_name': 'path',
-                    'x_fields': 'header',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'application/json'
-                ],
-                'content_type': [],
-            },
-            api_client=api_client
-        )
         self.post_ai_suite_collections_resource_endpoint = _Endpoint(
             settings={
                 'response_type': (AISuiteCollection,),
@@ -293,7 +235,7 @@ class IntegrationsApi(object):
                     'connection_name',
                     'aisuite_project_id',
                     'project_id',
-                    'hospital_id',
+                    'institute_id',
                     'x_fields',
                 ],
                 'required': [
@@ -319,7 +261,7 @@ class IntegrationsApi(object):
                         (str,),
                     'project_id':
                         (str,),
-                    'hospital_id':
+                    'institute_id':
                         (str,),
                     'x_fields':
                         (str,),
@@ -327,15 +269,15 @@ class IntegrationsApi(object):
                 'attribute_map': {
                     'connection_name': 'connection_name',
                     'aisuite_project_id': 'aisuite_project_id',
-                    'project_id': 'project_id',
-                    'hospital_id': 'hospital_id',
+                    'project_id': 'projectId',
+                    'institute_id': 'instituteId',
                     'x_fields': 'X-Fields',
                 },
                 'location_map': {
                     'connection_name': 'path',
                     'aisuite_project_id': 'path',
                     'project_id': 'query',
-                    'hospital_id': 'query',
+                    'institute_id': 'query',
                     'x_fields': 'header',
                 },
                 'collection_format_map': {
@@ -370,7 +312,7 @@ class IntegrationsApi(object):
 
         Keyword Args:
             project_id (str): IGTCloud project. [optional]
-            hospital_id (str): IGTCloud hospital. [optional]
+            institute_id (str): IGTCloud institute. [optional]
             x_fields (str): An optional fields mask. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
@@ -564,77 +506,6 @@ class IntegrationsApi(object):
             connection_name
         return self.get_ai_suite_projects_resource_endpoint.call_with_http_info(**kwargs)
 
-    def get_ai_suite_providers_resource(
-        self,
-        connection_name,
-        **kwargs
-    ):
-        """get_ai_suite_providers_resource  # noqa: E501
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.get_ai_suite_providers_resource(connection_name, async_req=True)
-        >>> result = thread.get()
-
-        Args:
-            connection_name (str): Name of AI Suite connection
-
-        Keyword Args:
-            x_fields (str): An optional fields mask. [optional]
-            _return_http_data_only (bool): response data without head status
-                code and headers. Default is True.
-            _preload_content (bool): if False, the urllib3.HTTPResponse object
-                will be returned without reading/decoding response data.
-                Default is True.
-            _request_timeout (int/float/tuple): timeout setting for this request. If
-                one number provided, it will be total request timeout. It can also
-                be a pair (tuple) of (connection, read) timeouts.
-                Default is None.
-            _check_input_type (bool): specifies if type checking
-                should be done one the data sent to the server.
-                Default is True.
-            _check_return_type (bool): specifies if type checking
-                should be done one the data received from the server.
-                Default is True.
-            _content_type (str/None): force body content-type.
-                Default is None and content-type will be predicted by allowed
-                content-types and body.
-            _host_index (int/None): specifies the index of the server
-                that we want to use.
-                Default is read from the configuration.
-            async_req (bool): execute request asynchronously
-
-        Returns:
-            [AISuiteProvider]
-                If the method is called asynchronously, returns the request
-                thread.
-        """
-        kwargs['async_req'] = kwargs.get(
-            'async_req', False
-        )
-        kwargs['_return_http_data_only'] = kwargs.get(
-            '_return_http_data_only', True
-        )
-        kwargs['_preload_content'] = kwargs.get(
-            '_preload_content', True
-        )
-        kwargs['_request_timeout'] = kwargs.get(
-            '_request_timeout', None
-        )
-        kwargs['_check_input_type'] = kwargs.get(
-            '_check_input_type', True
-        )
-        kwargs['_check_return_type'] = kwargs.get(
-            '_check_return_type', True
-        )
-        kwargs['_content_type'] = kwargs.get(
-            '_content_type')
-        kwargs['_host_index'] = kwargs.get('_host_index')
-        kwargs['connection_name'] = \
-            connection_name
-        return self.get_ai_suite_providers_resource_endpoint.call_with_http_info(**kwargs)
-
     def post_ai_suite_collections_resource(
         self,
         connection_name,
@@ -655,7 +526,7 @@ class IntegrationsApi(object):
 
         Keyword Args:
             project_id (str): IGTCloud project. [optional]
-            hospital_id (str): IGTCloud hospital. [optional]
+            institute_id (str): IGTCloud institute. [optional]
             x_fields (str): An optional fields mask. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
