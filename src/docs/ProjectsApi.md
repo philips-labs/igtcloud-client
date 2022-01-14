@@ -15,7 +15,6 @@ Method | HTTP request | Description
 [**post_hospitals_resource**](ProjectsApi.md#post_hospitals_resource) | **POST** /projects/{project_id}/hospitals | 
 [**post_project_files_resource**](ProjectsApi.md#post_project_files_resource) | **POST** /projects/{project_id}/files | This create project files endpoint actually only stores the file size of a project_id + key combination
 [**post_projects_resource**](ProjectsApi.md#post_projects_resource) | **POST** /projects | 
-[**post_sync_projects_resource**](ProjectsApi.md#post_sync_projects_resource) | **POST** /projects/$sync | 
 
 
 # **delete_project_files_resource**
@@ -95,6 +94,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**204** | No Data |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -288,7 +288,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_project_download_file_resource**
-> get_project_download_file_resource(project_id)
+> file_type get_project_download_file_resource(project_id)
 
 
 
@@ -334,7 +334,8 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_project_download_file_resource(project_id)
+        api_response = api_instance.get_project_download_file_resource(project_id)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling ProjectsApi->get_project_download_file_resource: %s\n" % e)
 ```
@@ -348,7 +349,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**file_type**
 
 ### Authorization
 
@@ -357,13 +358,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/zip
 
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | File |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -508,6 +510,7 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     api_instance = projects_api.ProjectsApi(api_client)
     project_id = "project_id_example" # str | 
     include_child_relations = False # bool |  (optional) if omitted the server will use the default value of False
+    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
     try:
@@ -519,7 +522,7 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_project_resource(project_id, include_child_relations=include_child_relations)
+        api_response = api_instance.get_project_resource(project_id, include_child_relations=include_child_relations, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling ProjectsApi->get_project_resource: %s\n" % e)
@@ -532,6 +535,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**|  |
  **include_child_relations** | **bool**|  | [optional] if omitted the server will use the default value of False
+ **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
 
@@ -551,14 +555,14 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**200** | Success |  -  |
 **400** | Bad request |  -  |
 **404** | Not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_project_types_resource**
-> ProjectResponse get_project_types_resource()
+> ProjectTypesResponse get_project_types_resource()
 
 
 
@@ -571,8 +575,8 @@ Name | Type | Description  | Notes
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import projects_api
-from igtcloud.client.services.entities.model.project_response import ProjectResponse
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from igtcloud.client.services.entities.model.project_types_response import ProjectTypesResponse
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -621,7 +625,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ProjectResponse**](ProjectResponse.md)
+[**ProjectTypesResponse**](ProjectTypesResponse.md)
 
 ### Authorization
 
@@ -883,11 +887,21 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
             ),
         ],
     ) # FileSizesModel | 
+    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
     try:
         # This create project files endpoint actually only stores the file size of a project_id + key combination
         api_response = api_instance.post_project_files_resource(project_id, payload)
+        pprint(api_response)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling ProjectsApi->post_project_files_resource: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        # This create project files endpoint actually only stores the file size of a project_id + key combination
+        api_response = api_instance.post_project_files_resource(project_id, payload, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling ProjectsApi->post_project_files_resource: %s\n" % e)
@@ -900,6 +914,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**|  |
  **payload** | [**FileSizesModel**](FileSizesModel.md)|  |
+ **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
 
@@ -1021,82 +1036,6 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Success |  -  |
 **400** | Bad request |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **post_sync_projects_resource**
-> post_sync_projects_resource()
-
-
-
-### Example
-
-* Api Key Authentication (csrf_token):
-* Api Key Authentication (jwt):
-
-```python
-import time
-import igtcloud.client.services.entities
-from igtcloud.client.services.entities.api import projects_api
-from pprint import pprint
-# Defining the host is optional and defaults to /data
-# See configuration.py for a list of all supported configuration parameters.
-configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: csrf_token
-configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['csrf_token'] = 'Bearer'
-
-# Configure API key authorization: jwt
-configuration.api_key['jwt'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['jwt'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = projects_api.ProjectsApi(api_client)
-
-    # example, this endpoint has no required or optional parameters
-    try:
-        api_instance.post_sync_projects_resource()
-    except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->post_sync_projects_resource: %s\n" % e)
-```
-
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

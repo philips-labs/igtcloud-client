@@ -56,8 +56,6 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     api_instance = integrations_api.IntegrationsApi(api_client)
     connection_name = "connection_name_example" # str | Name of AI Suite connection
     aisuite_project_id = "aisuite_project_id_example" # str | AI Suite project id or reference
-    project_id = "projectId_example" # str | IGTCloud project (optional)
-    institute_id = "instituteId_example" # str | IGTCloud institute (optional)
     x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
@@ -70,7 +68,7 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_ai_suite_collections_resource(connection_name, aisuite_project_id, project_id=project_id, institute_id=institute_id, x_fields=x_fields)
+        api_response = api_instance.get_ai_suite_collections_resource(connection_name, aisuite_project_id, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling IntegrationsApi->get_ai_suite_collections_resource: %s\n" % e)
@@ -83,8 +81,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **connection_name** | **str**| Name of AI Suite connection |
  **aisuite_project_id** | **str**| AI Suite project id or reference |
- **project_id** | **str**| IGTCloud project | [optional]
- **institute_id** | **str**| IGTCloud institute | [optional]
  **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
@@ -333,8 +329,6 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     api_instance = integrations_api.IntegrationsApi(api_client)
     connection_name = "connection_name_example" # str | Name of AI Suite connection
     aisuite_project_id = "aisuite_project_id_example" # str | AI Suite project id or reference
-    project_id = "projectId_example" # str | IGTCloud project (optional)
-    institute_id = "instituteId_example" # str | IGTCloud institute (optional)
     x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
@@ -347,7 +341,7 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.post_ai_suite_collections_resource(connection_name, aisuite_project_id, project_id=project_id, institute_id=institute_id, x_fields=x_fields)
+        api_response = api_instance.post_ai_suite_collections_resource(connection_name, aisuite_project_id, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling IntegrationsApi->post_ai_suite_collections_resource: %s\n" % e)
@@ -360,8 +354,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **connection_name** | **str**| Name of AI Suite connection |
  **aisuite_project_id** | **str**| AI Suite project id or reference |
- **project_id** | **str**| IGTCloud project | [optional]
- **institute_id** | **str**| IGTCloud institute | [optional]
  **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type

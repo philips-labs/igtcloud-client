@@ -21,8 +21,10 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
+from igtcloud.client.services.entities.model.applications_response import ApplicationsResponse
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.entities.model.storage_model import StorageModel
+from igtcloud.client.services.entities.model.training_applications_response import TrainingApplicationsResponse
 
 
 class ApplicationsApi(object):
@@ -38,7 +40,7 @@ class ApplicationsApi(object):
         self.api_client = api_client
         self.get_applications_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (ApplicationsResponse,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -55,6 +57,7 @@ class ApplicationsApi(object):
                     'format',
                     'vm_environment',
                     'does_open_on_study',
+                    'x_fields',
                 ],
                 'required': [
                     'project_id',
@@ -82,6 +85,8 @@ class ApplicationsApi(object):
                         (str,),
                     'does_open_on_study':
                         (bool,),
+                    'x_fields':
+                        (str,),
                 },
                 'attribute_map': {
                     'project_id': 'projectId',
@@ -89,6 +94,7 @@ class ApplicationsApi(object):
                     'format': 'format',
                     'vm_environment': 'vmEnvironment',
                     'does_open_on_study': 'doesOpenOnStudy',
+                    'x_fields': 'X-Fields',
                 },
                 'location_map': {
                     'project_id': 'query',
@@ -96,6 +102,7 @@ class ApplicationsApi(object):
                     'format': 'query',
                     'vm_environment': 'query',
                     'does_open_on_study': 'query',
+                    'x_fields': 'header',
                 },
                 'collection_format_map': {
                 }
@@ -110,7 +117,7 @@ class ApplicationsApi(object):
         )
         self.get_training_application_guide_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (file_type,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -154,7 +161,7 @@ class ApplicationsApi(object):
             },
             headers_map={
                 'accept': [
-                    'application/json'
+                    'application/pdf'
                 ],
                 'content_type': [],
             },
@@ -224,7 +231,7 @@ class ApplicationsApi(object):
         )
         self.get_training_applications_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (TrainingApplicationsResponse,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -236,6 +243,7 @@ class ApplicationsApi(object):
             },
             params_map={
                 'all': [
+                    'x_fields',
                 ],
                 'required': [],
                 'nullable': [
@@ -251,10 +259,14 @@ class ApplicationsApi(object):
                 'allowed_values': {
                 },
                 'openapi_types': {
+                    'x_fields':
+                        (str,),
                 },
                 'attribute_map': {
+                    'x_fields': 'X-Fields',
                 },
                 'location_map': {
+                    'x_fields': 'header',
                 },
                 'collection_format_map': {
                 }
@@ -289,6 +301,7 @@ class ApplicationsApi(object):
             format (str): [optional]
             vm_environment (str): [optional]
             does_open_on_study (bool): [optional]
+            x_fields (str): An optional fields mask. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -313,7 +326,7 @@ class ApplicationsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            ApplicationsResponse
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -383,7 +396,7 @@ class ApplicationsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            file_type
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -498,6 +511,7 @@ class ApplicationsApi(object):
 
 
         Keyword Args:
+            x_fields (str): An optional fields mask. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -522,7 +536,7 @@ class ApplicationsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            TrainingApplicationsResponse
                 If the method is called asynchronously, returns the request
                 thread.
         """

@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 
 # **get_applications_resource**
-> get_applications_resource(project_id)
+> ApplicationsResponse get_applications_resource(project_id)
 
 
 
@@ -24,6 +24,7 @@ Method | HTTP request | Description
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import applications_api
+from igtcloud.client.services.entities.model.applications_response import ApplicationsResponse
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
 # Defining the host is optional and defaults to /data
@@ -58,17 +59,20 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     format = "format_example" # str |  (optional)
     vm_environment = "vmEnvironment_example" # str |  (optional)
     does_open_on_study = True # bool |  (optional)
+    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_applications_resource(project_id)
+        api_response = api_instance.get_applications_resource(project_id)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling ApplicationsApi->get_applications_resource: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_instance.get_applications_resource(project_id, application=application, format=format, vm_environment=vm_environment, does_open_on_study=does_open_on_study)
+        api_response = api_instance.get_applications_resource(project_id, application=application, format=format, vm_environment=vm_environment, does_open_on_study=does_open_on_study, x_fields=x_fields)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling ApplicationsApi->get_applications_resource: %s\n" % e)
 ```
@@ -83,10 +87,11 @@ Name | Type | Description  | Notes
  **format** | **str**|  | [optional]
  **vm_environment** | **str**|  | [optional]
  **does_open_on_study** | **bool**|  | [optional]
+ **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
 
-void (empty response body)
+[**ApplicationsResponse**](ApplicationsResponse.md)
 
 ### Authorization
 
@@ -102,12 +107,13 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Success |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_training_application_guide_resource**
-> get_training_application_guide_resource(training_application)
+> file_type get_training_application_guide_resource(training_application)
 
 
 
@@ -153,7 +159,8 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_training_application_guide_resource(training_application)
+        api_response = api_instance.get_training_application_guide_resource(training_application)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling ApplicationsApi->get_training_application_guide_resource: %s\n" % e)
 ```
@@ -167,7 +174,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**file_type**
 
 ### Authorization
 
@@ -176,13 +183,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/pdf
 
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | File |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -284,7 +292,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_training_applications_resource**
-> get_training_applications_resource()
+> TrainingApplicationsResponse get_training_applications_resource()
 
 
 
@@ -298,6 +306,7 @@ import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import applications_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from igtcloud.client.services.entities.model.training_applications_response import TrainingApplicationsResponse
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -326,21 +335,27 @@ configuration.api_key['jwt'] = 'YOUR_API_KEY'
 with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = applications_api.ApplicationsApi(api_client)
+    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
-    # example, this endpoint has no required or optional parameters
+    # example passing only required values which don't have defaults set
+    # and optional values
     try:
-        api_instance.get_training_applications_resource()
+        api_response = api_instance.get_training_applications_resource(x_fields=x_fields)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling ApplicationsApi->get_training_applications_resource: %s\n" % e)
 ```
 
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
 
-void (empty response body)
+[**TrainingApplicationsResponse**](TrainingApplicationsResponse.md)
 
 ### Authorization
 
@@ -356,6 +371,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Success |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

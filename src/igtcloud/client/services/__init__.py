@@ -56,7 +56,6 @@ def _setup_entities():
             BaseService.__init__(self, api_client, '/api/data')
             ProjectsApi.__init__(self, api_client)
             HospitalsApi.__init__(self, api_client)
-            IntegrationsApi.__init__(self, api_client)
 
     return EntitiesService(client)
 

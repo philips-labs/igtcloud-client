@@ -41,12 +41,6 @@ class TestIntegrationsApi(unittest.TestCase):
         """
         pass
 
-    def test_get_ai_suite_providers_resource(self):
-        """Test case for get_ai_suite_providers_resource
-
-        """
-        pass
-
     def test_post_ai_suite_collections_resource(self):
         """Test case for post_ai_suite_collections_resource
 

@@ -5,6 +5,12 @@
     "/applications": {
       "get": {
         "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ApplicationsResponse"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -39,6 +45,13 @@
             "name": "doesOpenOnStudy",
             "in": "query",
             "type": "boolean"
+          },
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
           }
         ],
         "tags": [
@@ -88,6 +101,15 @@
       ],
       "get": {
         "responses": {
+          "200": {
+            "description": "Series",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Series"
+              }
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -125,6 +147,12 @@
       ],
       "get": {
         "responses": {
+          "200": {
+            "description": "Series",
+            "schema": {
+              "$ref": "#/definitions/Series"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -161,6 +189,12 @@
       ],
       "get": {
         "responses": {
+          "200": {
+            "description": "File",
+            "schema": {
+              "type": "file"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -169,6 +203,9 @@
           }
         },
         "operationId": "get_series_preview_resource",
+        "produces": [
+          "image/jpg"
+        ],
         "tags": [
           "Hospitals"
         ]
@@ -183,29 +220,14 @@
           "type": "string"
         }
       ],
-      "get": {
-        "responses": {
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "get_studies_resource",
-        "parameters": [
-          {
-            "name": "$filter",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "Hospitals"
-        ]
-      },
       "post": {
         "responses": {
+          "201": {
+            "description": "Study",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -220,8 +242,38 @@
             "required": true,
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/DynamicStudyModel"
+              "$ref": "#/definitions/RootStudy"
             }
+          }
+        ],
+        "tags": [
+          "Hospitals"
+        ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Study",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RootStudy"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "get_studies_resource",
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "type": "string"
           }
         ],
         "tags": [
@@ -244,32 +296,14 @@
           "type": "string"
         }
       ],
-      "patch": {
-        "responses": {
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "patch_study_resource",
-        "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/DynamicStudyModel"
-            }
-          }
-        ],
-        "tags": [
-          "Hospitals"
-        ]
-      },
       "put": {
         "responses": {
+          "200": {
+            "description": "Study",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -284,7 +318,7 @@
             "required": true,
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/DynamicStudyModel"
+              "$ref": "#/definitions/RootStudy"
             }
           }
         ],
@@ -292,8 +326,14 @@
           "Hospitals"
         ]
       },
-      "delete": {
+      "patch": {
         "responses": {
+          "200": {
+            "description": "Study",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -301,13 +341,29 @@
             }
           }
         },
-        "operationId": "delete_study_resource",
+        "operationId": "patch_study_resource",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          }
+        ],
         "tags": [
           "Hospitals"
         ]
       },
       "get": {
         "responses": {
+          "200": {
+            "description": "Study",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -316,6 +372,23 @@
           }
         },
         "operationId": "get_study_resource",
+        "tags": [
+          "Hospitals"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "Study Deleted"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_study_resource",
         "tags": [
           "Hospitals"
         ]
@@ -338,6 +411,12 @@
       ],
       "post": {
         "responses": {
+          "200": {
+            "description": "Study",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -352,7 +431,7 @@
             "required": true,
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/AnnotationStateModel"
+              "$ref": "#/definitions/AnnotationState"
             }
           }
         ],
@@ -378,6 +457,12 @@
       ],
       "get": {
         "responses": {
+          "200": {
+            "description": "File",
+            "schema": {
+              "type": "file"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -386,6 +471,9 @@
           }
         },
         "operationId": "get_study_download_file_resource",
+        "produces": [
+          "application/zip"
+        ],
         "tags": [
           "Hospitals"
         ]
@@ -408,6 +496,9 @@
       ],
       "post": {
         "responses": {
+          "202": {
+            "description": "Accepted"
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -438,6 +529,12 @@
       ],
       "post": {
         "responses": {
+          "200": {
+            "description": "Study",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -452,7 +549,7 @@
             "required": true,
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/ElectronicRecordStateModel"
+              "$ref": "#/definitions/ElectronicRecordState"
             }
           }
         ],
@@ -476,6 +573,39 @@
           "type": "string"
         }
       ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/FilesResponse"
+            }
+          }
+        },
+        "summary": "This create study files endpoint actually only stores the file size of a study_id + key combination",
+        "description": "Used only for retrieving progress percentage of uploads.",
+        "operationId": "post_study_files_resource",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/FileSizesModel"
+            }
+          },
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "Hospitals"
+        ]
+      },
       "get": {
         "responses": {
           "200": {
@@ -513,6 +643,9 @@
       },
       "delete": {
         "responses": {
+          "204": {
+            "description": "No Content"
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -521,32 +654,6 @@
           }
         },
         "operationId": "delete_study_files_resource",
-        "tags": [
-          "Hospitals"
-        ]
-      },
-      "post": {
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/FilesResponse"
-            }
-          }
-        },
-        "summary": "This create study files endpoint actually only stores the file size of a study_id + key combination",
-        "description": "Used only for retrieving progress percentage of uploads.",
-        "operationId": "post_study_files_resource",
-        "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/FileSizesModel"
-            }
-          }
-        ],
         "tags": [
           "Hospitals"
         ]
@@ -569,6 +676,15 @@
       ],
       "get": {
         "responses": {
+          "200": {
+            "description": "Series",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Series"
+              }
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -612,6 +728,12 @@
       ],
       "put": {
         "responses": {
+          "200": {
+            "description": "Series",
+            "schema": {
+              "$ref": "#/definitions/Series"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -626,7 +748,7 @@
             "required": true,
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/SeriesCreateModel"
+              "$ref": "#/definitions/Series"
             }
           }
         ],
@@ -636,6 +758,9 @@
       },
       "delete": {
         "responses": {
+          "204": {
+            "description": "No content"
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -737,6 +862,35 @@
           "type": "string"
         }
       ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AISuiteCollection"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "post_ai_suite_collections_resource",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "Integrations"
+        ]
+      },
       "get": {
         "responses": {
           "200": {
@@ -757,59 +911,6 @@
         },
         "operationId": "get_ai_suite_collections_resource",
         "parameters": [
-          {
-            "name": "projectId",
-            "in": "query",
-            "type": "string",
-            "description": "IGTCloud project"
-          },
-          {
-            "name": "instituteId",
-            "in": "query",
-            "type": "string",
-            "description": "IGTCloud institute"
-          },
-          {
-            "name": "X-Fields",
-            "in": "header",
-            "type": "string",
-            "format": "mask",
-            "description": "An optional fields mask"
-          }
-        ],
-        "tags": [
-          "Integrations"
-        ]
-      },
-      "post": {
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/AISuiteCollection"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "post_ai_suite_collections_resource",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "query",
-            "type": "string",
-            "description": "IGTCloud project"
-          },
-          {
-            "name": "instituteId",
-            "in": "query",
-            "type": "string",
-            "description": "IGTCloud institute"
-          },
           {
             "name": "X-Fields",
             "in": "header",
@@ -865,40 +966,6 @@
           "type": "string"
         }
       ],
-      "get": {
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/ServiceModel"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "get_services_resource",
-        "parameters": [
-          {
-            "name": "$filter",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "X-Fields",
-            "in": "header",
-            "type": "string",
-            "format": "mask",
-            "description": "An optional fields mask"
-          }
-        ],
-        "tags": [
-          "Organizations"
-        ]
-      },
       "post": {
         "responses": {
           "201": {
@@ -923,6 +990,40 @@
             "schema": {
               "$ref": "#/definitions/ServiceCreateModel"
             }
+          },
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "Organizations"
+        ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceModel"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "get_services_resource",
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "type": "string"
           },
           {
             "name": "X-Fields",
@@ -1040,7 +1141,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/ProjectResponse"
+              "$ref": "#/definitions/ProjectTypesResponse"
             }
           },
           "404": {
@@ -1072,35 +1173,6 @@
       }
     },
     "/projects": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/ProjectsResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "get_projects_resource",
-        "parameters": [
-          {
-            "name": "X-Fields",
-            "in": "header",
-            "type": "string",
-            "format": "mask",
-            "description": "An optional fields mask"
-          }
-        ],
-        "tags": [
-          "Projects"
-        ]
-      },
       "post": {
         "responses": {
           "200": {
@@ -1140,16 +1212,32 @@
         "tags": [
           "Projects"
         ]
-      }
-    },
-    "/projects/$sync": {
-      "post": {
+      },
+      "get": {
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ProjectsResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
           }
         },
-        "operationId": "post_sync_projects_resource",
+        "operationId": "get_projects_resource",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
         "tags": [
           "Projects"
         ]
@@ -1206,7 +1294,7 @@
       "get": {
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Success",
             "schema": {
               "$ref": "#/definitions/ProjectResponse"
             }
@@ -1231,6 +1319,13 @@
             "in": "query",
             "type": "boolean",
             "default": false
+          },
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
           }
         ],
         "tags": [
@@ -1249,6 +1344,12 @@
       ],
       "get": {
         "responses": {
+          "200": {
+            "description": "File",
+            "schema": {
+              "type": "file"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -1257,6 +1358,9 @@
           }
         },
         "operationId": "get_project_download_file_resource",
+        "produces": [
+          "application/zip"
+        ],
         "tags": [
           "Projects"
         ]
@@ -1271,6 +1375,39 @@
           "type": "string"
         }
       ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/FilesResponse"
+            }
+          }
+        },
+        "summary": "This create project files endpoint actually only stores the file size of a project_id + key combination",
+        "description": "Used only for retrieving progress percentage of uploads.",
+        "operationId": "post_project_files_resource",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/FileSizesModel"
+            }
+          },
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "Projects"
+        ]
+      },
       "get": {
         "responses": {
           "200": {
@@ -1302,6 +1439,9 @@
       },
       "delete": {
         "responses": {
+          "204": {
+            "description": "No Data"
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -1310,32 +1450,6 @@
           }
         },
         "operationId": "delete_project_files_resource",
-        "tags": [
-          "Projects"
-        ]
-      },
-      "post": {
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/FilesResponse"
-            }
-          }
-        },
-        "summary": "This create project files endpoint actually only stores the file size of a project_id + key combination",
-        "description": "Used only for retrieving progress percentage of uploads.",
-        "operationId": "post_project_files_resource",
-        "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/FileSizesModel"
-            }
-          }
-        ],
         "tags": [
           "Projects"
         ]
@@ -1350,35 +1464,6 @@
           "type": "string"
         }
       ],
-      "get": {
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/HospitalsResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "get_hospitals_resource",
-        "parameters": [
-          {
-            "name": "X-Fields",
-            "in": "header",
-            "type": "string",
-            "format": "mask",
-            "description": "An optional fields mask"
-          }
-        ],
-        "tags": [
-          "Projects"
-        ]
-      },
       "post": {
         "responses": {
           "201": {
@@ -1415,18 +1500,34 @@
         "tags": [
           "Projects"
         ]
-      }
-    },
-    "/system-maintenance/cleanup-download-links": {
-      "post": {
+      },
+      "get": {
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/HospitalsResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
           }
         },
-        "operationId": "post_study_cleanup_download_links_resource",
+        "operationId": "get_hospitals_resource",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
         "tags": [
-          "System"
+          "Projects"
         ]
       }
     },
@@ -1439,6 +1540,27 @@
           "type": "string"
         }
       ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "post_task_resource",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/TaskCompletedModel"
+            }
+          }
+        ],
+        "tags": [
+          "Tasks"
+        ]
+      },
       "get": {
         "responses": {
           "302": {
@@ -1484,32 +1606,17 @@
         "tags": [
           "Tasks"
         ]
-      },
-      "post": {
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "operationId": "post_task_resource",
-        "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/TaskCompletedModel"
-            }
-          }
-        ],
-        "tags": [
-          "Tasks"
-        ]
       }
     },
     "/training-applications": {
       "get": {
         "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/TrainingApplicationsResponse"
+            }
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -1518,6 +1625,15 @@
           }
         },
         "operationId": "get_training_applications_resource",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
         "tags": [
           "Applications"
         ]
@@ -1578,29 +1694,10 @@
       ],
       "get": {
         "responses": {
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "get_training_application_guide_resource",
-        "tags": [
-          "Applications"
-        ]
-      }
-    },
-    "/users": {
-      "get": {
-        "responses": {
           "200": {
-            "description": "Success",
+            "description": "File",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/UserInfoModel"
-              }
+              "type": "file"
             }
           },
           "400": {
@@ -1610,20 +1707,16 @@
             }
           }
         },
-        "operationId": "get_users_resource",
-        "parameters": [
-          {
-            "name": "X-Fields",
-            "in": "header",
-            "type": "string",
-            "format": "mask",
-            "description": "An optional fields mask"
-          }
+        "operationId": "get_training_application_guide_resource",
+        "produces": [
+          "application/pdf"
         ],
         "tags": [
-          "Users"
+          "Applications"
         ]
-      },
+      }
+    },
+    "/users": {
       "post": {
         "responses": {
           "200": {
@@ -1666,16 +1759,45 @@
         "tags": [
           "Users"
         ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserInfoModel"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "get_users_resource",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "Users"
+        ]
       }
     },
     "/users/$mfa-reset": {
       "post": {
         "responses": {
           "204": {
-            "description": "No data",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
+            "description": "No data"
           },
           "400": {
             "description": "Bad request",
@@ -1703,6 +1825,9 @@
     "/users/$profile": {
       "post": {
         "responses": {
+          "204": {
+            "description": "No Content"
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -1833,6 +1958,9 @@
       ],
       "put": {
         "responses": {
+          "204": {
+            "description": "No Content"
+          },
           "400": {
             "description": "Bad request",
             "schema": {
@@ -1851,20 +1979,6 @@
             }
           }
         ],
-        "tags": [
-          "Users"
-        ]
-      },
-      "delete": {
-        "responses": {
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_user_resource",
         "tags": [
           "Users"
         ]
@@ -1894,6 +2008,23 @@
             "description": "An optional fields mask"
           }
         ],
+        "tags": [
+          "Users"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_user_resource",
         "tags": [
           "Users"
         ]
@@ -1954,9 +2085,6 @@
       "name": "Tasks"
     },
     {
-      "name": "System"
-    },
-    {
       "name": "Users"
     },
     {
@@ -1964,10 +2092,63 @@
     }
   ],
   "definitions": {
+    "ApplicationsResponse": {
+      "properties": {
+        "applications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicationsModel"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "ApplicationsModel": {
+      "properties": {
+        "applicationId": {
+          "type": "string"
+        },
+        "supportedFormats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "vmEnvironment": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "4xxMessage": {
       "properties": {
         "message": {
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TrainingApplicationsResponse": {
+      "properties": {
+        "applications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TrainingApplicationsModel"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "TrainingApplicationsModel": {
+      "properties": {
+        "applicationId": {
+          "type": "string"
+        },
+        "vmEnvironment": {
+          "type": "string"
+        },
+        "hasGuide": {
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -2023,6 +2204,44 @@
       },
       "type": "object"
     },
+    "ServiceCreateResponse": {
+      "properties": {
+        "applicationId": {
+          "type": "string"
+        },
+        "defaultScopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expiresOn": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "organizationId": {
+          "type": "string"
+        },
+        "privateKey": {
+          "type": "string"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "serviceId": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ServiceModel": {
       "properties": {
         "entry": {
@@ -2058,44 +2277,6 @@
           "type": "string"
         },
         "organizationId": {
-          "type": "string"
-        },
-        "scopes": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "serviceId": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ServiceCreateResponse": {
-      "properties": {
-        "applicationId": {
-          "type": "string"
-        },
-        "defaultScopes": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "expiresOn": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "organizationId": {
-          "type": "string"
-        },
-        "privateKey": {
           "type": "string"
         },
         "scopes": {
@@ -2184,9 +2365,548 @@
         },
         "projectTypeName": {
           "type": "string"
+        },
+        "studies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RootStudy"
+          }
         }
       },
       "type": "object"
+    },
+    "CoreLabsStudy": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseStudy"
+        },
+        {
+          "properties": {
+            "isPhilipsData": {
+              "type": "string"
+            },
+            "studyName": {
+              "type": "string"
+            },
+            "applicationType": {
+              "type": "string"
+            },
+            "operator": {
+              "type": "string"
+            },
+            "cathlabnr": {
+              "type": "string"
+            },
+            "usedMaterials": {
+              "type": "string"
+            },
+            "studyStartDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "studyEndDateTime": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "BaseStudy": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/RootStudy"
+        },
+        {
+          "properties": {
+            "studyId": {
+              "type": "string"
+            },
+            "instanceUid": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "studyDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "accessionNumber": {
+              "type": "string"
+            },
+            "s3Prefix": {
+              "type": "string"
+            },
+            "hospitalId": {
+              "type": "string"
+            },
+            "projectId": {
+              "type": "string"
+            },
+            "patientDatabaseId": {
+              "type": "string"
+            },
+            "patient": {
+              "$ref": "#/definitions/PatientModel"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "RootStudy": {
+      "required": [
+        "studyType"
+      ],
+      "properties": {
+        "studyDatabaseId": {
+          "type": "string"
+        },
+        "createdOn": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "lastUpdatedOn": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdatedBy": {
+          "type": "string"
+        },
+        "maxRetentionDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "legalBasis": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "legalBasisOther": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "purposeOther": {
+          "type": "string"
+        },
+        "electronicRecordState": {
+          "type": "string"
+        },
+        "studyType": {
+          "type": "string"
+        }
+      },
+      "discriminator": "studyType",
+      "type": "object"
+    },
+    "PatientModel": {
+      "properties": {
+        "patientDatabaseId": {
+          "type": "string"
+        },
+        "patientId": {
+          "type": "string"
+        },
+        "patientName": {
+          "type": "string"
+        },
+        "givenName": {
+          "type": "string"
+        },
+        "familyName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        },
+        "nameSuffix": {
+          "type": "string"
+        },
+        "namePrefix": {
+          "type": "string"
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "patientIdIssuer": {
+          "type": "string"
+        },
+        "patientIdValue": {
+          "type": "string"
+        },
+        "s3Prefix": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Study": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseStudy"
+        },
+        {
+          "properties": {},
+          "type": "object"
+        }
+      ]
+    },
+    "EpdStudy": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/RootStudy"
+        },
+        {
+          "properties": {
+            "age": {
+              "type": "string"
+            },
+            "gender": {
+              "type": "string"
+            },
+            "diseaseTypes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "diseaseTypesOther": {
+              "type": "string"
+            },
+            "datetime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "site": {
+              "type": "string"
+            },
+            "subsite": {
+              "type": "string"
+            },
+            "procedureTypes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "procedureTypesOther": {
+              "type": "string"
+            },
+            "comments": {
+              "type": "string"
+            },
+            "computerName": {
+              "type": "string"
+            },
+            "computerUsername": {
+              "type": "string"
+            },
+            "macAddress": {
+              "type": "string"
+            },
+            "driveId": {
+              "type": "string"
+            },
+            "softwareVersion": {
+              "type": "string"
+            },
+            "hardwareVersion": {
+              "type": "string"
+            },
+            "duration": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "FCS": {
+              "type": "string"
+            },
+            "physician": {
+              "type": "string"
+            },
+            "redo": {
+              "type": "boolean"
+            },
+            "imagedChambers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "imagedChambersOther": {
+              "type": "string"
+            },
+            "events": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EpdStudyEvent"
+              }
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "EpdStudyEvent": {
+      "properties": {
+        "datetime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "description": {
+          "type": "string"
+        },
+        "isMaster": {
+          "type": "boolean"
+        },
+        "isSlave": {
+          "type": "boolean"
+        },
+        "comments": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AnnotationStudy": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CoreLabsStudy"
+        },
+        {
+          "properties": {
+            "annotationState": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "IGuideUStudy": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/RootStudy"
+        },
+        {
+          "properties": {
+            "hospitalId": {
+              "type": "string"
+            },
+            "subjectId": {
+              "type": "string"
+            },
+            "visitName": {
+              "type": "string"
+            },
+            "procedureDate": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "WeTrustStudy": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseStudy"
+        },
+        {
+          "properties": {
+            "subjectId": {
+              "type": "string"
+            },
+            "corelabId": {
+              "type": "string"
+            },
+            "classification": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "EchoNav": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseStudy"
+        },
+        {
+          "properties": {
+            "subjectId": {
+              "type": "string"
+            },
+            "xRaySystem": {
+              "type": "string"
+            },
+            "xRaySoftwareRelease": {
+              "type": "string"
+            },
+            "xRayConfiguration": {
+              "type": "string"
+            },
+            "xRayDetector": {
+              "type": "string"
+            },
+            "xRayTable": {
+              "type": "string"
+            },
+            "ultrasoundSystem": {
+              "type": "string"
+            },
+            "ultrasoundSoftwareRelease": {
+              "type": "string"
+            },
+            "ultrasoundHardware": {
+              "type": "string"
+            },
+            "echoNavigatorInvestigationalDevice": {
+              "type": "string"
+            },
+            "echoNavigatorSoftwareRelease": {
+              "type": "string"
+            },
+            "hemo": {
+              "type": "string"
+            },
+            "recordedData": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "diseases": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "therapy": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "redo": {
+              "type": "string"
+            },
+            "implant1Manufacturer": {
+              "type": "string"
+            },
+            "implant1Type": {
+              "type": "string"
+            },
+            "implant1Size": {
+              "type": "string"
+            },
+            "implant2Manufacturer": {
+              "type": "string"
+            },
+            "implant2Type": {
+              "type": "string"
+            },
+            "implant2Size": {
+              "type": "string"
+            },
+            "implant3Manufacturer": {
+              "type": "string"
+            },
+            "implant3Type": {
+              "type": "string"
+            },
+            "implant3Size": {
+              "type": "string"
+            },
+            "implant4Manufacturer": {
+              "type": "string"
+            },
+            "implant4Type": {
+              "type": "string"
+            },
+            "implant4Size": {
+              "type": "string"
+            },
+            "imageTransducers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "comments": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "MarvelStudy": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseStudy"
+        },
+        {
+          "properties": {
+            "clinicalStudy": {
+              "type": "string"
+            },
+            "date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "anatomy": {
+              "type": "string"
+            },
+            "site": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "pullbackPrePost": {
+              "type": "string"
+            },
+            "pullbackLimb": {
+              "type": "string"
+            },
+            "pullbackAccessPoint": {
+              "type": "string"
+            },
+            "pullbackDirection": {
+              "type": "string"
+            },
+            "pullbackStentType": {
+              "type": "string"
+            },
+            "pullbackStentedRegion": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      ]
     },
     "HospitalCreateModel": {
       "properties": {
@@ -2310,13 +3030,10 @@
       },
       "type": "object"
     },
-    "ProjectsResponse": {
+    "ProjectResponse": {
       "properties": {
-        "projects": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ProjectModel"
-          }
+        "project": {
+          "$ref": "#/definitions/ProjectModel"
         }
       },
       "type": "object"
@@ -2340,21 +3057,56 @@
           "items": {
             "type": "string"
           }
+        },
+        "institutes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HospitalModel"
+          }
         }
       },
       "type": "object"
     },
-    "ProjectResponse": {
+    "ProjectsResponse": {
       "properties": {
-        "project": {
-          "$ref": "#/definitions/ProjectModel"
+        "projects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProjectModel"
+          }
         }
       },
       "type": "object"
     },
-    "SeriesCreateModel": {
+    "ProjectTypesResponse": {
+      "properties": {
+        "projectTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "Series": {
+      "required": [
+        "seriesType"
+      ],
       "properties": {
         "seriesDatabaseId": {
+          "type": "string"
+        },
+        "createdOn": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "lastUpdatedOn": {
+          "type": "string"
+        },
+        "lastUpdatedBy": {
           "type": "string"
         },
         "instanceUid": {
@@ -2375,6 +3127,9 @@
         "seriesFormat": {
           "type": "string"
         },
+        "studyDatabaseId": {
+          "type": "string"
+        },
         "relatedStudyInstanceUid": {
           "type": "string"
         },
@@ -2386,15 +3141,15 @@
         },
         "displayName": {
           "type": "string"
+        },
+        "seriesType": {
+          "type": "string"
         }
       },
+      "discriminator": "seriesType",
       "type": "object"
     },
-    "DynamicStudyModel": {
-      "properties": {},
-      "type": "object"
-    },
-    "ElectronicRecordStateModel": {
+    "ElectronicRecordState": {
       "properties": {
         "username": {
           "type": "string"
@@ -2408,7 +3163,7 @@
       },
       "type": "object"
     },
-    "AnnotationStateModel": {
+    "AnnotationState": {
       "properties": {
         "annotationState": {
           "type": "string"
@@ -2717,6 +3472,114 @@
             },
             "institute": {
               "$ref": "#/definitions/HospitalModel"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "AnnotationSeries": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Series"
+        },
+        {
+          "properties": {
+            "study": {
+              "$ref": "#/definitions/AnnotationStudy"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "CoreLabsSeries": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Series"
+        },
+        {
+          "properties": {
+            "study": {
+              "$ref": "#/definitions/CoreLabsStudy"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "EchoNavSeries": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Series"
+        },
+        {
+          "properties": {
+            "study": {
+              "$ref": "#/definitions/EchoNav"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "IgtCloudSeries": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Series"
+        },
+        {
+          "properties": {
+            "study": {
+              "$ref": "#/definitions/Study"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "MarvelSeries": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Series"
+        },
+        {
+          "properties": {
+            "study": {
+              "$ref": "#/definitions/MarvelStudy"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "WeTrustSeries": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Series"
+        },
+        {
+          "properties": {
+            "study": {
+              "$ref": "#/definitions/WeTrustStudy"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "AISuiteProvider": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AISuiteResource"
+        },
+        {
+          "properties": {
+            "dataFormat": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
             }
           },
           "type": "object"

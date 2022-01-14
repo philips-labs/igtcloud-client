@@ -105,6 +105,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**204** | No Content |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -188,6 +189,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**204** | Study Deleted |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -273,6 +275,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**204** | No content |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -363,7 +366,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_series_list_resource**
-> get_series_list_resource(hospital_id)
+> [Series] get_series_list_resource(hospital_id)
 
 
 
@@ -376,6 +379,7 @@ Name | Type | Description  | Notes
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import hospitals_api
+from igtcloud.client.services.entities.model.series import Series
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
 # Defining the host is optional and defaults to /data
@@ -410,14 +414,16 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_series_list_resource(hospital_id)
+        api_response = api_instance.get_series_list_resource(hospital_id)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_series_list_resource: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_instance.get_series_list_resource(hospital_id, filter=filter)
+        api_response = api_instance.get_series_list_resource(hospital_id, filter=filter)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_series_list_resource: %s\n" % e)
 ```
@@ -432,7 +438,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**[Series]**](Series.md)
 
 ### Authorization
 
@@ -448,12 +454,13 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Series |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_series_preview_resource**
-> get_series_preview_resource(hospital_id, series_id, file_name)
+> file_type get_series_preview_resource(hospital_id, series_id, file_name)
 
 
 
@@ -501,7 +508,8 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_series_preview_resource(hospital_id, series_id, file_name)
+        api_response = api_instance.get_series_preview_resource(hospital_id, series_id, file_name)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_series_preview_resource: %s\n" % e)
 ```
@@ -517,7 +525,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**file_type**
 
 ### Authorization
 
@@ -526,19 +534,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: image/jpg
 
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | File |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_series_resource**
-> get_series_resource(hospital_id, series_id)
+> Series get_series_resource(hospital_id, series_id)
 
 
 
@@ -551,6 +560,7 @@ void (empty response body)
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import hospitals_api
+from igtcloud.client.services.entities.model.series import Series
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
 # Defining the host is optional and defaults to /data
@@ -585,7 +595,8 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_series_resource(hospital_id, series_id)
+        api_response = api_instance.get_series_resource(hospital_id, series_id)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_series_resource: %s\n" % e)
 ```
@@ -600,7 +611,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**Series**](Series.md)
 
 ### Authorization
 
@@ -616,12 +627,13 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Series |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_studies_resource**
-> get_studies_resource(hospital_id)
+> [RootStudy] get_studies_resource(hospital_id)
 
 
 
@@ -635,6 +647,7 @@ import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import hospitals_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from igtcloud.client.services.entities.model.root_study import RootStudy
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -668,14 +681,16 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_studies_resource(hospital_id)
+        api_response = api_instance.get_studies_resource(hospital_id)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_studies_resource: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_instance.get_studies_resource(hospital_id, filter=filter)
+        api_response = api_instance.get_studies_resource(hospital_id, filter=filter)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_studies_resource: %s\n" % e)
 ```
@@ -690,7 +705,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**[RootStudy]**](RootStudy.md)
 
 ### Authorization
 
@@ -706,12 +721,13 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Study |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_study_download_file_resource**
-> get_study_download_file_resource(hospital_id, study_id)
+> file_type get_study_download_file_resource(hospital_id, study_id)
 
 
 
@@ -758,7 +774,8 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_study_download_file_resource(hospital_id, study_id)
+        api_response = api_instance.get_study_download_file_resource(hospital_id, study_id)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_study_download_file_resource: %s\n" % e)
 ```
@@ -773,7 +790,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**file_type**
 
 ### Authorization
 
@@ -782,13 +799,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/zip
 
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | File |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -892,7 +910,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_study_resource**
-> get_study_resource(hospital_id, study_id)
+> RootStudy get_study_resource(hospital_id, study_id)
 
 
 
@@ -906,6 +924,7 @@ import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import hospitals_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from igtcloud.client.services.entities.model.root_study import RootStudy
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -939,7 +958,8 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_study_resource(hospital_id, study_id)
+        api_response = api_instance.get_study_resource(hospital_id, study_id)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_study_resource: %s\n" % e)
 ```
@@ -954,7 +974,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**RootStudy**](RootStudy.md)
 
 ### Authorization
 
@@ -970,12 +990,13 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Study |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_study_series_list_resource**
-> get_study_series_list_resource(hospital_id, study_id)
+> [Series] get_study_series_list_resource(hospital_id, study_id)
 
 
 
@@ -988,6 +1009,7 @@ void (empty response body)
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import hospitals_api
+from igtcloud.client.services.entities.model.series import Series
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
 # Defining the host is optional and defaults to /data
@@ -1023,14 +1045,16 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.get_study_series_list_resource(hospital_id, study_id)
+        api_response = api_instance.get_study_series_list_resource(hospital_id, study_id)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_study_series_list_resource: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_instance.get_study_series_list_resource(hospital_id, study_id, filter=filter)
+        api_response = api_instance.get_study_series_list_resource(hospital_id, study_id, filter=filter)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->get_study_series_list_resource: %s\n" % e)
 ```
@@ -1046,7 +1070,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**[Series]**](Series.md)
 
 ### Authorization
 
@@ -1062,12 +1086,13 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Series |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_study_resource**
-> patch_study_resource(hospital_id, study_id, payload)
+> RootStudy patch_study_resource(hospital_id, study_id, payload)
 
 
 
@@ -1081,6 +1106,7 @@ import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import hospitals_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from igtcloud.client.services.entities.model.root_study import RootStudy
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -1111,11 +1137,12 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     api_instance = hospitals_api.HospitalsApi(api_client)
     hospital_id = "hospital_id_example" # str | 
     study_id = "study_id_example" # str | 
-    payload = {} # bool, date, datetime, dict, float, int, list, str, none_type | 
+    payload = RootStudy() # RootStudy | 
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.patch_study_resource(hospital_id, study_id, payload)
+        api_response = api_instance.patch_study_resource(hospital_id, study_id, payload)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->patch_study_resource: %s\n" % e)
 ```
@@ -1127,11 +1154,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **hospital_id** | **str**|  |
  **study_id** | **str**|  |
- **payload** | **bool, date, datetime, dict, float, int, list, str, none_type**|  |
+ **payload** | [**RootStudy**](RootStudy.md)|  |
 
 ### Return type
 
-void (empty response body)
+[**RootStudy**](RootStudy.md)
 
 ### Authorization
 
@@ -1147,12 +1174,13 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Study |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_studies_resource**
-> post_studies_resource(hospital_id, payload)
+> RootStudy post_studies_resource(hospital_id, payload)
 
 
 
@@ -1166,6 +1194,7 @@ import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import hospitals_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from igtcloud.client.services.entities.model.root_study import RootStudy
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -1195,11 +1224,12 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hospitals_api.HospitalsApi(api_client)
     hospital_id = "hospital_id_example" # str | 
-    payload = {} # bool, date, datetime, dict, float, int, list, str, none_type | 
+    payload = RootStudy() # RootStudy | 
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.post_studies_resource(hospital_id, payload)
+        api_response = api_instance.post_studies_resource(hospital_id, payload)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->post_studies_resource: %s\n" % e)
 ```
@@ -1210,11 +1240,11 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **hospital_id** | **str**|  |
- **payload** | **bool, date, datetime, dict, float, int, list, str, none_type**|  |
+ **payload** | [**RootStudy**](RootStudy.md)|  |
 
 ### Return type
 
-void (empty response body)
+[**RootStudy**](RootStudy.md)
 
 ### Authorization
 
@@ -1230,12 +1260,13 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**201** | Study |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_study_annotation_state_resource**
-> post_study_annotation_state_resource(hospital_id, study_id, payload)
+> RootStudy post_study_annotation_state_resource(hospital_id, study_id, payload)
 
 
 
@@ -1249,7 +1280,8 @@ import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import hospitals_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.annotation_state_model import AnnotationStateModel
+from igtcloud.client.services.entities.model.root_study import RootStudy
+from igtcloud.client.services.entities.model.annotation_state import AnnotationState
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -1280,13 +1312,14 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     api_instance = hospitals_api.HospitalsApi(api_client)
     hospital_id = "hospital_id_example" # str | 
     study_id = "study_id_example" # str | 
-    payload = AnnotationStateModel(
+    payload = AnnotationState(
         annotation_state="annotation_state_example",
-    ) # AnnotationStateModel | 
+    ) # AnnotationState | 
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.post_study_annotation_state_resource(hospital_id, study_id, payload)
+        api_response = api_instance.post_study_annotation_state_resource(hospital_id, study_id, payload)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->post_study_annotation_state_resource: %s\n" % e)
 ```
@@ -1298,11 +1331,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **hospital_id** | **str**|  |
  **study_id** | **str**|  |
- **payload** | [**AnnotationStateModel**](AnnotationStateModel.md)|  |
+ **payload** | [**AnnotationState**](AnnotationState.md)|  |
 
 ### Return type
 
-void (empty response body)
+[**RootStudy**](RootStudy.md)
 
 ### Authorization
 
@@ -1318,6 +1351,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Study |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1401,12 +1435,13 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**202** | Accepted |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_study_electronic_record_state_resource**
-> post_study_electronic_record_state_resource(hospital_id, study_id, payload)
+> RootStudy post_study_electronic_record_state_resource(hospital_id, study_id, payload)
 
 
 
@@ -1419,8 +1454,9 @@ void (empty response body)
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import hospitals_api
+from igtcloud.client.services.entities.model.electronic_record_state import ElectronicRecordState
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.electronic_record_state_model import ElectronicRecordStateModel
+from igtcloud.client.services.entities.model.root_study import RootStudy
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -1451,15 +1487,16 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     api_instance = hospitals_api.HospitalsApi(api_client)
     hospital_id = "hospital_id_example" # str | 
     study_id = "study_id_example" # str | 
-    payload = ElectronicRecordStateModel(
+    payload = ElectronicRecordState(
         username="username_example",
         password="password_example",
         electronic_record_state="electronic_record_state_example",
-    ) # ElectronicRecordStateModel | 
+    ) # ElectronicRecordState | 
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.post_study_electronic_record_state_resource(hospital_id, study_id, payload)
+        api_response = api_instance.post_study_electronic_record_state_resource(hospital_id, study_id, payload)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->post_study_electronic_record_state_resource: %s\n" % e)
 ```
@@ -1471,11 +1508,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **hospital_id** | **str**|  |
  **study_id** | **str**|  |
- **payload** | [**ElectronicRecordStateModel**](ElectronicRecordStateModel.md)|  |
+ **payload** | [**ElectronicRecordState**](ElectronicRecordState.md)|  |
 
 ### Return type
 
-void (empty response body)
+[**RootStudy**](RootStudy.md)
 
 ### Authorization
 
@@ -1491,6 +1528,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Study |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1551,11 +1589,21 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
             ),
         ],
     ) # FileSizesModel | 
+    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
     try:
         # This create study files endpoint actually only stores the file size of a study_id + key combination
         api_response = api_instance.post_study_files_resource(hospital_id, study_id, payload)
+        pprint(api_response)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling HospitalsApi->post_study_files_resource: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        # This create study files endpoint actually only stores the file size of a study_id + key combination
+        api_response = api_instance.post_study_files_resource(hospital_id, study_id, payload, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->post_study_files_resource: %s\n" % e)
@@ -1569,6 +1617,7 @@ Name | Type | Description  | Notes
  **hospital_id** | **str**|  |
  **study_id** | **str**|  |
  **payload** | [**FileSizesModel**](FileSizesModel.md)|  |
+ **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
 
@@ -1593,7 +1642,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_study_resource**
-> put_study_resource(hospital_id, study_id, payload)
+> RootStudy put_study_resource(hospital_id, study_id, payload)
 
 
 
@@ -1607,6 +1656,7 @@ import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import hospitals_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from igtcloud.client.services.entities.model.root_study import RootStudy
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -1637,11 +1687,12 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     api_instance = hospitals_api.HospitalsApi(api_client)
     hospital_id = "hospital_id_example" # str | 
     study_id = "study_id_example" # str | 
-    payload = {} # bool, date, datetime, dict, float, int, list, str, none_type | 
+    payload = RootStudy() # RootStudy | 
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.put_study_resource(hospital_id, study_id, payload)
+        api_response = api_instance.put_study_resource(hospital_id, study_id, payload)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->put_study_resource: %s\n" % e)
 ```
@@ -1653,11 +1704,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **hospital_id** | **str**|  |
  **study_id** | **str**|  |
- **payload** | **bool, date, datetime, dict, float, int, list, str, none_type**|  |
+ **payload** | [**RootStudy**](RootStudy.md)|  |
 
 ### Return type
 
-void (empty response body)
+[**RootStudy**](RootStudy.md)
 
 ### Authorization
 
@@ -1673,12 +1724,13 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Study |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_study_series_resource**
-> put_study_series_resource(hospital_id, study_id, series_id, payload)
+> Series put_study_series_resource(hospital_id, study_id, series_id, payload)
 
 
 
@@ -1691,8 +1743,8 @@ void (empty response body)
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import hospitals_api
+from igtcloud.client.services.entities.model.series import Series
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.series_create_model import SeriesCreateModel
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -1724,23 +1776,12 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     hospital_id = "hospital_id_example" # str | 
     study_id = "study_id_example" # str | 
     series_id = "series_id_example" # str | 
-    payload = SeriesCreateModel(
-        series_database_id="series_database_id_example",
-        instance_uid="instance_uid_example",
-        modality="modality_example",
-        preview_url="preview_url_example",
-        procedure_database_id="procedure_database_id_example",
-        s3_prefix="s3_prefix_example",
-        series_format="series_format_example",
-        related_study_instance_uid="related_study_instance_uid_example",
-        related_series_instance_uid="related_series_instance_uid_example",
-        document_title="document_title_example",
-        display_name="display_name_example",
-    ) # SeriesCreateModel | 
+    payload = Series() # Series | 
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.put_study_series_resource(hospital_id, study_id, series_id, payload)
+        api_response = api_instance.put_study_series_resource(hospital_id, study_id, series_id, payload)
+        pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling HospitalsApi->put_study_series_resource: %s\n" % e)
 ```
@@ -1753,11 +1794,11 @@ Name | Type | Description  | Notes
  **hospital_id** | **str**|  |
  **study_id** | **str**|  |
  **series_id** | **str**|  |
- **payload** | [**SeriesCreateModel**](SeriesCreateModel.md)|  |
+ **payload** | [**Series**](Series.md)|  |
 
 ### Return type
 
-void (empty response body)
+[**Series**](Series.md)
 
 ### Authorization
 
@@ -1773,6 +1814,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Series |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

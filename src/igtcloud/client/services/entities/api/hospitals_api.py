@@ -21,13 +21,14 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from igtcloud.client.services.entities.model.annotation_state_model import AnnotationStateModel
-from igtcloud.client.services.entities.model.electronic_record_state_model import ElectronicRecordStateModel
+from igtcloud.client.services.entities.model.annotation_state import AnnotationState
+from igtcloud.client.services.entities.model.electronic_record_state import ElectronicRecordState
 from igtcloud.client.services.entities.model.file_sizes_model import FileSizesModel
 from igtcloud.client.services.entities.model.files_response import FilesResponse
 from igtcloud.client.services.entities.model.hospitals_response import HospitalsResponse
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.series_create_model import SeriesCreateModel
+from igtcloud.client.services.entities.model.root_study import RootStudy
+from igtcloud.client.services.entities.model.series import Series
 
 
 class HospitalsApi(object):
@@ -273,7 +274,7 @@ class HospitalsApi(object):
         )
         self.get_series_list_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': ([Series],),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -330,7 +331,7 @@ class HospitalsApi(object):
         )
         self.get_series_preview_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (file_type,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -386,7 +387,7 @@ class HospitalsApi(object):
             },
             headers_map={
                 'accept': [
-                    'application/json'
+                    'image/jpg'
                 ],
                 'content_type': [],
             },
@@ -394,7 +395,7 @@ class HospitalsApi(object):
         )
         self.get_series_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (Series,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -452,7 +453,7 @@ class HospitalsApi(object):
         )
         self.get_studies_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': ([RootStudy],),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -509,7 +510,7 @@ class HospitalsApi(object):
         )
         self.get_study_download_file_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (file_type,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -559,7 +560,7 @@ class HospitalsApi(object):
             },
             headers_map={
                 'accept': [
-                    'application/json'
+                    'application/zip'
                 ],
                 'content_type': [],
             },
@@ -635,7 +636,7 @@ class HospitalsApi(object):
         )
         self.get_study_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (RootStudy,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -693,7 +694,7 @@ class HospitalsApi(object):
         )
         self.get_study_series_list_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': ([Series],),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -756,7 +757,7 @@ class HospitalsApi(object):
         )
         self.patch_study_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (RootStudy,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -795,7 +796,7 @@ class HospitalsApi(object):
                     'study_id':
                         (str,),
                     'payload':
-                        (bool, date, datetime, dict, float, int, list, str, none_type,),
+                        (RootStudy,),
                 },
                 'attribute_map': {
                     'hospital_id': 'hospital_id',
@@ -821,7 +822,7 @@ class HospitalsApi(object):
         )
         self.post_studies_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (RootStudy,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -856,7 +857,7 @@ class HospitalsApi(object):
                     'hospital_id':
                         (str,),
                     'payload':
-                        (bool, date, datetime, dict, float, int, list, str, none_type,),
+                        (RootStudy,),
                 },
                 'attribute_map': {
                     'hospital_id': 'hospital_id',
@@ -880,7 +881,7 @@ class HospitalsApi(object):
         )
         self.post_study_annotation_state_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (RootStudy,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -919,7 +920,7 @@ class HospitalsApi(object):
                     'study_id':
                         (str,),
                     'payload':
-                        (AnnotationStateModel,),
+                        (AnnotationState,),
                 },
                 'attribute_map': {
                     'hospital_id': 'hospital_id',
@@ -1003,7 +1004,7 @@ class HospitalsApi(object):
         )
         self.post_study_electronic_record_state_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (RootStudy,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -1042,7 +1043,7 @@ class HospitalsApi(object):
                     'study_id':
                         (str,),
                     'payload':
-                        (ElectronicRecordStateModel,),
+                        (ElectronicRecordState,),
                 },
                 'attribute_map': {
                     'hospital_id': 'hospital_id',
@@ -1083,6 +1084,7 @@ class HospitalsApi(object):
                     'hospital_id',
                     'study_id',
                     'payload',
+                    'x_fields',
                 ],
                 'required': [
                     'hospital_id',
@@ -1108,15 +1110,19 @@ class HospitalsApi(object):
                         (str,),
                     'payload':
                         (FileSizesModel,),
+                    'x_fields':
+                        (str,),
                 },
                 'attribute_map': {
                     'hospital_id': 'hospital_id',
                     'study_id': 'study_id',
+                    'x_fields': 'X-Fields',
                 },
                 'location_map': {
                     'hospital_id': 'path',
                     'study_id': 'path',
                     'payload': 'body',
+                    'x_fields': 'header',
                 },
                 'collection_format_map': {
                 }
@@ -1133,7 +1139,7 @@ class HospitalsApi(object):
         )
         self.put_study_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (RootStudy,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -1172,7 +1178,7 @@ class HospitalsApi(object):
                     'study_id':
                         (str,),
                     'payload':
-                        (bool, date, datetime, dict, float, int, list, str, none_type,),
+                        (RootStudy,),
                 },
                 'attribute_map': {
                     'hospital_id': 'hospital_id',
@@ -1198,7 +1204,7 @@ class HospitalsApi(object):
         )
         self.put_study_series_resource_endpoint = _Endpoint(
             settings={
-                'response_type': None,
+                'response_type': (Series,),
                 'auth': [
                     'csrf_token',
                     'jwt'
@@ -1241,7 +1247,7 @@ class HospitalsApi(object):
                     'series_id':
                         (str,),
                     'payload':
-                        (SeriesCreateModel,),
+                        (Series,),
                 },
                 'attribute_map': {
                     'hospital_id': 'hospital_id',
@@ -1602,7 +1608,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            [Series]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1676,7 +1682,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            file_type
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1752,7 +1758,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            Series
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1825,7 +1831,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            [RootStudy]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1897,7 +1903,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            file_type
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -2047,7 +2053,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            RootStudy
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -2122,7 +2128,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            [Series]
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -2171,7 +2177,7 @@ class HospitalsApi(object):
         Args:
             hospital_id (str):
             study_id (str):
-            payload (bool, date, datetime, dict, float, int, list, str, none_type):
+            payload (RootStudy):
 
         Keyword Args:
             _return_http_data_only (bool): response data without head status
@@ -2198,7 +2204,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            RootStudy
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -2247,7 +2253,7 @@ class HospitalsApi(object):
 
         Args:
             hospital_id (str):
-            payload (bool, date, datetime, dict, float, int, list, str, none_type):
+            payload (RootStudy):
 
         Keyword Args:
             _return_http_data_only (bool): response data without head status
@@ -2274,7 +2280,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            RootStudy
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -2323,7 +2329,7 @@ class HospitalsApi(object):
         Args:
             hospital_id (str):
             study_id (str):
-            payload (AnnotationStateModel):
+            payload (AnnotationState):
 
         Keyword Args:
             _return_http_data_only (bool): response data without head status
@@ -2350,7 +2356,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            RootStudy
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -2475,7 +2481,7 @@ class HospitalsApi(object):
         Args:
             hospital_id (str):
             study_id (str):
-            payload (ElectronicRecordStateModel):
+            payload (ElectronicRecordState):
 
         Keyword Args:
             _return_http_data_only (bool): response data without head status
@@ -2502,7 +2508,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            RootStudy
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -2557,6 +2563,7 @@ class HospitalsApi(object):
             payload (FileSizesModel):
 
         Keyword Args:
+            x_fields (str): An optional fields mask. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -2632,7 +2639,7 @@ class HospitalsApi(object):
         Args:
             hospital_id (str):
             study_id (str):
-            payload (bool, date, datetime, dict, float, int, list, str, none_type):
+            payload (RootStudy):
 
         Keyword Args:
             _return_http_data_only (bool): response data without head status
@@ -2659,7 +2666,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            RootStudy
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -2712,7 +2719,7 @@ class HospitalsApi(object):
             hospital_id (str):
             study_id (str):
             series_id (str):
-            payload (SeriesCreateModel):
+            payload (Series):
 
         Keyword Args:
             _return_http_data_only (bool): response data without head status
@@ -2739,7 +2746,7 @@ class HospitalsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            None
+            Series
                 If the method is called asynchronously, returns the request
                 thread.
         """

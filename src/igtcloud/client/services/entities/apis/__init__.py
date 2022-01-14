@@ -19,6 +19,5 @@ from igtcloud.client.services.entities.api.hospitals_api import HospitalsApi
 from igtcloud.client.services.entities.api.integrations_api import IntegrationsApi
 from igtcloud.client.services.entities.api.organizations_api import OrganizationsApi
 from igtcloud.client.services.entities.api.projects_api import ProjectsApi
-from igtcloud.client.services.entities.api.system_api import SystemApi
 from igtcloud.client.services.entities.api.tasks_api import TasksApi
 from igtcloud.client.services.entities.api.users_api import UsersApi

@@ -90,12 +90,6 @@ class TestProjectsApi(unittest.TestCase):
         """
         pass
 
-    def test_post_sync_projects_resource(self):
-        """Test case for post_sync_projects_resource
-
-        """
-        pass
-
 
 if __name__ == '__main__':
     unittest.main()
