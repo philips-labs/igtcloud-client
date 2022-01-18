@@ -81,11 +81,14 @@ class UserCreateModel(ModelNormal):
                 and the value is attribute type.
         """
         return {
-            'name': (str,),  # noqa: E501
+            'given_name': (str,),  # noqa: E501
             'family_name': (str,),  # noqa: E501
             'email': (str,),  # noqa: E501
-            'mobile': (str,),  # noqa: E501
             'login_id': (str,),  # noqa: E501
+            'ist_level': (str,),  # noqa: E501
+            'preferred_language': (str,),  # noqa: E501
+            'training_start_date': (datetime,),  # noqa: E501
+            'training_end_date': (datetime,),  # noqa: E501
         }
 
     @cached_property
@@ -94,11 +97,14 @@ class UserCreateModel(ModelNormal):
 
 
     attribute_map = {
-        'name': 'name',  # noqa: E501
+        'given_name': 'givenName',  # noqa: E501
         'family_name': 'familyName',  # noqa: E501
         'email': 'email',  # noqa: E501
-        'mobile': 'mobile',  # noqa: E501
         'login_id': 'loginId',  # noqa: E501
+        'ist_level': 'istLevel',  # noqa: E501
+        'preferred_language': 'preferredLanguage',  # noqa: E501
+        'training_start_date': 'trainingStartDate',  # noqa: E501
+        'training_end_date': 'trainingEndDate',  # noqa: E501
     }
 
     read_only_vars = {
@@ -108,8 +114,14 @@ class UserCreateModel(ModelNormal):
 
     @classmethod
     @convert_js_args_to_python_args
-    def _from_openapi_data(cls, *args, **kwargs):  # noqa: E501
+    def _from_openapi_data(cls, given_name, family_name, email, login_id, *args, **kwargs):  # noqa: E501
         """UserCreateModel - a model defined in OpenAPI
+
+        Args:
+            given_name (str):
+            family_name (str):
+            email (str):
+            login_id (str):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -142,11 +154,10 @@ class UserCreateModel(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            name (str): [optional]  # noqa: E501
-            family_name (str): [optional]  # noqa: E501
-            email (str): [optional]  # noqa: E501
-            mobile (str): [optional]  # noqa: E501
-            login_id (str): [optional]  # noqa: E501
+            ist_level (str): [optional]  # noqa: E501
+            preferred_language (str): [optional]  # noqa: E501
+            training_start_date (datetime): [optional]  # noqa: E501
+            training_end_date (datetime): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -174,6 +185,10 @@ class UserCreateModel(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
+        self.given_name = given_name
+        self.family_name = family_name
+        self.email = email
+        self.login_id = login_id
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
@@ -194,8 +209,14 @@ class UserCreateModel(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, *args, **kwargs):  # noqa: E501
+    def __init__(self, given_name, family_name, email, login_id, *args, **kwargs):  # noqa: E501
         """UserCreateModel - a model defined in OpenAPI
+
+        Args:
+            given_name (str):
+            family_name (str):
+            email (str):
+            login_id (str):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -228,11 +249,10 @@ class UserCreateModel(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            name (str): [optional]  # noqa: E501
-            family_name (str): [optional]  # noqa: E501
-            email (str): [optional]  # noqa: E501
-            mobile (str): [optional]  # noqa: E501
-            login_id (str): [optional]  # noqa: E501
+            ist_level (str): [optional]  # noqa: E501
+            preferred_language (str): [optional]  # noqa: E501
+            training_start_date (datetime): [optional]  # noqa: E501
+            training_end_date (datetime): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -258,6 +278,10 @@ class UserCreateModel(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
+        self.given_name = given_name
+        self.family_name = family_name
+        self.email = email
+        self.login_id = login_id
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \

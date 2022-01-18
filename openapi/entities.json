@@ -3183,8 +3183,14 @@
       "type": "object"
     },
     "UserCreateModel": {
+      "required": [
+        "email",
+        "familyName",
+        "givenName",
+        "loginId"
+      ],
       "properties": {
-        "name": {
+        "givenName": {
           "type": "string"
         },
         "familyName": {
@@ -3193,11 +3199,22 @@
         "email": {
           "type": "string"
         },
-        "mobile": {
-          "type": "string"
-        },
         "loginId": {
           "type": "string"
+        },
+        "istLevel": {
+          "type": "string"
+        },
+        "preferredLanguage": {
+          "type": "string"
+        },
+        "trainingStartDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "trainingEndDate": {
+          "type": "string",
+          "format": "date-time"
         }
       },
       "type": "object"
