@@ -29,7 +29,7 @@ def _setup_service(module):
     def _api_key_hook(conf: module.Configuration):
         auth_handler = conf.auth_handler_provider()
         conf.api_key['jwt'] = auth_handler.jwt_token
-        conf.api_key['csrf'] = auth_handler.csrf_token
+        conf.api_key['csrf_token'] = auth_handler.csrf_token
 
     config = module.Configuration(api_key=dict(jwt=None, csrf=None))
     config.auth_handler_provider = None
@@ -48,14 +48,17 @@ def _setup_service(module):
 
 def _setup_entities():
     from . import entities
-    from .entities.apis import (ProjectsApi, HospitalsApi, IntegrationsApi)
+    from .entities.apis import (ProjectsApi, HospitalsApi, IntegrationsApi, UsersApi, OrganizationsApi)
     client = _setup_service(entities)
 
-    class EntitiesService(BaseService, ProjectsApi, HospitalsApi, IntegrationsApi):
+    class EntitiesService(BaseService, ProjectsApi, HospitalsApi, IntegrationsApi, UsersApi, OrganizationsApi):
         def __init__(self, api_client):
             BaseService.__init__(self, api_client, '/api/data')
             ProjectsApi.__init__(self, api_client)
             HospitalsApi.__init__(self, api_client)
+            IntegrationsApi.__init__(self, api_client)
+            UsersApi.__init__(self, api_client)
+            OrganizationsApi.__init__(self, api_client)
 
     return EntitiesService(client)
 
