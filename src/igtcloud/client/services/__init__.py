@@ -31,7 +31,7 @@ def _setup_service(module):
         conf.api_key['jwt'] = auth_handler.jwt_token
         conf.api_key['csrf_token'] = auth_handler.csrf_token
 
-    config = module.Configuration(api_key=dict(jwt=None, csrf=None))
+    config = module.Configuration(api_key=dict(jwt=None, csrf_token=None))
     config.auth_handler_provider = None
     config.host = 'https://philips.com/test'
     config.refresh_api_key_hook = _api_key_hook
