@@ -118,6 +118,8 @@ class Patient(ModelNormal):
     }
 
     read_only_vars = {
+        'patient_database_id',  # noqa: E501
+        's3_prefix',  # noqa: E501
     }
 
     _composed_schemas = {}

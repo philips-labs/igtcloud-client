@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**study_type** | **str** |  | 
+**study_type** | **str** |  | [readonly] 
 **subject_id** | **str** |  | [optional] 
 **x_ray_system** | **str** |  | [optional] 
 **x_ray_software_release** | **str** |  | [optional] 
@@ -35,11 +35,11 @@ Name | Type | Description | Notes
 **implant4_size** | **str** |  | [optional] 
 **image_transducers** | **[str]** |  | [optional] 
 **comments** | **str** |  | [optional] 
-**study_database_id** | **str** |  | [optional] 
-**created_on** | **datetime** |  | [optional] 
-**created_by** | **str** |  | [optional] 
-**last_updated_on** | **datetime** |  | [optional] 
-**last_updated_by** | **str** |  | [optional] 
+**study_database_id** | **str** |  | [optional] [readonly] 
+**created_on** | **datetime** |  | [optional] [readonly] 
+**created_by** | **str** |  | [optional] [readonly] 
+**last_updated_on** | **datetime** |  | [optional] [readonly] 
+**last_updated_by** | **str** |  | [optional] [readonly] 
 **max_retention_date** | **datetime** |  | [optional] 
 **legal_basis** | **[str]** |  | [optional] 
 **legal_basis_other** | **str** |  | [optional] 
@@ -52,10 +52,10 @@ Name | Type | Description | Notes
 **description** | **str** |  | [optional] 
 **study_date** | **datetime** |  | [optional] 
 **accession_number** | **str** |  | [optional] 
-**s3_prefix** | **str** |  | [optional] 
-**hospital_id** | **str** |  | [optional] 
-**project_id** | **str** |  | [optional] 
-**patient_database_id** | **str** |  | [optional] 
+**s3_prefix** | **str** |  | [optional] [readonly] 
+**hospital_id** | **str** |  | [optional] [readonly] 
+**project_id** | **str** |  | [optional] [readonly] 
+**patient_database_id** | **str** |  | [optional] [readonly] 
 **patient** | [**Patient**](Patient.md) |  | [optional] 
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 

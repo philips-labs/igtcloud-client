@@ -755,11 +755,14 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
     payload = UserRequest(
-        name="name_example",
+        given_name="given_name_example",
         family_name="family_name_example",
         email="email_example",
-        mobile="mobile_example",
         login_id="login_id_example",
+        ist_level="ist_level_example",
+        preferred_language="preferred_language_example",
+        training_start_date=dateutil_parser('1970-01-01T00:00:00.00Z'),
+        training_end_date=dateutil_parser('1970-01-01T00:00:00.00Z'),
     ) # UserRequest | 
     x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
@@ -857,11 +860,14 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     api_instance = users_api.UsersApi(api_client)
     user_uuid = "user_uuid_example" # str | 
     payload = UserRequest(
-        name="name_example",
+        given_name="given_name_example",
         family_name="family_name_example",
         email="email_example",
-        mobile="mobile_example",
         login_id="login_id_example",
+        ist_level="ist_level_example",
+        preferred_language="preferred_language_example",
+        training_start_date=dateutil_parser('1970-01-01T00:00:00.00Z'),
+        training_end_date=dateutil_parser('1970-01-01T00:00:00.00Z'),
     ) # UserRequest | 
 
     # example passing only required values which don't have defaults set

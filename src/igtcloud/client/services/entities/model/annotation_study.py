@@ -169,6 +169,16 @@ class AnnotationStudy(ModelComposed):
     }
 
     read_only_vars = {
+        'study_type',  # noqa: E501
+        'study_database_id',  # noqa: E501
+        'created_on',  # noqa: E501
+        'created_by',  # noqa: E501
+        'last_updated_on',  # noqa: E501
+        'last_updated_by',  # noqa: E501
+        's3_prefix',  # noqa: E501
+        'hospital_id',  # noqa: E501
+        'project_id',  # noqa: E501
+        'patient_database_id',  # noqa: E501
     }
 
     @classmethod
@@ -308,7 +318,6 @@ class AnnotationStudy(ModelComposed):
         """AnnotationStudy - a model defined in OpenAPI
 
         Keyword Args:
-            study_type (str):
             _check_type (bool): if True, values for parameters in openapi_types
                                 will be type checked and a TypeError will be
                                 raised if the wrong type is input.

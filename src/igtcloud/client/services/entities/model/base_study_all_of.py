@@ -120,6 +120,10 @@ class BaseStudyAllOf(ModelNormal):
     }
 
     read_only_vars = {
+        's3_prefix',  # noqa: E501
+        'hospital_id',  # noqa: E501
+        'project_id',  # noqa: E501
+        'patient_database_id',  # noqa: E501
     }
 
     _composed_schemas = {}

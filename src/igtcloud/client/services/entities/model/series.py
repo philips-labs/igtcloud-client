@@ -152,6 +152,12 @@ class Series(ModelNormal):
     }
 
     read_only_vars = {
+        'series_type',  # noqa: E501
+        'created_on',  # noqa: E501
+        'created_by',  # noqa: E501
+        'last_updated_on',  # noqa: E501
+        'last_updated_by',  # noqa: E501
+        'study_database_id',  # noqa: E501
     }
 
     _composed_schemas = {}
@@ -259,11 +265,8 @@ class Series(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, series_type, *args, **kwargs):  # noqa: E501
+    def __init__(self, *args, **kwargs):  # noqa: E501
         """Series - a model defined in OpenAPI
-
-        Args:
-            series_type (str):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -337,7 +340,6 @@ class Series(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
-        self.series_type = series_type
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \

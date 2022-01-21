@@ -4,12 +4,12 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**study_type** | **str** |  | 
-**study_database_id** | **str** |  | [optional] 
-**created_on** | **datetime** |  | [optional] 
-**created_by** | **str** |  | [optional] 
-**last_updated_on** | **datetime** |  | [optional] 
-**last_updated_by** | **str** |  | [optional] 
+**study_type** | **str** |  | [readonly] 
+**study_database_id** | **str** |  | [optional] [readonly] 
+**created_on** | **datetime** |  | [optional] [readonly] 
+**created_by** | **str** |  | [optional] [readonly] 
+**last_updated_on** | **datetime** |  | [optional] [readonly] 
+**last_updated_by** | **str** |  | [optional] [readonly] 
 **max_retention_date** | **datetime** |  | [optional] 
 **legal_basis** | **[str]** |  | [optional] 
 **legal_basis_other** | **str** |  | [optional] 

@@ -141,6 +141,12 @@ class IgtCloudSeries(ModelComposed):
     }
 
     read_only_vars = {
+        'series_type',  # noqa: E501
+        'created_on',  # noqa: E501
+        'created_by',  # noqa: E501
+        'last_updated_on',  # noqa: E501
+        'last_updated_by',  # noqa: E501
+        'study_database_id',  # noqa: E501
     }
 
     @classmethod
@@ -266,7 +272,6 @@ class IgtCloudSeries(ModelComposed):
         """IgtCloudSeries - a model defined in OpenAPI
 
         Keyword Args:
-            series_type (str):
             _check_type (bool): if True, values for parameters in openapi_types
                                 will be type checked and a TypeError will be
                                 raised if the wrong type is input.

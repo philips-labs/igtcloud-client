@@ -322,6 +322,23 @@
           "Institutes"
         ]
       },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "Study Deleted"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_study",
+        "tags": [
+          "Institutes"
+        ]
+      },
       "patch": {
         "responses": {
           "200": {
@@ -378,23 +395,6 @@
             }
           }
         ],
-        "tags": [
-          "Institutes"
-        ]
-      },
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "Study Deleted"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_study",
         "tags": [
           "Institutes"
         ]
@@ -732,6 +732,23 @@
           "type": "string"
         }
       ],
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_study_series",
+        "tags": [
+          "Institutes"
+        ]
+      },
       "put": {
         "responses": {
           "200": {
@@ -758,23 +775,6 @@
             }
           }
         ],
-        "tags": [
-          "Institutes"
-        ]
-      },
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No content"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_study_series",
         "tags": [
           "Institutes"
         ]
@@ -2006,6 +2006,23 @@
           "Users"
         ]
       },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_user",
+        "tags": [
+          "Users"
+        ]
+      },
       "put": {
         "responses": {
           "204": {
@@ -2029,23 +2046,6 @@
             }
           }
         ],
-        "tags": [
-          "Users"
-        ]
-      },
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_user",
         "tags": [
           "Users"
         ]
@@ -2365,16 +2365,20 @@
               "type": "string"
             },
             "s3Prefix": {
-              "type": "string"
+              "type": "string",
+              "readOnly": true
             },
             "hospitalId": {
-              "type": "string"
+              "type": "string",
+              "readOnly": true
             },
             "projectId": {
-              "type": "string"
+              "type": "string",
+              "readOnly": true
             },
             "patientDatabaseId": {
-              "type": "string"
+              "type": "string",
+              "readOnly": true
             },
             "patient": {
               "$ref": "#/definitions/Patient"
@@ -2390,21 +2394,26 @@
       ],
       "properties": {
         "studyDatabaseId": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "createdOn": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "readOnly": true
         },
         "createdBy": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "lastUpdatedOn": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "readOnly": true
         },
         "lastUpdatedBy": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "maxRetentionDate": {
           "type": "string",
@@ -2432,7 +2441,8 @@
           "type": "string"
         },
         "studyType": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         }
       },
       "discriminator": "studyType",
@@ -2441,7 +2451,8 @@
     "Patient": {
       "properties": {
         "patientDatabaseId": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "patientId": {
           "type": "string"
@@ -2478,7 +2489,8 @@
           "type": "string"
         },
         "s3Prefix": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         }
       },
       "type": "object"
@@ -2952,16 +2964,20 @@
           "type": "string"
         },
         "createdOn": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "createdBy": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "lastUpdatedOn": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "lastUpdatedBy": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "instanceUid": {
           "type": "string"
@@ -2982,7 +2998,8 @@
           "type": "string"
         },
         "studyDatabaseId": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "relatedStudyInstanceUid": {
           "type": "string"
@@ -2997,7 +3014,8 @@
           "type": "string"
         },
         "seriesType": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         }
       },
       "discriminator": "seriesType",
@@ -3037,8 +3055,14 @@
       "type": "object"
     },
     "UserRequest": {
+      "required": [
+        "email",
+        "familyName",
+        "givenName",
+        "loginId"
+      ],
       "properties": {
-        "name": {
+        "givenName": {
           "type": "string"
         },
         "familyName": {
@@ -3047,11 +3071,22 @@
         "email": {
           "type": "string"
         },
-        "mobile": {
-          "type": "string"
-        },
         "loginId": {
           "type": "string"
+        },
+        "istLevel": {
+          "type": "string"
+        },
+        "preferredLanguage": {
+          "type": "string"
+        },
+        "trainingStartDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "trainingEndDate": {
+          "type": "string",
+          "format": "date-time"
         }
       },
       "type": "object"

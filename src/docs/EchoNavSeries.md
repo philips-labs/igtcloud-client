@@ -4,20 +4,20 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**series_type** | **str** |  | 
+**series_type** | **str** |  | [readonly] 
 **study** | [**EchoNavStudy**](EchoNavStudy.md) |  | [optional] 
 **series_database_id** | **str** |  | [optional] 
-**created_on** | **str** |  | [optional] 
-**created_by** | **str** |  | [optional] 
-**last_updated_on** | **str** |  | [optional] 
-**last_updated_by** | **str** |  | [optional] 
+**created_on** | **str** |  | [optional] [readonly] 
+**created_by** | **str** |  | [optional] [readonly] 
+**last_updated_on** | **str** |  | [optional] [readonly] 
+**last_updated_by** | **str** |  | [optional] [readonly] 
 **instance_uid** | **str** |  | [optional] 
 **modality** | **str** |  | [optional] 
 **preview_url** | **str** |  | [optional] 
 **procedure_database_id** | **str** |  | [optional] 
 **s3_prefix** | **str** |  | [optional] 
 **series_format** | **str** |  | [optional] 
-**study_database_id** | **str** |  | [optional] 
+**study_database_id** | **str** |  | [optional] [readonly] 
 **related_study_instance_uid** | **str** |  | [optional] 
 **related_series_instance_uid** | **str** |  | [optional] 
 **document_title** | **str** |  | [optional] 
