@@ -1,0 +1,161 @@
+{
+  "swagger": "2.0",
+  "basePath": "/action",
+  "paths": {
+    "/preprocess-file": {
+      "post": {
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          },
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "post_preprocess_file",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/PreprocessingRequest"
+            }
+          }
+        ],
+        "tags": [
+          "action"
+        ]
+      }
+    },
+    "/update-database": {
+      "post": {
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          },
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "post_update_database",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateDatabaseRequest"
+            }
+          }
+        ],
+        "tags": [
+          "action"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "IGT Cloud Action",
+    "version": "1.0",
+    "description": "IGT Cloud action"
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "csrf_token": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-CSRF-TOKEN"
+    },
+    "jwt": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-JWT"
+    }
+  },
+  "security": [
+    {
+      "csrf_token": []
+    },
+    {
+      "jwt": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "action"
+    }
+  ],
+  "definitions": {
+    "PreprocessingRequest": {
+      "properties": {
+        "uploadedPath": {
+          "type": "string"
+        },
+        "hospitalId": {
+          "type": "string"
+        },
+        "patientId": {
+          "type": "string"
+        },
+        "studyId": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "4xxMessage": {
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UpdateDatabaseRequest": {
+      "properties": {
+        "uploadedPath": {
+          "type": "string"
+        },
+        "hospitalId": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "responses": {
+    "ParseError": {
+      "description": "When a mask can't be parsed"
+    },
+    "MaskError": {
+      "description": "When any error occurs on mask"
+    },
+    "Exception": {
+      "description": "When a generic exception occurred"
+    }
+  }
+}
