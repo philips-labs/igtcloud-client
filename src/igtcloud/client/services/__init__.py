@@ -76,7 +76,21 @@ def _setup_auth():
     return AuthService(client)
 
 
+def _setup_action():
+    from . import action
+    from .action.apis import ActionApi
+    client = _setup_service(action)
+
+    class ActionService(BaseService, ActionApi):
+        def __init__(self, api_client):
+            BaseService.__init__(self, api_client, '/api/action')
+            ActionApi.__init__(self, api_client)
+
+    return ActionService(client)
+
+
 entities_service = _setup_entities()
 auth_service = _setup_auth()
+action_service = _setup_action()
 
-__all__ = ['auth_service', 'entities_service']
+__all__ = ['auth_service', 'entities_service', 'action_service']
