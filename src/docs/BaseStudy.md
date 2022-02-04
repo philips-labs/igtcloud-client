@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **patient_database_id** | **str** |  | [optional] [readonly] 
 **patient** | [**Patient**](Patient.md) |  | [optional] 
 **study_database_id** | **str** |  | [optional] [readonly] 
+**institute_id** | **str** |  | [optional] [readonly] 
 **created_on** | **datetime** |  | [optional] [readonly] 
 **created_by** | **str** |  | [optional] [readonly] 
 **last_updated_on** | **datetime** |  | [optional] [readonly] 

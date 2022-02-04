@@ -105,6 +105,7 @@ class RootStudy(ModelNormal):
         return {
             'study_type': (str,),  # noqa: E501
             'study_database_id': (str,),  # noqa: E501
+            'institute_id': (str,),  # noqa: E501
             'created_on': (datetime,),  # noqa: E501
             'created_by': (str,),  # noqa: E501
             'last_updated_on': (datetime,),  # noqa: E501
@@ -138,6 +139,7 @@ class RootStudy(ModelNormal):
     attribute_map = {
         'study_type': 'studyType',  # noqa: E501
         'study_database_id': 'studyDatabaseId',  # noqa: E501
+        'institute_id': 'instituteId',  # noqa: E501
         'created_on': 'createdOn',  # noqa: E501
         'created_by': 'createdBy',  # noqa: E501
         'last_updated_on': 'lastUpdatedOn',  # noqa: E501
@@ -153,6 +155,7 @@ class RootStudy(ModelNormal):
     read_only_vars = {
         'study_type',  # noqa: E501
         'study_database_id',  # noqa: E501
+        'institute_id',  # noqa: E501
         'created_on',  # noqa: E501
         'created_by',  # noqa: E501
         'last_updated_on',  # noqa: E501
@@ -201,6 +204,7 @@ class RootStudy(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             study_database_id (str): [optional]  # noqa: E501
+            institute_id (str): [optional]  # noqa: E501
             created_on (datetime): [optional]  # noqa: E501
             created_by (str): [optional]  # noqa: E501
             last_updated_on (datetime): [optional]  # noqa: E501
@@ -294,6 +298,7 @@ class RootStudy(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             study_database_id (str): [optional]  # noqa: E501
+            institute_id (str): [optional]  # noqa: E501
             created_on (datetime): [optional]  # noqa: E501
             created_by (str): [optional]  # noqa: E501
             last_updated_on (datetime): [optional]  # noqa: E501

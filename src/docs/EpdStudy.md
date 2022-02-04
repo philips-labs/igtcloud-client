@@ -30,6 +30,7 @@ Name | Type | Description | Notes
 **imaged_chambers_other** | **str** |  | [optional] 
 **events** | [**[EpdStudyEvent]**](EpdStudyEvent.md) |  | [optional] 
 **study_database_id** | **str** |  | [optional] [readonly] 
+**institute_id** | **str** |  | [optional] [readonly] 
 **created_on** | **datetime** |  | [optional] [readonly] 
 **created_by** | **str** |  | [optional] [readonly] 
 **last_updated_on** | **datetime** |  | [optional] [readonly] 

@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **study_start_date_time** | **datetime** |  | [optional] 
 **study_end_date_time** | **datetime** |  | [optional] 
 **study_database_id** | **str** |  | [optional] [readonly] 
+**institute_id** | **str** |  | [optional] [readonly] 
 **created_on** | **datetime** |  | [optional] [readonly] 
 **created_by** | **str** |  | [optional] [readonly] 
 **last_updated_on** | **datetime** |  | [optional] [readonly] 

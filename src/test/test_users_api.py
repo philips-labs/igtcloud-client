@@ -29,6 +29,18 @@ class TestUsersApi(unittest.TestCase):
         """
         pass
 
+    def test_delete_user_storage_files(self):
+        """Test case for delete_user_storage_files
+
+        """
+        pass
+
+    def test_delete_user_storage_training_settings(self):
+        """Test case for delete_user_storage_training_settings
+
+        """
+        pass
+
     def test_get_me(self):
         """Test case for get_me
 
@@ -43,6 +55,18 @@ class TestUsersApi(unittest.TestCase):
 
     def test_get_user_storage(self):
         """Test case for get_user_storage
+
+        """
+        pass
+
+    def test_get_user_storage_download_files(self):
+        """Test case for get_user_storage_download_files
+
+        """
+        pass
+
+    def test_get_user_storage_files(self):
+        """Test case for get_user_storage_files
 
         """
         pass

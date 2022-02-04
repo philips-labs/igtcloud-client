@@ -54,6 +54,8 @@ class IntegrationsApi(object):
                 'all': [
                     'connection_name',
                     'aisuite_project_id',
+                    'project_id',
+                    'institute_id',
                     'x_fields',
                 ],
                 'required': [
@@ -77,17 +79,25 @@ class IntegrationsApi(object):
                         (str,),
                     'aisuite_project_id':
                         (str,),
+                    'project_id':
+                        (str,),
+                    'institute_id':
+                        (str,),
                     'x_fields':
                         (str,),
                 },
                 'attribute_map': {
                     'connection_name': 'connection_name',
                     'aisuite_project_id': 'aisuite_project_id',
+                    'project_id': 'projectId',
+                    'institute_id': 'instituteId',
                     'x_fields': 'X-Fields',
                 },
                 'location_map': {
                     'connection_name': 'path',
                     'aisuite_project_id': 'path',
+                    'project_id': 'query',
+                    'institute_id': 'query',
                     'x_fields': 'header',
                 },
                 'collection_format_map': {
@@ -224,6 +234,8 @@ class IntegrationsApi(object):
                 'all': [
                     'connection_name',
                     'aisuite_project_id',
+                    'project_id',
+                    'institute_id',
                     'x_fields',
                 ],
                 'required': [
@@ -247,17 +259,25 @@ class IntegrationsApi(object):
                         (str,),
                     'aisuite_project_id':
                         (str,),
+                    'project_id':
+                        (str,),
+                    'institute_id':
+                        (str,),
                     'x_fields':
                         (str,),
                 },
                 'attribute_map': {
                     'connection_name': 'connection_name',
                     'aisuite_project_id': 'aisuite_project_id',
+                    'project_id': 'projectId',
+                    'institute_id': 'instituteId',
                     'x_fields': 'X-Fields',
                 },
                 'location_map': {
                     'connection_name': 'path',
                     'aisuite_project_id': 'path',
+                    'project_id': 'query',
+                    'institute_id': 'query',
                     'x_fields': 'header',
                 },
                 'collection_format_map': {
@@ -291,6 +311,8 @@ class IntegrationsApi(object):
             aisuite_project_id (str): AI Suite project id or reference
 
         Keyword Args:
+            project_id (str): IGTCloud project. [optional]
+            institute_id (str): IGTCloud institute. [optional]
             x_fields (str): An optional fields mask. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
@@ -503,6 +525,8 @@ class IntegrationsApi(object):
             aisuite_project_id (str): AI Suite project id or reference
 
         Keyword Args:
+            project_id (str): IGTCloud project. [optional]
+            institute_id (str): IGTCloud institute. [optional]
             x_fields (str): An optional fields mask. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.

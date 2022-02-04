@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **study_type** | **str** |  | [readonly] 
 **annotation_state** | **str** |  | [optional] 
 **study_database_id** | **str** |  | [optional] [readonly] 
+**institute_id** | **str** |  | [optional] [readonly] 
 **created_on** | **datetime** |  | [optional] [readonly] 
 **created_by** | **str** |  | [optional] [readonly] 
 **last_updated_on** | **datetime** |  | [optional] [readonly] 
