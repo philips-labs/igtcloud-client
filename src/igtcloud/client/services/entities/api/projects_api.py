@@ -21,7 +21,7 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from igtcloud.client.services.entities.model.file_sizes import FileSizes
+from igtcloud.client.services.entities.model.file import File
 from igtcloud.client.services.entities.model.files import Files
 from igtcloud.client.services.entities.model.institute import Institute
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
@@ -54,6 +54,7 @@ class ProjectsApi(object):
             params_map={
                 'all': [
                     'project_id',
+                    'keys',
                 ],
                 'required': [
                     'project_id',
@@ -73,14 +74,19 @@ class ProjectsApi(object):
                 'openapi_types': {
                     'project_id':
                         (str,),
+                    'keys':
+                        ([str],),
                 },
                 'attribute_map': {
                     'project_id': 'project_id',
+                    'keys': 'keys',
                 },
                 'location_map': {
                     'project_id': 'path',
+                    'keys': 'query',
                 },
                 'collection_format_map': {
+                    'keys': 'multi',
                 }
             },
             headers_map={
@@ -573,7 +579,7 @@ class ProjectsApi(object):
                     'project_id':
                         (str,),
                     'payload':
-                        (FileSizes,),
+                        ([File],),
                     'x_fields':
                         (str,),
                 },
@@ -675,6 +681,7 @@ class ProjectsApi(object):
             project_id (str):
 
         Keyword Args:
+            keys ([str]): [optional] if omitted the server will use the default value of []
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -1306,7 +1313,7 @@ class ProjectsApi(object):
 
         Args:
             project_id (str):
-            payload (FileSizes):
+            payload ([File]):
 
         Keyword Args:
             x_fields (str): An optional fields mask. [optional]

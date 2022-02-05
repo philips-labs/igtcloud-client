@@ -82,13 +82,13 @@ class File(ModelNormal):
         """
         return {
             'key': (str,),  # noqa: E501
+            'file_size': (int,),  # noqa: E501
             'file_name': (str,),  # noqa: E501
             'is_completed': (bool,),  # noqa: E501
             'is_new': (bool,),  # noqa: E501
             'upload_id': (str,),  # noqa: E501
             'progress_percentage': (int,),  # noqa: E501
             'type': (str,),  # noqa: E501
-            'file_size': (int,),  # noqa: E501
             'progress_in_bytes': (int,),  # noqa: E501
         }
 
@@ -99,13 +99,13 @@ class File(ModelNormal):
 
     attribute_map = {
         'key': 'key',  # noqa: E501
+        'file_size': 'fileSize',  # noqa: E501
         'file_name': 'fileName',  # noqa: E501
         'is_completed': 'isCompleted',  # noqa: E501
         'is_new': 'isNew',  # noqa: E501
         'upload_id': 'uploadId',  # noqa: E501
         'progress_percentage': 'progressPercentage',  # noqa: E501
         'type': 'type',  # noqa: E501
-        'file_size': 'fileSize',  # noqa: E501
         'progress_in_bytes': 'progressInBytes',  # noqa: E501
     }
 
@@ -123,8 +123,12 @@ class File(ModelNormal):
 
     @classmethod
     @convert_js_args_to_python_args
-    def _from_openapi_data(cls, *args, **kwargs):  # noqa: E501
+    def _from_openapi_data(cls, key, file_size, *args, **kwargs):  # noqa: E501
         """File - a model defined in OpenAPI
+
+        Args:
+            key (str):
+            file_size (int):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -157,14 +161,12 @@ class File(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            key (str): [optional]  # noqa: E501
             file_name (str): [optional]  # noqa: E501
             is_completed (bool): [optional]  # noqa: E501
             is_new (bool): [optional]  # noqa: E501
             upload_id (str): [optional]  # noqa: E501
             progress_percentage (int): [optional]  # noqa: E501
             type (str): [optional]  # noqa: E501
-            file_size (int): [optional]  # noqa: E501
             progress_in_bytes (int): [optional]  # noqa: E501
         """
 
@@ -193,6 +195,8 @@ class File(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
+        self.key = key
+        self.file_size = file_size
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
@@ -213,8 +217,12 @@ class File(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, *args, **kwargs):  # noqa: E501
+    def __init__(self, key, file_size, *args, **kwargs):  # noqa: E501
         """File - a model defined in OpenAPI
+
+        Args:
+            key (str):
+            file_size (int):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -247,14 +255,12 @@ class File(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            key (str): [optional]  # noqa: E501
             file_name (str): [optional]  # noqa: E501
             is_completed (bool): [optional]  # noqa: E501
             is_new (bool): [optional]  # noqa: E501
             upload_id (str): [optional]  # noqa: E501
             progress_percentage (int): [optional]  # noqa: E501
             type (str): [optional]  # noqa: E501
-            file_size (int): [optional]  # noqa: E501
             progress_in_bytes (int): [optional]  # noqa: E501
         """
 
@@ -281,6 +287,8 @@ class File(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
+        self.key = key
+        self.file_size = file_size
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \

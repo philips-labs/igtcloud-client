@@ -155,10 +155,20 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     api_instance = institutes_api.InstitutesApi(api_client)
     hospital_id = "hospital_id_example" # str | 
     study_id = "study_id_example" # str | 
+    keys = [
+        "[]",
+    ] # [str] |  (optional) if omitted the server will use the default value of []
 
     # example passing only required values which don't have defaults set
     try:
         api_instance.delete_study_files(hospital_id, study_id)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling InstitutesApi->delete_study_files: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        api_instance.delete_study_files(hospital_id, study_id, keys=keys)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling InstitutesApi->delete_study_files: %s\n" % e)
 ```
@@ -170,6 +180,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **hospital_id** | **str**|  |
  **study_id** | **str**|  |
+ **keys** | **[str]**|  | [optional] if omitted the server will use the default value of []
 
 ### Return type
 
@@ -1549,8 +1560,8 @@ Used only for retrieving progress percentage of uploads.
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import institutes_api
-from igtcloud.client.services.entities.model.file_sizes import FileSizes
 from igtcloud.client.services.entities.model.files import Files
+from igtcloud.client.services.entities.model.file import File
 from pprint import pprint
 # Defining the host is optional and defaults to /data
 # See configuration.py for a list of all supported configuration parameters.
@@ -1581,14 +1592,12 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     api_instance = institutes_api.InstitutesApi(api_client)
     hospital_id = "hospital_id_example" # str | 
     study_id = "study_id_example" # str | 
-    payload = FileSizes(
-        file_sizes=[
-            File(
-                key="key_example",
-                file_size=1,
-            ),
-        ],
-    ) # FileSizes | 
+    payload = [
+        File(
+            key="key_example",
+            file_size=1,
+        ),
+    ] # [File] | 
     x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
@@ -1616,7 +1625,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **hospital_id** | **str**|  |
  **study_id** | **str**|  |
- **payload** | [**FileSizes**](FileSizes.md)|  |
+ **payload** | [**[File]**](File.md)|  |
  **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type

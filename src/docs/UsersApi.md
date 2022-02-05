@@ -145,17 +145,24 @@ configuration.api_key['jwt'] = 'YOUR_API_KEY'
 with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
+    keys = [
+        "[]",
+    ] # [str] |  (optional) if omitted the server will use the default value of []
 
-    # example, this endpoint has no required or optional parameters
+    # example passing only required values which don't have defaults set
+    # and optional values
     try:
-        api_instance.delete_user_storage_files()
+        api_instance.delete_user_storage_files(keys=keys)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling UsersApi->delete_user_storage_files: %s\n" % e)
 ```
 
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **keys** | **[str]**|  | [optional] if omitted the server will use the default value of []
 
 ### Return type
 

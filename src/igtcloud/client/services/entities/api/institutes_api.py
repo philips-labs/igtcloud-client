@@ -23,7 +23,7 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
 )
 from igtcloud.client.services.entities.model.annotation_state import AnnotationState
 from igtcloud.client.services.entities.model.electronic_record_state import ElectronicRecordState
-from igtcloud.client.services.entities.model.file_sizes import FileSizes
+from igtcloud.client.services.entities.model.file import File
 from igtcloud.client.services.entities.model.files import Files
 from igtcloud.client.services.entities.model.institute import Institute
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
@@ -116,6 +116,7 @@ class InstitutesApi(object):
                 'all': [
                     'hospital_id',
                     'study_id',
+                    'keys',
                 ],
                 'required': [
                     'hospital_id',
@@ -138,16 +139,21 @@ class InstitutesApi(object):
                         (str,),
                     'study_id':
                         (str,),
+                    'keys':
+                        ([str],),
                 },
                 'attribute_map': {
                     'hospital_id': 'hospital_id',
                     'study_id': 'study_id',
+                    'keys': 'keys',
                 },
                 'location_map': {
                     'hospital_id': 'path',
                     'study_id': 'path',
+                    'keys': 'query',
                 },
                 'collection_format_map': {
+                    'keys': 'multi',
                 }
             },
             headers_map={
@@ -1109,7 +1115,7 @@ class InstitutesApi(object):
                     'study_id':
                         (str,),
                     'payload':
-                        (FileSizes,),
+                        ([File],),
                     'x_fields':
                         (str,),
                 },
@@ -1367,6 +1373,7 @@ class InstitutesApi(object):
             study_id (str):
 
         Keyword Args:
+            keys ([str]): [optional] if omitted the server will use the default value of []
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -2560,7 +2567,7 @@ class InstitutesApi(object):
         Args:
             hospital_id (str):
             study_id (str):
-            payload (FileSizes):
+            payload ([File]):
 
         Keyword Args:
             x_fields (str): An optional fields mask. [optional]

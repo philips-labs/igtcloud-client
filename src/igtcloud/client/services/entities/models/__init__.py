@@ -40,7 +40,6 @@ from igtcloud.client.services.entities.model.epd_study import EpdStudy
 from igtcloud.client.services.entities.model.epd_study_all_of import EpdStudyAllOf
 from igtcloud.client.services.entities.model.epd_study_event import EpdStudyEvent
 from igtcloud.client.services.entities.model.file import File
-from igtcloud.client.services.entities.model.file_sizes import FileSizes
 from igtcloud.client.services.entities.model.files import Files
 from igtcloud.client.services.entities.model.group import Group
 from igtcloud.client.services.entities.model.hsdp_details import HsdpDetails

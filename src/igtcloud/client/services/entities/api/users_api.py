@@ -107,6 +107,7 @@ class UsersApi(object):
             },
             params_map={
                 'all': [
+                    'keys',
                 ],
                 'required': [],
                 'nullable': [
@@ -122,12 +123,17 @@ class UsersApi(object):
                 'allowed_values': {
                 },
                 'openapi_types': {
+                    'keys':
+                        ([str],),
                 },
                 'attribute_map': {
+                    'keys': 'keys',
                 },
                 'location_map': {
+                    'keys': 'query',
                 },
                 'collection_format_map': {
+                    'keys': 'multi',
                 }
             },
             headers_map={
@@ -848,6 +854,7 @@ class UsersApi(object):
 
 
         Keyword Args:
+            keys ([str]): [optional] if omitted the server will use the default value of []
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
