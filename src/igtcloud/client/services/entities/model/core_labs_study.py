@@ -114,13 +114,13 @@ class CoreLabsStudy(ModelComposed):
             'purpose': ([str],),  # noqa: E501
             'purpose_other': (str,),  # noqa: E501
             'electronic_record_state': (str,),  # noqa: E501
+            's3_prefix': (str,),  # noqa: E501
             'study_id': (str,),  # noqa: E501
             'instance_uid': (str,),  # noqa: E501
             'state': (str,),  # noqa: E501
             'description': (str,),  # noqa: E501
             'study_date': (datetime,),  # noqa: E501
             'accession_number': (str,),  # noqa: E501
-            's3_prefix': (str,),  # noqa: E501
             'hospital_id': (str,),  # noqa: E501
             'project_id': (str,),  # noqa: E501
             'patient_database_id': (str,),  # noqa: E501
@@ -159,13 +159,13 @@ class CoreLabsStudy(ModelComposed):
         'purpose': 'purpose',  # noqa: E501
         'purpose_other': 'purposeOther',  # noqa: E501
         'electronic_record_state': 'electronicRecordState',  # noqa: E501
+        's3_prefix': 's3Prefix',  # noqa: E501
         'study_id': 'studyId',  # noqa: E501
         'instance_uid': 'instanceUid',  # noqa: E501
         'state': 'state',  # noqa: E501
         'description': 'description',  # noqa: E501
         'study_date': 'studyDate',  # noqa: E501
         'accession_number': 'accessionNumber',  # noqa: E501
-        's3_prefix': 's3Prefix',  # noqa: E501
         'hospital_id': 'hospitalId',  # noqa: E501
         'project_id': 'projectId',  # noqa: E501
         'patient_database_id': 'patientDatabaseId',  # noqa: E501
@@ -243,13 +243,13 @@ class CoreLabsStudy(ModelComposed):
             purpose ([str]): [optional]  # noqa: E501
             purpose_other (str): [optional]  # noqa: E501
             electronic_record_state (str): [optional]  # noqa: E501
+            s3_prefix (str): [optional]  # noqa: E501
             study_id (str): [optional]  # noqa: E501
             instance_uid (str): [optional]  # noqa: E501
             state (str): [optional]  # noqa: E501
             description (str): [optional]  # noqa: E501
             study_date (datetime): [optional]  # noqa: E501
             accession_number (str): [optional]  # noqa: E501
-            s3_prefix (str): [optional]  # noqa: E501
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
@@ -373,13 +373,13 @@ class CoreLabsStudy(ModelComposed):
             purpose ([str]): [optional]  # noqa: E501
             purpose_other (str): [optional]  # noqa: E501
             electronic_record_state (str): [optional]  # noqa: E501
+            s3_prefix (str): [optional]  # noqa: E501
             study_id (str): [optional]  # noqa: E501
             instance_uid (str): [optional]  # noqa: E501
             state (str): [optional]  # noqa: E501
             description (str): [optional]  # noqa: E501
             study_date (datetime): [optional]  # noqa: E501
             accession_number (str): [optional]  # noqa: E501
-            s3_prefix (str): [optional]  # noqa: E501
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501

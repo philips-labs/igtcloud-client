@@ -11,7 +11,6 @@ Name | Type | Description | Notes
 **description** | **str** |  | [optional] 
 **study_date** | **datetime** |  | [optional] 
 **accession_number** | **str** |  | [optional] 
-**s3_prefix** | **str** |  | [optional] [readonly] 
 **hospital_id** | **str** |  | [optional] [readonly] 
 **project_id** | **str** |  | [optional] [readonly] 
 **patient_database_id** | **str** |  | [optional] [readonly] 
@@ -28,6 +27,7 @@ Name | Type | Description | Notes
 **purpose** | **[str]** |  | [optional] 
 **purpose_other** | **str** |  | [optional] 
 **electronic_record_state** | **str** |  | [optional] 
+**s3_prefix** | **str** |  | [optional] [readonly] 
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

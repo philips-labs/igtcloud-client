@@ -93,7 +93,6 @@ class BaseStudyAllOf(ModelNormal):
             'description': (str,),  # noqa: E501
             'study_date': (datetime,),  # noqa: E501
             'accession_number': (str,),  # noqa: E501
-            's3_prefix': (str,),  # noqa: E501
             'hospital_id': (str,),  # noqa: E501
             'project_id': (str,),  # noqa: E501
             'patient_database_id': (str,),  # noqa: E501
@@ -112,7 +111,6 @@ class BaseStudyAllOf(ModelNormal):
         'description': 'description',  # noqa: E501
         'study_date': 'studyDate',  # noqa: E501
         'accession_number': 'accessionNumber',  # noqa: E501
-        's3_prefix': 's3Prefix',  # noqa: E501
         'hospital_id': 'hospitalId',  # noqa: E501
         'project_id': 'projectId',  # noqa: E501
         'patient_database_id': 'patientDatabaseId',  # noqa: E501
@@ -120,7 +118,6 @@ class BaseStudyAllOf(ModelNormal):
     }
 
     read_only_vars = {
-        's3_prefix',  # noqa: E501
         'hospital_id',  # noqa: E501
         'project_id',  # noqa: E501
         'patient_database_id',  # noqa: E501
@@ -170,7 +167,6 @@ class BaseStudyAllOf(ModelNormal):
             description (str): [optional]  # noqa: E501
             study_date (datetime): [optional]  # noqa: E501
             accession_number (str): [optional]  # noqa: E501
-            s3_prefix (str): [optional]  # noqa: E501
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
@@ -262,7 +258,6 @@ class BaseStudyAllOf(ModelNormal):
             description (str): [optional]  # noqa: E501
             study_date (datetime): [optional]  # noqa: E501
             accession_number (str): [optional]  # noqa: E501
-            s3_prefix (str): [optional]  # noqa: E501
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501

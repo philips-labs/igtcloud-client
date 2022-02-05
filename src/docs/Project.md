@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **description** | **str** |  | [optional] 
 **project_type_name** | **str** |  | [optional] 
 **continents** | **[str]** |  | [optional] 
+**s3_prefix** | **str** |  | [optional] [readonly] 
 **institutes** | [**[Institute]**](Institute.md) |  | [optional] [readonly] 
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 

@@ -128,6 +128,7 @@ class EpdStudy(ModelComposed):
             'purpose': ([str],),  # noqa: E501
             'purpose_other': (str,),  # noqa: E501
             'electronic_record_state': (str,),  # noqa: E501
+            's3_prefix': (str,),  # noqa: E501
         }
 
     @cached_property
@@ -176,6 +177,7 @@ class EpdStudy(ModelComposed):
         'purpose': 'purpose',  # noqa: E501
         'purpose_other': 'purposeOther',  # noqa: E501
         'electronic_record_state': 'electronicRecordState',  # noqa: E501
+        's3_prefix': 's3Prefix',  # noqa: E501
     }
 
     read_only_vars = {
@@ -186,6 +188,7 @@ class EpdStudy(ModelComposed):
         'created_by',  # noqa: E501
         'last_updated_on',  # noqa: E501
         'last_updated_by',  # noqa: E501
+        's3_prefix',  # noqa: E501
     }
 
     @classmethod
@@ -261,6 +264,7 @@ class EpdStudy(ModelComposed):
             purpose ([str]): [optional]  # noqa: E501
             purpose_other (str): [optional]  # noqa: E501
             electronic_record_state (str): [optional]  # noqa: E501
+            s3_prefix (str): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -396,6 +400,7 @@ class EpdStudy(ModelComposed):
             purpose ([str]): [optional]  # noqa: E501
             purpose_other (str): [optional]  # noqa: E501
             electronic_record_state (str): [optional]  # noqa: E501
+            s3_prefix (str): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

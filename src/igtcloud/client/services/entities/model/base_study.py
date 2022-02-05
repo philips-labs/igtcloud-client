@@ -110,7 +110,6 @@ class BaseStudy(ModelComposed):
             'description': (str,),  # noqa: E501
             'study_date': (datetime,),  # noqa: E501
             'accession_number': (str,),  # noqa: E501
-            's3_prefix': (str,),  # noqa: E501
             'hospital_id': (str,),  # noqa: E501
             'project_id': (str,),  # noqa: E501
             'patient_database_id': (str,),  # noqa: E501
@@ -127,6 +126,7 @@ class BaseStudy(ModelComposed):
             'purpose': ([str],),  # noqa: E501
             'purpose_other': (str,),  # noqa: E501
             'electronic_record_state': (str,),  # noqa: E501
+            's3_prefix': (str,),  # noqa: E501
         }
 
     @cached_property
@@ -152,7 +152,6 @@ class BaseStudy(ModelComposed):
         'description': 'description',  # noqa: E501
         'study_date': 'studyDate',  # noqa: E501
         'accession_number': 'accessionNumber',  # noqa: E501
-        's3_prefix': 's3Prefix',  # noqa: E501
         'hospital_id': 'hospitalId',  # noqa: E501
         'project_id': 'projectId',  # noqa: E501
         'patient_database_id': 'patientDatabaseId',  # noqa: E501
@@ -169,11 +168,11 @@ class BaseStudy(ModelComposed):
         'purpose': 'purpose',  # noqa: E501
         'purpose_other': 'purposeOther',  # noqa: E501
         'electronic_record_state': 'electronicRecordState',  # noqa: E501
+        's3_prefix': 's3Prefix',  # noqa: E501
     }
 
     read_only_vars = {
         'study_type',  # noqa: E501
-        's3_prefix',  # noqa: E501
         'hospital_id',  # noqa: E501
         'project_id',  # noqa: E501
         'patient_database_id',  # noqa: E501
@@ -183,6 +182,7 @@ class BaseStudy(ModelComposed):
         'created_by',  # noqa: E501
         'last_updated_on',  # noqa: E501
         'last_updated_by',  # noqa: E501
+        's3_prefix',  # noqa: E501
     }
 
     @classmethod
@@ -228,7 +228,6 @@ class BaseStudy(ModelComposed):
             description (str): [optional]  # noqa: E501
             study_date (datetime): [optional]  # noqa: E501
             accession_number (str): [optional]  # noqa: E501
-            s3_prefix (str): [optional]  # noqa: E501
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
@@ -245,6 +244,7 @@ class BaseStudy(ModelComposed):
             purpose ([str]): [optional]  # noqa: E501
             purpose_other (str): [optional]  # noqa: E501
             electronic_record_state (str): [optional]  # noqa: E501
+            s3_prefix (str): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -350,7 +350,6 @@ class BaseStudy(ModelComposed):
             description (str): [optional]  # noqa: E501
             study_date (datetime): [optional]  # noqa: E501
             accession_number (str): [optional]  # noqa: E501
-            s3_prefix (str): [optional]  # noqa: E501
             hospital_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
@@ -367,6 +366,7 @@ class BaseStudy(ModelComposed):
             purpose ([str]): [optional]  # noqa: E501
             purpose_other (str): [optional]  # noqa: E501
             electronic_record_state (str): [optional]  # noqa: E501
+            s3_prefix (str): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

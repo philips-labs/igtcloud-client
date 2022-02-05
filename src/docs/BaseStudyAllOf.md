@@ -10,7 +10,6 @@ Name | Type | Description | Notes
 **description** | **str** |  | [optional] 
 **study_date** | **datetime** |  | [optional] 
 **accession_number** | **str** |  | [optional] 
-**s3_prefix** | **str** |  | [optional] [readonly] 
 **hospital_id** | **str** |  | [optional] [readonly] 
 **project_id** | **str** |  | [optional] [readonly] 
 **patient_database_id** | **str** |  | [optional] [readonly] 

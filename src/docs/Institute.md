@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **parent_id** | **str** |  | [optional] [readonly] 
 **has_series** | **bool** |  | [optional] [readonly] 
 **project_type_name** | **str** |  | [optional] [readonly] 
+**s3_prefix** | **str** |  | [optional] [readonly] 
 **studies** | [**[RootStudy]**](RootStudy.md) |  | [optional] [readonly] 
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 
