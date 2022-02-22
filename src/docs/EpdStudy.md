@@ -31,6 +31,8 @@ Name | Type | Description | Notes
 **events** | [**[EpdStudyEvent]**](EpdStudyEvent.md) |  | [optional] 
 **study_database_id** | **str** |  | [optional] [readonly] 
 **institute_id** | **str** |  | [optional] [readonly] 
+**project_id** | **str** |  | [optional] [readonly] 
+**study_id_human_readable** | **str** |  | [optional] [readonly] 
 **created_on** | **datetime** |  | [optional] [readonly] 
 **created_by** | **str** |  | [optional] [readonly] 
 **last_updated_on** | **datetime** |  | [optional] [readonly] 

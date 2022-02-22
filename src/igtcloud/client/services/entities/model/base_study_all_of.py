@@ -94,7 +94,6 @@ class BaseStudyAllOf(ModelNormal):
             'study_date': (datetime,),  # noqa: E501
             'accession_number': (str,),  # noqa: E501
             'hospital_id': (str,),  # noqa: E501
-            'project_id': (str,),  # noqa: E501
             'patient_database_id': (str,),  # noqa: E501
             'patient': (Patient,),  # noqa: E501
         }
@@ -112,14 +111,12 @@ class BaseStudyAllOf(ModelNormal):
         'study_date': 'studyDate',  # noqa: E501
         'accession_number': 'accessionNumber',  # noqa: E501
         'hospital_id': 'hospitalId',  # noqa: E501
-        'project_id': 'projectId',  # noqa: E501
         'patient_database_id': 'patientDatabaseId',  # noqa: E501
         'patient': 'patient',  # noqa: E501
     }
 
     read_only_vars = {
         'hospital_id',  # noqa: E501
-        'project_id',  # noqa: E501
         'patient_database_id',  # noqa: E501
     }
 
@@ -168,7 +165,6 @@ class BaseStudyAllOf(ModelNormal):
             study_date (datetime): [optional]  # noqa: E501
             accession_number (str): [optional]  # noqa: E501
             hospital_id (str): [optional]  # noqa: E501
-            project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
             patient (Patient): [optional]  # noqa: E501
         """
@@ -259,7 +255,6 @@ class BaseStudyAllOf(ModelNormal):
             study_date (datetime): [optional]  # noqa: E501
             accession_number (str): [optional]  # noqa: E501
             hospital_id (str): [optional]  # noqa: E501
-            project_id (str): [optional]  # noqa: E501
             patient_database_id (str): [optional]  # noqa: E501
             patient (Patient): [optional]  # noqa: E501
         """
