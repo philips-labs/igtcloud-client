@@ -5,6 +5,7 @@ import os
 import signal
 import sys
 import tempfile
+from contextlib import contextmanager
 from getpass import getpass
 from http import cookies
 from threading import Lock, Timer
@@ -18,6 +19,29 @@ from requests import RequestException
 from tenacity import retry, wait_exponential, stop_after_delay, retry_if_exception_type
 
 logger = logging.getLogger(__name__)
+
+
+@contextmanager
+def smart_auth(domain, username=None):
+    url = urlparse(domain)
+    if not url.scheme:
+        url = urlparse('https://' + domain)
+    domain = url.geturl()
+    auth = None
+    try:
+        try_auth = AuthHandler()
+        if try_auth.domain == domain and (not username or try_auth.username == username):
+            auth = try_auth
+    except RuntimeError:
+        pass
+    try:
+        if auth is None:
+            with AuthRefresher(domain=domain, username=username) as auth:
+                yield auth
+        else:
+            yield auth
+    finally:
+        auth.close()
 
 
 def _get_mmap_filename():

@@ -54,8 +54,14 @@ def _setup_action():
     return service
 
 
+def set_auth(auth):
+    auth_service.auth_handler = auth
+    action_service.auth_handler = auth
+    entities_service.auth_handler = auth
+
+
 auth_service = _setup_auth()
 action_service = _setup_action()
 entities_service = _setup_entities()
 
-__all__ = ['auth_service', 'entities_service', 'action_service']
+__all__ = ['auth_service', 'entities_service', 'action_service', 'set_auth']

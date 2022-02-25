@@ -14,6 +14,7 @@ from .entities.model.institute import Institute
 from .entities.model.project import Project
 from .entities.model.root_study import RootStudy
 from .entities.model.series import Series
+from .utils.s3 import S3File
 
 
 class EntitiesService(BaseService, ProjectsApi, InstitutesApi, IntegrationsApi, UsersApi, OrganizationsApi):
@@ -24,6 +25,9 @@ class EntitiesService(BaseService, ProjectsApi, InstitutesApi, IntegrationsApi, 
         IntegrationsApi.__init__(self, api_client)
         UsersApi.__init__(self, api_client)
         OrganizationsApi.__init__(self, api_client)
+
+        self.study_type_classes = RootStudy.discriminator.get('study_type')
+        self.series_type_classes = Series.discriminator.get('series_type')
 
 
 class FilesCollectionWrapper(CollectionWrapper):
@@ -121,18 +125,17 @@ def _patch_service(service: EntitiesService):
     study_series = property(lambda study: get_study_series(service, study), no_setter)
     study_files = property(lambda study: get_study_files(service, study), no_setter)
     study_dicom = property(lambda study: get_dicom_files(service, study), no_setter)
-    for discriminator in RootStudy.discriminator.values():
-        for study_class in discriminator.values():
-            study_class.series = study_series
-            study_class.files = study_files
-            study_class.dicom = study_dicom
-
+    for study_class in service.study_type_classes.values():
+        study_class.series = study_series
+        study_class.files = study_files
+        study_class.dicom = study_dicom
 
     File.required_properties.add('_creds_wrapper')
     File._creds_wrapper = None
-    File.credentials = lambda file, action: get_file_creds(file, action)
-    File.download = lambda file, destination: download_file(file, destination)
-    File.download_fileobj = lambda file, file_obj: download_fileobj(file, file_obj)
+    File.credentials = get_file_creds
+    File.download = download_file
+    File.download_fileobj = download_fileobj
+    File.open = open_file
 
 
 def no_setter(self, value):
@@ -236,16 +239,39 @@ def get_file_creds(file: File, action: str) -> Optional[Credentials]:
         return s3_creds(action, file.key)
 
 
-def download_file(file: File, destination_dir: os.PathLike):
-    bucket = get_s3_bucket(file, 'GET')
+def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = True):
+    if not file.is_completed:
+        return False
     destination = os.path.abspath(os.path.join(destination_dir, file.file_name))
+    if os.path.exists(destination) and not overwrite:
+        return False
+    bucket = get_s3_bucket(file, 'GET')
     os.makedirs(os.path.abspath(destination_dir), exist_ok=True)
     bucket.download_file(Key=file.key, Filename=destination)
+    return True
 
 
 def download_fileobj(file: File, file_obj: io.IOBase):
     bucket = get_s3_bucket(file, 'GET')
-    bucket.download_fileobj(Key=file.key, FileObj=file_obj)
+    bucket.download_fileobj(Key=file.key, Fileobj=file_obj)
+
+
+def open_file(file: File, mode='rb', **kwargs):
+    if 'r' not in mode:
+        raise RuntimeError("Mode should contain 'r'")
+    binary = 'b' in mode
+    bucket = get_s3_bucket(file, 'GET')
+    s3_file = S3File(bucket.Object(file.key), mode=mode)
+    if binary:
+        buffering = kwargs.pop('buffering', 0)
+        if buffering == 0:
+            return s3_file
+        else:
+            buffer_size = buffering if buffering > 0 else 10*1024**2
+            kwargs.setdefault('buffer_size', buffer_size)
+            return io.BufferedReader(s3_file, **kwargs)
+    else:
+        return io.TextIOWrapper(s3_file, **kwargs)
 
 
 def get_s3_bucket(file: File, action: str):
@@ -256,7 +282,8 @@ def get_s3_bucket(file: File, action: str):
                       aws_secret_access_key=creds.secret_key,
                       aws_session_token=creds.session_token)
     creds_dict = {k: v for k, v in creds_dict.items() if k}
-    s3 = boto3.resource('s3', **creds_dict)
+    session = boto3.session.Session(**creds_dict)
+    s3 = session.resource('s3')
     return s3.Bucket(creds.bucket)
 
 
