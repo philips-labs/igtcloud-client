@@ -23,8 +23,8 @@ def cli():
 @click.option('--domain', default=None, help='Overwrites the environment setting')
 @click.option('--user', default=None, help='Username')
 @click.option('--ext', default=None, help='filter on specific file extension (i.e.: \'.txt\')')
-@click.option('--start', default=None, help='start date (YYYY-MM-DD) of date range filter. Base value is 1900-01-01.')
-@click.option('--end', default=None, help='end date (YYYY-MM-DD) of date range filter. Base value is today.')
+@click.option('--start', default=None, help='start date (YYYY-MM-DD) of date range filter. Default value is 1900-01-01.')
+@click.option('--end', default=None, help='end date (YYYY-MM-DD) of date range filter. Default value is 9999-12-31.')
 @click.option('--debug', flag_value=True, help='Enable debug logging')
 def download(target_folder, project, institute, environment, domain, user, ext, start, end, debug):
     """Download data from Philips Interventional Cloud.
@@ -51,6 +51,50 @@ def download(target_folder, project, institute, environment, domain, user, ext, 
         logger.info(f"Using url: {auth.domain}")
         download_institute(project, institute, target_folder, files_filter=filter_by_ext(ext),
                            studies_filter=filter_by_study_date(start, end))
+
+
+@click.command(short_help="List data from Philips Interventional Cloud in CSV file")
+@click.argument('target_folder')
+@click.argument('project')
+@click.argument('institute', required=False, default='*')
+@click.argument('environment', required=False, default='PROD', type=click.Choice(['PROD', 'TEST'],
+                                                                                 case_sensitive=False))
+@click.option('--domain', default=None, help='Overwrites the environment setting')
+@click.option('--user', default=None, help='Username')
+@click.option('--ext', default=None, help='filter on specific file extension (i.e.: \'.txt\')')
+@click.option('--start', default=None, help='start date (YYYY-MM-DD) of date range filter. Default value is 1900-01-01.')
+@click.option('--end', default=None, help='end date (YYYY-MM-DD) of date range filter. Default value is 9999-12-31.')
+@click.option('--debug', flag_value=True, help='Enable debug logging')
+@click.option('--files', flag_value=True, help='Output all files under patient studies')
+def csv(target_folder, project, institute, environment, domain, user, ext, start, end, debug, files):
+    """List data from Philips Interventional Cloud in CSV file.
+
+    This tool will export all studies/files from INSTITUTE (or all institutes) in project PROJECT to
+    TARGET_FOLDER/cloud_??.csv
+    """
+    if debug:
+        logging.getLogger('igtcloud.client').setLevel(logging.DEBUG)
+
+    from igtcloud.client.core.auth import smart_auth
+    from igtcloud.client.services import set_auth
+    from igtcloud.client.tools.common import filter_by_study_date, filter_by_ext
+    from igtcloud.client.tools.list_project import list_project
+
+    if institute == "*":
+        institute = None
+
+    if domain is None:
+        if environment == 'PROD':
+            domain = "igt-web.eu1.phsdp.com"
+        elif environment == 'TEST':
+            domain = "igt-web-test.eu1.phsdp.com"
+        else:
+            raise RuntimeError("Unsupported environment")
+    with smart_auth(domain, username=user) as auth:
+        set_auth(auth)
+        logger.info(f"Using url: {auth.domain}")
+        list_project(project, target_folder, institute_name=institute, list_files=files,
+                     files_filter=filter_by_ext(ext), studies_filter=filter_by_study_date(start, end))
 
 
 @click.command(short_help="Upload data to Philips Interventional Cloud")
@@ -94,3 +138,4 @@ cli.add_command(login)
 cli.add_command(get_token)
 cli.add_command(download)
 cli.add_command(upload)
+cli.add_command(csv)

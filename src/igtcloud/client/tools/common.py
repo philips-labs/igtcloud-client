@@ -59,7 +59,7 @@ def filter_by_study_date(start: Optional[str], end: Optional[str]):
         return None  # No filtering
 
     start_d = parse(start).date() if start else datetime(year=1900, month=1, day=1).date()
-    end_d = parse(end).date() if end else datetime.today().date()
+    end_d = parse(end).date() if end else datetime(year=9999, month=12, day=31).date()
 
     def date_filter(study: RootStudy) -> bool:
         try:
@@ -73,3 +73,18 @@ def filter_by_study_date(start: Optional[str], end: Optional[str]):
             return True
 
     return date_filter
+
+
+def flatten_dict(input_dict: dict) -> dict:
+    output_dict = dict()
+    for k, v in input_dict.items():
+        if isinstance(v, list):
+            output_dict[k] = ', '.join(v)
+        elif isinstance(v, dict):
+            for kk, vv in flatten_dict(v).items():
+                if not kk.startswith(k):
+                    kk = k + kk.title()
+                output_dict[kk] = vv
+        else:
+            output_dict[k] = v
+    return output_dict

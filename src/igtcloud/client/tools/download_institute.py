@@ -23,9 +23,9 @@ def download_institute(project_name: str, institute_name: str, destination: str,
 
     institute = find_institute_by_name(project.id, institute_name)
 
-    logger.info(f"study information - institute name: {institute.name}, project type: {project.project_type_name}, "
+    logger.info(f"Institute name: {institute.name}, project type: {project.project_type_name}, "
                 f"destination: {destination}")
-    logger.debug(f"additional study information - institute id: {institute.id} and project id: {project.id}")
+    logger.debug(f"Institute id: {institute.id} and project id: {project.id}")
 
     studies = institute.studies
 
