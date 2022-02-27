@@ -6,6 +6,7 @@ import signal
 import sys
 import tempfile
 from contextlib import contextmanager
+from datetime import datetime
 from getpass import getpass
 from http import cookies
 from threading import Lock, Timer
@@ -30,7 +31,7 @@ def smart_auth(domain, username=None):
     auth = None
     try:
         try_auth = AuthHandler()
-        if try_auth.domain == domain and (not username or try_auth.username == username):
+        if try_auth.domain == domain and try_auth.is_valid and (not username or try_auth.username == username):
             auth = try_auth
     except RuntimeError:
         pass
@@ -69,6 +70,11 @@ class AuthHandler:
     @property
     def access_token(self):
         return self._jwt_data.get("access_token")
+
+    @property
+    def is_valid(self):
+        now = datetime.now().timestamp()
+        return self._jwt_data.get("exp") > now
 
     @property
     def domain(self):
