@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
 **project_type_name** | **str** |  | [optional] 
+**study_type** | **str** |  | [optional] [readonly] 
 **continents** | **[str]** |  | [optional] 
 **s3_prefix** | **str** |  | [optional] [readonly] 
 **institutes** | [**[Institute]**](Institute.md) |  | [optional] [readonly] 

@@ -647,6 +647,7 @@ class InstitutesApi(object):
                     'hospital_id',
                     'study_id',
                     'auxiliary',
+                    'completed',
                     'x_fields',
                 ],
                 'required': [
@@ -672,6 +673,8 @@ class InstitutesApi(object):
                         (str,),
                     'auxiliary':
                         (bool,),
+                    'completed':
+                        (bool,),
                     'x_fields':
                         (str,),
                 },
@@ -679,12 +682,14 @@ class InstitutesApi(object):
                     'hospital_id': 'hospital_id',
                     'study_id': 'study_id',
                     'auxiliary': 'auxiliary',
+                    'completed': 'completed',
                     'x_fields': 'X-Fields',
                 },
                 'location_map': {
                     'hospital_id': 'path',
                     'study_id': 'path',
                     'auxiliary': 'query',
+                    'completed': 'query',
                     'x_fields': 'header',
                 },
                 'collection_format_map': {
@@ -2105,6 +2110,7 @@ class InstitutesApi(object):
 
         Keyword Args:
             auxiliary (bool): [optional] if omitted the server will use the default value of False
+            completed (bool): [optional] if omitted the server will use the default value of False
             x_fields (str): An optional fields mask. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.

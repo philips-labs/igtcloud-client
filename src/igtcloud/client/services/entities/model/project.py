@@ -91,6 +91,7 @@ class Project(ModelNormal):
             'name': (str,),  # noqa: E501
             'description': (str,),  # noqa: E501
             'project_type_name': (str,),  # noqa: E501
+            'study_type': (str,),  # noqa: E501
             'continents': ([str],),  # noqa: E501
             's3_prefix': (str,),  # noqa: E501
             'institutes': ([Institute],),  # noqa: E501
@@ -106,6 +107,7 @@ class Project(ModelNormal):
         'name': 'name',  # noqa: E501
         'description': 'description',  # noqa: E501
         'project_type_name': 'projectTypeName',  # noqa: E501
+        'study_type': 'studyType',  # noqa: E501
         'continents': 'continents',  # noqa: E501
         's3_prefix': 's3Prefix',  # noqa: E501
         'institutes': 'institutes',  # noqa: E501
@@ -113,6 +115,7 @@ class Project(ModelNormal):
 
     read_only_vars = {
         'id',  # noqa: E501
+        'study_type',  # noqa: E501
         's3_prefix',  # noqa: E501
         'institutes',  # noqa: E501
     }
@@ -159,6 +162,7 @@ class Project(ModelNormal):
             name (str): [optional]  # noqa: E501
             description (str): [optional]  # noqa: E501
             project_type_name (str): [optional]  # noqa: E501
+            study_type (str): [optional]  # noqa: E501
             continents ([str]): [optional]  # noqa: E501
             s3_prefix (str): [optional]  # noqa: E501
             institutes ([Institute]): [optional]  # noqa: E501
@@ -247,6 +251,7 @@ class Project(ModelNormal):
             name (str): [optional]  # noqa: E501
             description (str): [optional]  # noqa: E501
             project_type_name (str): [optional]  # noqa: E501
+            study_type (str): [optional]  # noqa: E501
             continents ([str]): [optional]  # noqa: E501
             s3_prefix (str): [optional]  # noqa: E501
             institutes ([Institute]): [optional]  # noqa: E501

@@ -955,6 +955,7 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     hospital_id = "hospital_id_example" # str | 
     study_id = "study_id_example" # str | 
     auxiliary = False # bool |  (optional) if omitted the server will use the default value of False
+    completed = False # bool |  (optional) if omitted the server will use the default value of False
     x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
@@ -967,7 +968,7 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_study_files(hospital_id, study_id, auxiliary=auxiliary, x_fields=x_fields)
+        api_response = api_instance.get_study_files(hospital_id, study_id, auxiliary=auxiliary, completed=completed, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
         print("Exception when calling InstitutesApi->get_study_files: %s\n" % e)
@@ -981,6 +982,7 @@ Name | Type | Description  | Notes
  **hospital_id** | **str**|  |
  **study_id** | **str**|  |
  **auxiliary** | **bool**|  | [optional] if omitted the server will use the default value of False
+ **completed** | **bool**|  | [optional] if omitted the server will use the default value of False
  **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
