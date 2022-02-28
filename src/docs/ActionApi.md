@@ -1,6 +1,6 @@
 # igtcloud.client.services.action.ActionApi
 
-All URIs are relative to */action*
+All URIs are relative to *http://localhost/action*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -17,7 +17,6 @@ Method | HTTP request | Description
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.action
@@ -25,10 +24,10 @@ from igtcloud.client.services.action.api import action_api
 from igtcloud.client.services.action.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.action.model.preprocessing_request import PreprocessingRequest
 from pprint import pprint
-# Defining the host is optional and defaults to /action
+# Defining the host is optional and defaults to http://localhost/action
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.action.Configuration(
-    host = "/action"
+    host = "http://localhost/action"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -88,7 +87,6 @@ void (empty response body)
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -106,7 +104,6 @@ void (empty response body)
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.action
@@ -114,10 +111,10 @@ from igtcloud.client.services.action.api import action_api
 from igtcloud.client.services.action.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.action.model.update_database_request import UpdateDatabaseRequest
 from pprint import pprint
-# Defining the host is optional and defaults to /action
+# Defining the host is optional and defaults to http://localhost/action
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.action.Configuration(
-    host = "/action"
+    host = "http://localhost/action"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -175,7 +172,6 @@ void (empty response body)
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |

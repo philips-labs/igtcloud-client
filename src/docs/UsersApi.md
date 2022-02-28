@@ -1,6 +1,6 @@
 # igtcloud.client.services.entities.UsersApi
 
-All URIs are relative to */data*
+All URIs are relative to *http://localhost/data*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -29,17 +29,16 @@ Method | HTTP request | Description
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import users_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -94,7 +93,6 @@ void (empty response body)
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | No Content |  -  |
@@ -111,17 +109,16 @@ void (empty response body)
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import users_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -179,7 +176,6 @@ void (empty response body)
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | No Content |  -  |
@@ -196,17 +192,16 @@ void (empty response body)
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import users_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -257,7 +252,6 @@ void (empty response body)
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | No Content |  -  |
@@ -274,7 +268,6 @@ void (empty response body)
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
@@ -282,10 +275,10 @@ from igtcloud.client.services.entities.api import users_api
 from igtcloud.client.services.entities.model.user import User
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -342,7 +335,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -359,7 +351,6 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
@@ -367,10 +358,10 @@ from igtcloud.client.services.entities.api import users_api
 from igtcloud.client.services.entities.model.user import User
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -436,7 +427,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -453,7 +443,6 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
@@ -461,10 +450,10 @@ from igtcloud.client.services.entities.api import users_api
 from igtcloud.client.services.entities.model.storage import Storage
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -523,7 +512,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -540,17 +528,16 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import users_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -602,7 +589,6 @@ This endpoint does not need any parameter.
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | File |  -  |
@@ -619,7 +605,6 @@ This endpoint does not need any parameter.
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
@@ -627,10 +612,10 @@ from igtcloud.client.services.entities.api import users_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.entities.model.file import File
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -687,7 +672,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -704,7 +688,6 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
@@ -712,10 +695,10 @@ from igtcloud.client.services.entities.api import users_api
 from igtcloud.client.services.entities.model.user import User
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -772,7 +755,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -789,7 +771,6 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
@@ -798,10 +779,10 @@ from igtcloud.client.services.entities.model.user_activation_request import User
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.entities.model.hsdp_response import HsdpResponse
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -869,7 +850,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -886,7 +866,6 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
@@ -894,10 +873,10 @@ from igtcloud.client.services.entities.api import users_api
 from igtcloud.client.services.entities.model.user_activation_request import UserActivationRequest
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -954,7 +933,6 @@ void (empty response body)
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | No data |  -  |
@@ -971,17 +949,16 @@ void (empty response body)
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import users_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1032,7 +1009,6 @@ void (empty response body)
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | No Content |  -  |
@@ -1049,7 +1025,6 @@ void (empty response body)
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
@@ -1058,10 +1033,10 @@ from igtcloud.client.services.entities.model.user import User
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.entities.model.user_request import UserRequest
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1136,7 +1111,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Existing user found, onboarded |  -  |
@@ -1154,7 +1128,6 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
@@ -1162,10 +1135,10 @@ from igtcloud.client.services.entities.api import users_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.entities.model.user_request import UserRequest
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -1231,7 +1204,6 @@ void (empty response body)
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | No Content |  -  |
