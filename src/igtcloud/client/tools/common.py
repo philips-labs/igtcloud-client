@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime
-from typing import Iterable, Optional
+from typing import Iterable, Optional, List, Tuple
 
 import tqdm
 from dateutil.parser import parse
@@ -42,6 +42,22 @@ def find_institute_by_name(project_id: str, institute_name: str) -> Optional[Ins
     for institute in institutes:
         return institute
     return None
+
+
+def find_project_and_institutes(project_name: str, institute_name: str = None) -> Tuple[Optional[Project], List[Institute]]:
+    institutes = list()
+    project = find_project_by_name(project_name)
+    if not project:
+        return None, institutes
+
+    if institute_name:
+        institute = find_institute_by_name(project.id, institute_name)
+        if institute:
+            institutes.append(institute)
+    else:
+        institutes = project.institutes
+
+    return project, institutes
 
 
 def filter_by_ext(ext: Optional[str]):
@@ -88,3 +104,14 @@ def flatten_dict(input_dict: dict) -> dict:
         else:
             output_dict[k] = v
     return output_dict
+
+
+def study_key(study: RootStudy) -> str:
+    attr_candidates = ['name', 'clinical_study', 'subject_id']
+    for attr in attr_candidates:
+        if hasattr(study, attr):
+            return getattr(study, attr)
+    if hasattr(study, 'patient'):
+        return study.patient.patient_name
+    else:
+        return study.study_database_id

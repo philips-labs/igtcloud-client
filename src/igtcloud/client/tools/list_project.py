@@ -8,7 +8,8 @@ from typing import Optional, Callable
 from igtcloud.client.services.entities.model.file import File
 from igtcloud.client.services.entities.model.root_study import RootStudy
 from igtcloud.client.services.entities.model_utils import model_to_dict
-from igtcloud.client.tools.common import find_project_by_name, find_institute_by_name, flatten_dict
+from igtcloud.client.tools.common import find_project_by_name, find_institute_by_name, flatten_dict, \
+    find_project_and_institutes
 
 logger = logging.getLogger(__name__)
 
@@ -16,18 +17,10 @@ logger = logging.getLogger(__name__)
 def list_project(project_name: str, destination: str, institute_name: Optional[str] = None,
                  list_files: bool = False, studies_filter: Callable[[RootStudy], bool] = None,
                  files_filter: Callable[[File], bool] = None):
-    project = find_project_by_name(project_name)
+    project, institutes = find_project_and_institutes(project_name, institute_name)
     if not project:
         logger.error(f"Project not found: {project_name}")
         return
-
-    institutes = list()
-    if institute_name:
-        institute = find_institute_by_name(project.id, institute_name)
-        if institute:
-            institutes.append(institute)
-    else:
-        institutes = project.institutes
 
     if not institutes:
         logger.error(f"No institutes found")

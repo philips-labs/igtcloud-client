@@ -1,5 +1,4 @@
 import logging
-
 import click
 
 from . import logger
@@ -25,8 +24,11 @@ def cli():
 @click.option('--ext', default=None, help='filter on specific file extension (i.e.: \'.txt\')')
 @click.option('--start', default=None, help='start date (YYYY-MM-DD) of date range filter. Default value is 1900-01-01.')
 @click.option('--end', default=None, help='end date (YYYY-MM-DD) of date range filter. Default value is 9999-12-31.')
+@click.option('--category', default=['files'], multiple=True, type=click.Choice(['files', 'dicom', 'annotations'],
+                                                                                case_sensitive=False),
+              help='Categories of files to download')
 @click.option('--debug', flag_value=True, help='Enable debug logging')
-def download(target_folder, project, institute, environment, domain, user, ext, start, end, debug):
+def download(target_folder, project, institute, environment, domain, user, ext, start, end, category, debug):
     """Download data from Philips Interventional Cloud.
 
     \b
@@ -49,7 +51,7 @@ def download(target_folder, project, institute, environment, domain, user, ext, 
     with smart_auth(domain, username=user) as auth:
         set_auth(auth)
         logger.info(f"Using url: {auth.domain}")
-        download_institute(project, institute, target_folder, files_filter=filter_by_ext(ext),
+        download_institute(project, institute, target_folder, categories=category, files_filter=filter_by_ext(ext),
                            studies_filter=filter_by_study_date(start, end))
 
 
@@ -83,13 +85,7 @@ def csv(target_folder, project, institute, environment, domain, user, ext, start
     if institute == "*":
         institute = None
 
-    if domain is None:
-        if environment == 'PROD':
-            domain = "igt-web.eu1.phsdp.com"
-        elif environment == 'TEST':
-            domain = "igt-web-test.eu1.phsdp.com"
-        else:
-            raise RuntimeError("Unsupported environment")
+    domain = _get_domain(domain, environment)
     with smart_auth(domain, username=user) as auth:
         set_auth(auth)
         logger.info(f"Using url: {auth.domain}")
@@ -97,9 +93,49 @@ def csv(target_folder, project, institute, environment, domain, user, ext, start
                      files_filter=filter_by_ext(ext), studies_filter=filter_by_study_date(start, end))
 
 
+def _get_domain(domain, environment):
+    if domain is None:
+        if environment == 'PROD':
+            domain = "igt-web.eu1.phsdp.com"
+        elif environment == 'TEST':
+            domain = "igt-web-test.eu1.phsdp.com"
+        else:
+            raise RuntimeError("Unsupported environment")
+    return domain
+
+
 @click.command(short_help="Upload data to Philips Interventional Cloud")
-def upload():
-    click.echo('Dropped the database')
+@click.argument('local_folder')
+@click.argument('project')
+@click.argument('institute', required=False, default='*')
+@click.argument('environment', required=False, default='PROD', type=click.Choice(['PROD', 'TEST'],
+                                                                                 case_sensitive=False))
+@click.option('--domain', default=None, help='Overwrites the environment setting')
+@click.option('--user', default=None, help='Username')
+@click.option('--submit', flag_value=True, help='Set electronic record state to submitted state')
+@click.option('--debug', flag_value=True, help='Enable debug logging')
+def upload(local_folder, project, institute, environment, domain, user, submit, debug):
+    """Upload data to Philips Interventional Cloud.
+
+    \b
+    This tool will upload all files in LOCAL_FOLDER to project PROJECT.
+    the folder structure should be LOCAL_FOLDER / INSTITUTE / <patient study name> / <files and folders"""
+    if debug:
+        logging.getLogger('igtcloud.client').setLevel(logging.DEBUG)
+
+    domain = _get_domain(domain, environment)
+
+    from igtcloud.client.core.auth import smart_auth
+    from igtcloud.client.services import set_auth
+    from igtcloud.client.tools.upload_project import upload_project
+
+    if institute == "*":
+        institute = None
+
+    with smart_auth(domain, username=user) as auth:
+        set_auth(auth)
+        logger.info(f"Using url: {auth.domain}")
+        upload_project(local_folder, project, institute, submit)
 
 
 @click.command(short_help="Login to Philips Interventional Cloud")

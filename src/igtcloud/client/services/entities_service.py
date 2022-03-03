@@ -30,12 +30,14 @@ class EntitiesService(BaseService, ProjectsApi, InstitutesApi, IntegrationsApi, 
         self.series_type_classes = Series.discriminator.get('series_type')
 
 
-class FilesCollectionWrapper(CollectionWrapper):
+class FilesCollectionWrapper(CollectionWrapper[File]):
     def __init__(self, s3_prefix: str, iterable: Iterable[File] = None, f_init: Callable[[], Iterable[File]] = None,
                  f_extend: Callable[[Iterable[File]], Iterable[File]] = None, f_remove: Callable[[File], None] = None,
                  f_auth: Callable[[str, str], Optional[Credentials]] = None,
-                 f_callback: Callable[[File], Any] = None) -> None:
+                 f_callback: Callable[[File], Any] = None,
+                 category: str = 'files') -> None:
         self.s3_prefix = s3_prefix
+        self.category = category
         if not self.s3_prefix.endswith('/'):
             self.s3_prefix += '/'
         f_add = None
@@ -73,6 +75,7 @@ class FilesCollectionWrapper(CollectionWrapper):
             collection = self
         for file in collection:
             file._creds_wrapper = lambda action: FilesCollectionWrapper.get_credentials(self, action)
+            file._category = lambda: self.category
 
     def extend(self, __iterable: Iterable[File]) -> None:
         if callable(self._extend):
@@ -90,7 +93,7 @@ class FilesCollectionWrapper(CollectionWrapper):
             self._credentials[action] = self._auth(action, self.s3_prefix)
         return self._credentials.get(action)
 
-    def upload(self, filename: str, key: str = None):
+    def upload(self, filename: str, key: str = None, overwrite: bool = False, callback: Callable[[int], None] = None) -> bool:
         abs_path = os.path.abspath(filename)
         if not os.path.exists(abs_path):
             raise FileNotFoundError(f"File {filename} not found")
@@ -99,15 +102,21 @@ class FilesCollectionWrapper(CollectionWrapper):
             key = os.path.basename(abs_path)
 
         key = self.s3_prefix + key
-        file = File(key=key, file_size=os.path.getsize(abs_path))
-        self.append(file)
-        try:
-            file = self[self.index(file)]
-        except Exception:
-            pass  # Ignore index exceptions
+        new_file = File(key=key, file_size=os.path.getsize(abs_path))
+        if new_file not in self:
+            file = self.append(new_file)
+        else:
+            file = self[self.index(new_file)]
+            if file.file_size == new_file.file_size and not overwrite:
+                if callback:
+                    callback(file.file_size)
+                return False
         bucket = get_s3_bucket(file, 'PUT')
         extra_args = {'ServerSideEncryption': 'AES256'}
-        bucket.upload_file(Filename=abs_path, Key=file.key, ExtraArgs=extra_args)
+        kwargs = dict(Filename=abs_path, Key=file.key, ExtraArgs=extra_args)
+        if callback:
+            kwargs['Callback'] = callback
+        bucket.upload_file(**kwargs)
         file.is_completed = True
         file.is_new = False
         file.progress_in_bytes = file.file_size
@@ -116,6 +125,7 @@ class FilesCollectionWrapper(CollectionWrapper):
         file.file_name = key[len(self.s3_prefix):]
         if callable(self._callback):
             self._callback(file)
+        return True
 
 
 def _patch_service(service: EntitiesService):
@@ -125,17 +135,22 @@ def _patch_service(service: EntitiesService):
     study_series = property(lambda study: get_study_series(service, study), no_setter)
     study_files = property(lambda study: get_study_files(service, study), no_setter)
     study_dicom = property(lambda study: get_dicom_files(service, study), no_setter)
+    study_annotations = property(lambda study: get_annotation_files(service, study), no_setter)
     for study_class in service.study_type_classes.values():
         study_class.series = study_series
         study_class.files = study_files
         study_class.dicom = study_dicom
+        study_class.annotations = study_annotations
 
     File.required_properties.add('_creds_wrapper')
+    File.required_properties.add('_category')
     File._creds_wrapper = None
+    File._category = None
     File.credentials = get_file_creds
     File.download = download_file
     File.download_fileobj = download_fileobj
     File.open = open_file
+    File.category = property(get_category)
 
 
 def no_setter(self, value):
@@ -185,6 +200,7 @@ def get_study_files(service: EntitiesService, study: RootStudy) -> FilesCollecti
     initial_value = data_store.get('files', None)
     if not isinstance(initial_value, FilesCollectionWrapper):
         data_store['files'] = FilesCollectionWrapper(s3_prefix=study.s3_prefix + 'files/',
+                                                     category='files',
                                                      f_auth=lambda action, prefix: s3_creds(action, prefix),
                                                      f_init=lambda: service.get_study_files(study.institute_id,
                                                                                             study.study_database_id).files,
@@ -203,11 +219,21 @@ def get_dicom_files(service: EntitiesService, study: RootStudy) -> FilesCollecti
     initial_value = data_store.get('dicom', None)
     if not isinstance(initial_value, FilesCollectionWrapper):
         data_store['dicom'] = FilesCollectionWrapper(s3_prefix=study.s3_prefix + '0/',
+                                                     category='dicom',
                                                      f_auth=lambda action, prefix: s3_creds(action, prefix),
-                                                     f_init=lambda: service.get_study_files(study.institute_id,
-                                                                                            study.study_database_id,
-                                                                                            auxiliary=True).dicom)
+                                                     f_init=lambda: get_aux_files(service, study, 'dicom'))
     return data_store['dicom']
+
+
+def get_annotation_files(service: EntitiesService, study: RootStudy) -> FilesCollectionWrapper:
+    data_store = study.get('_data_store')
+    initial_value = data_store.get('annotations', None)
+    if not isinstance(initial_value, FilesCollectionWrapper):
+        data_store['annotations'] = FilesCollectionWrapper(s3_prefix=study.s3_prefix + 'annotations/',
+                                                           category='annotations',
+                                                           f_auth=lambda action, prefix: s3_creds(action, prefix),
+                                                           f_init=lambda: get_aux_files(service, study, 'annotations'))
+    return data_store['annotations']
 
 
 def get_project_files(service: EntitiesService, project: Project) -> FilesCollectionWrapper:
@@ -239,15 +265,20 @@ def get_file_creds(file: File, action: str) -> Optional[Credentials]:
         return s3_creds(action, file.key)
 
 
-def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = True):
+def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = True, callback: Callable[[int], None] = None):
     if not file.is_completed:
         return False
     destination = os.path.abspath(os.path.join(destination_dir, file.file_name))
     if os.path.exists(destination) and not overwrite:
+        if callback:
+            callback(file.file_size)
         return False
     bucket = get_s3_bucket(file, 'GET')
-    os.makedirs(os.path.abspath(destination_dir), exist_ok=True)
-    bucket.download_file(Key=file.key, Filename=destination)
+    os.makedirs(os.path.abspath(os.path.dirname(destination)), exist_ok=True)
+    kwargs = dict(Key=file.key, Filename=destination)
+    if callback:
+        kwargs['Callback'] = callback
+    bucket.download_file(**kwargs)
     return True
 
 
@@ -296,3 +327,14 @@ def process_file(study: RootStudy, file: File):
                                        patient_id=getattr(study, 'patient_database_id', None),
                                        uploaded_path=file.file_name)
         action_service.post_preprocess_file(request)
+
+
+def get_category(file: File) -> str:
+    if callable(file._category):
+        return file._category()
+    return 'files'
+
+
+def get_aux_files(service: EntitiesService, study: RootStudy, aux: str):
+    files = service.get_study_files(study.institute_id, study.study_database_id, auxiliary=True)
+    return getattr(files, aux, [])

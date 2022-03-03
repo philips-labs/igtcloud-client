@@ -1,4 +1,4 @@
-from typing import Iterable, TypeVar, SupportsIndex, Callable
+from typing import Iterable, TypeVar, SupportsIndex, Callable, Generic
 
 from igtcloud.client.core.auth import AuthHandler
 
@@ -26,9 +26,10 @@ class BaseService:
 
 
 _T = TypeVar("_T")
+_KT = TypeVar("_KT")
 
 
-class CollectionWrapper(list):
+class CollectionWrapper(list, Generic[_T]):
     def __init__(self, iterable: Iterable[_T] = None,
                  f_init: Callable[[], Iterable[_T]] = None,
                  f_add: Callable[[_T], _T] = None,
@@ -50,11 +51,12 @@ class CollectionWrapper(list):
     def copy(self) -> list[_T]:
         return super().copy()
 
-    def append(self, __object: _T) -> None:
+    def append(self, __object: _T) -> _T:
         if callable(self._add):
             obj = self._add(__object)
             if obj is not None:
                 super().append(obj)
+                return obj
         else:
             raise RuntimeError("Not supported")
 
@@ -87,4 +89,7 @@ class CollectionWrapper(list):
         if callable(self._init):
             super().clear()
             super().extend(self._init())
+
+    def to_dict(self, key_fn: Callable[[_T], _KT]) -> dict[_KT, _T]:
+        return {key_fn(item): item for item in self.copy()}
 
