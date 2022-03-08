@@ -12,6 +12,7 @@ from igtcloud.client.services.base_service import CollectionWrapper
 from igtcloud.client.services.entities.model.electronic_record_state import ElectronicRecordState
 from igtcloud.client.services.entities.model.patient import Patient
 from igtcloud.client.services.entities.model.root_study import RootStudy
+from igtcloud.client.services.entities.model_utils import validate_and_convert_types
 from igtcloud.client.tools.common import find_project_and_institutes, study_key
 
 logger = logging.getLogger(__name__)
@@ -63,8 +64,14 @@ def upload_study(study_type: str, study_folder: str, institute_id: str, studies:
         try:
             with open(study_json_file, 'r') as f:
                 data = json.load(f)
-            data['studyType'] = study_type
-            local_study = study_cls._from_openapi_data(**data)
+                data['studyType'] = study_type
+            local_study = validate_and_convert_types(data,
+                                                     (RootStudy,),
+                                                     ['received_data'],
+                                                     True,
+                                                     True,
+                                                     configuration=entities_service.api_client.configuration
+                                                     )
         except Exception:
             logger.exception(f"Unable to parse {study_json_file}")
     if local_study is None:
@@ -89,12 +96,13 @@ def upload_study(study_type: str, study_folder: str, institute_id: str, studies:
     files_uploaded = list()
     files_skipped = list()
 
-    with concurrent.futures.ThreadPoolExecutor() as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
         fs = dict()
         with tqdm(total=0, leave=False, desc=f"Study {patient_name}", unit='B', unit_scale=True,
                   unit_divisor=1024) as pbar:
             def callback(x):
                 pbar.update(x)
+
             if os.path.isdir(os.path.join(study_folder, 'files')) or os.path.isdir(os.path.join(study_folder, 'dicom')):
                 # When directory contains files and/or dicom, only use files directory as study_root
                 study_folder = os.path.join(study_folder, 'files')

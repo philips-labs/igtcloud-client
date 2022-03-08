@@ -107,7 +107,7 @@ class FilesCollectionWrapper(CollectionWrapper[File]):
             file = self.append(new_file)
         else:
             file = self[self.index(new_file)]
-            if file.file_size == new_file.file_size and not overwrite:
+            if file.file_size == new_file.file_size and file.is_completed and not overwrite:
                 if callback:
                     callback(file.file_size)
                 return False
@@ -269,7 +269,7 @@ def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = Tr
     if not file.is_completed:
         return False
     destination = os.path.abspath(os.path.join(destination_dir, file.file_name))
-    if os.path.exists(destination) and not overwrite:
+    if os.path.exists(destination) and os.path.getsize(destination) == file.file_size and not overwrite:
         if callback:
             callback(file.file_size)
         return False
