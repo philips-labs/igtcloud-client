@@ -1,4 +1,4 @@
-from typing import Iterable, TypeVar, SupportsIndex, Callable, Generic, List
+from typing import Iterable, TypeVar, SupportsIndex, Callable, Generic, List, Dict
 
 from igtcloud.client.core.auth import AuthHandler
 
@@ -90,6 +90,6 @@ class CollectionWrapper(list, Generic[_T]):
             super().clear()
             super().extend(self._init())
 
-    def to_dict(self, key_fn: Callable[[_T], _KT]) -> dict[_KT, _T]:
+    def to_dict(self, key_fn: Callable[[_T], _KT]) -> Dict[_KT, _T]:
         return {key_fn(item): item for item in self.copy()}
 
