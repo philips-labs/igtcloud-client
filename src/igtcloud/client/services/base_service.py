@@ -1,4 +1,4 @@
-from typing import Iterable, TypeVar, SupportsIndex, Callable, Generic
+from typing import Iterable, TypeVar, SupportsIndex, Callable, Generic, List
 
 from igtcloud.client.core.auth import AuthHandler
 
@@ -48,7 +48,7 @@ class CollectionWrapper(list, Generic[_T]):
     def clear(self) -> None:
         raise RuntimeError("Not supported")
 
-    def copy(self) -> list[_T]:
+    def copy(self) -> List[_T]:
         return super().copy()
 
     def append(self, __object: _T) -> _T:

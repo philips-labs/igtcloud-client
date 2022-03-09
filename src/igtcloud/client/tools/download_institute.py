@@ -3,7 +3,7 @@ import json
 import logging
 import os
 from concurrent.futures import as_completed
-from typing import Callable
+from typing import Callable, List
 
 from tqdm.auto import tqdm
 
@@ -15,7 +15,7 @@ from ..services.entities.model.root_study import RootStudy
 logger = logging.getLogger(__name__)
 
 
-def download_institute(project_name: str, institute_name: str, destination: str, categories: list[str] = None,
+def download_institute(project_name: str, institute_name: str, destination: str, categories: List[str] = None,
                        studies_filter: Callable[[RootStudy], bool] = None, files_filter: Callable[[File], bool] = None):
     project = find_project_by_name(project_name)
     if not project:
