@@ -32,7 +32,8 @@ jobs:
           python-version: '3.9' 
           architecture: 'x64'
       
-      - run: |
+      - name: build executable
+        run: |
           pip install .
           pip install -r requirements-dev.txt
           pyinstaller --name igtcloud -F -p src .github/workflows/cli.py
