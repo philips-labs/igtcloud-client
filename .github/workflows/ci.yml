@@ -5,11 +5,10 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ master ]
+    tags:
+      - "v*.*.*"
   pull_request:
     branches: [ master ]
-  release:
-    types: [published, created, edited]
   
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -37,4 +36,14 @@ jobs:
           pip install .
           pip install -r requirements-dev.txt
           pyinstaller --name igtcloud -F -p src .github/workflows/cli.py
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        
+        with:
+          draft: ${{ startsWith(github.ref, 'refs/tags/') }}
+          files: |
+            dist/igtcloud*
+            LICENSE
+          
 

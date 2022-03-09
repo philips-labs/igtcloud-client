@@ -34,7 +34,7 @@ setup(
     name='igtcloudclient',
     use_scm_version={'write_to': 'src/igtcloud/client/__version__.py', 'local_scheme': dev_scheme},
     author='Koen de Laat (Philips)',
-    license="Apache License 2.0",
+    license="MIT",
     author_email='koen.de.laat@philips.com',
     url='https://www.philips.com',
     description='IGT Cloud client',
