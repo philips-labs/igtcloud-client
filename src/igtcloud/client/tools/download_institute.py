@@ -57,6 +57,7 @@ def download_institute(project_name: str, institute_name: str, destination: str,
 
 def _download_study(study, study_destination, categories, files_filter):
     study_json_file = os.path.join(study_destination, 'study.json')
+    os.makedirs(os.path.dirname(study_json_file), exist_ok=True)
     with open(study_json_file, 'w') as f:
         json.dump(ApiClient.sanitize_for_serialization(study), f, indent=4)
 
