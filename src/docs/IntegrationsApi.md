@@ -1,17 +1,17 @@
 # igtcloud.client.services.entities.IntegrationsApi
 
-All URIs are relative to */data*
+All URIs are relative to *http://localhost/data*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_ai_suite_collections_resource**](IntegrationsApi.md#get_ai_suite_collections_resource) | **GET** /integrations/aisuite/{connection_name}/projects/{aisuite_project_id} | 
-[**get_ai_suite_connections_resource**](IntegrationsApi.md#get_ai_suite_connections_resource) | **GET** /integrations/aisuite | 
-[**get_ai_suite_projects_resource**](IntegrationsApi.md#get_ai_suite_projects_resource) | **GET** /integrations/aisuite/{connection_name}/projects | 
-[**post_ai_suite_collections_resource**](IntegrationsApi.md#post_ai_suite_collections_resource) | **POST** /integrations/aisuite/{connection_name}/projects/{aisuite_project_id} | 
+[**get_ai_suite_collections**](IntegrationsApi.md#get_ai_suite_collections) | **GET** /integrations/aisuite/{connection_name}/projects/{aisuite_project_id} | 
+[**get_ai_suite_connections**](IntegrationsApi.md#get_ai_suite_connections) | **GET** /integrations/aisuite | 
+[**get_ai_suite_projects**](IntegrationsApi.md#get_ai_suite_projects) | **GET** /integrations/aisuite/{connection_name}/projects | 
+[**post_ai_suite_collections**](IntegrationsApi.md#post_ai_suite_collections) | **POST** /integrations/aisuite/{connection_name}/projects/{aisuite_project_id} | 
 
 
-# **get_ai_suite_collections_resource**
-> [AISuiteCollection] get_ai_suite_collections_resource(connection_name, aisuite_project_id)
+# **get_ai_suite_collections**
+> [AISuiteCollection] get_ai_suite_collections(connection_name, aisuite_project_id)
 
 
 
@@ -19,7 +19,6 @@ Method | HTTP request | Description
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
@@ -27,10 +26,10 @@ from igtcloud.client.services.entities.api import integrations_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.entities.model.ai_suite_collection import AISuiteCollection
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -56,22 +55,24 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     api_instance = integrations_api.IntegrationsApi(api_client)
     connection_name = "connection_name_example" # str | Name of AI Suite connection
     aisuite_project_id = "aisuite_project_id_example" # str | AI Suite project id or reference
+    project_id = "projectId_example" # str | IGTCloud project (optional)
+    institute_id = "instituteId_example" # str | IGTCloud institute (optional)
     x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.get_ai_suite_collections_resource(connection_name, aisuite_project_id)
+        api_response = api_instance.get_ai_suite_collections(connection_name, aisuite_project_id)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->get_ai_suite_collections_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->get_ai_suite_collections: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_ai_suite_collections_resource(connection_name, aisuite_project_id, x_fields=x_fields)
+        api_response = api_instance.get_ai_suite_collections(connection_name, aisuite_project_id, project_id=project_id, institute_id=institute_id, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->get_ai_suite_collections_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->get_ai_suite_collections: %s\n" % e)
 ```
 
 
@@ -81,6 +82,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **connection_name** | **str**| Name of AI Suite connection |
  **aisuite_project_id** | **str**| AI Suite project id or reference |
+ **project_id** | **str**| IGTCloud project | [optional]
+ **institute_id** | **str**| IGTCloud institute | [optional]
  **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
@@ -98,7 +101,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -106,8 +108,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_ai_suite_connections_resource**
-> [AISuiteConnection] get_ai_suite_connections_resource()
+# **get_ai_suite_connections**
+> [AISuiteConnection] get_ai_suite_connections()
 
 
 
@@ -115,17 +117,16 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import integrations_api
 from igtcloud.client.services.entities.model.ai_suite_connection import AISuiteConnection
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -154,10 +155,10 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_ai_suite_connections_resource(x_fields=x_fields)
+        api_response = api_instance.get_ai_suite_connections(x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->get_ai_suite_connections_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->get_ai_suite_connections: %s\n" % e)
 ```
 
 
@@ -182,15 +183,14 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_ai_suite_projects_resource**
-> [AISuiteProject] get_ai_suite_projects_resource(connection_name)
+# **get_ai_suite_projects**
+> [AISuiteProject] get_ai_suite_projects(connection_name)
 
 
 
@@ -198,7 +198,6 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
@@ -206,10 +205,10 @@ from igtcloud.client.services.entities.api import integrations_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.entities.model.ai_suite_project import AISuiteProject
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -238,18 +237,18 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.get_ai_suite_projects_resource(connection_name)
+        api_response = api_instance.get_ai_suite_projects(connection_name)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->get_ai_suite_projects_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->get_ai_suite_projects: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_ai_suite_projects_resource(connection_name, x_fields=x_fields)
+        api_response = api_instance.get_ai_suite_projects(connection_name, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->get_ai_suite_projects_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->get_ai_suite_projects: %s\n" % e)
 ```
 
 
@@ -275,7 +274,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -283,8 +281,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **post_ai_suite_collections_resource**
-> AISuiteCollection post_ai_suite_collections_resource(connection_name, aisuite_project_id)
+# **post_ai_suite_collections**
+> AISuiteCollection post_ai_suite_collections(connection_name, aisuite_project_id)
 
 
 
@@ -292,7 +290,6 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
@@ -300,10 +297,10 @@ from igtcloud.client.services.entities.api import integrations_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.entities.model.ai_suite_collection import AISuiteCollection
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -329,22 +326,24 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     api_instance = integrations_api.IntegrationsApi(api_client)
     connection_name = "connection_name_example" # str | Name of AI Suite connection
     aisuite_project_id = "aisuite_project_id_example" # str | AI Suite project id or reference
+    project_id = "projectId_example" # str | IGTCloud project (optional)
+    institute_id = "instituteId_example" # str | IGTCloud institute (optional)
     x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.post_ai_suite_collections_resource(connection_name, aisuite_project_id)
+        api_response = api_instance.post_ai_suite_collections(connection_name, aisuite_project_id)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->post_ai_suite_collections_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->post_ai_suite_collections: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.post_ai_suite_collections_resource(connection_name, aisuite_project_id, x_fields=x_fields)
+        api_response = api_instance.post_ai_suite_collections(connection_name, aisuite_project_id, project_id=project_id, institute_id=institute_id, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling IntegrationsApi->post_ai_suite_collections_resource: %s\n" % e)
+        print("Exception when calling IntegrationsApi->post_ai_suite_collections: %s\n" % e)
 ```
 
 
@@ -354,6 +353,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **connection_name** | **str**| Name of AI Suite connection |
  **aisuite_project_id** | **str**| AI Suite project id or reference |
+ **project_id** | **str**| IGTCloud project | [optional]
+ **institute_id** | **str**| IGTCloud institute | [optional]
  **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
@@ -371,7 +372,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |

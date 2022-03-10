@@ -1,24 +1,24 @@
 # igtcloud.client.services.entities.ProjectsApi
 
-All URIs are relative to */data*
+All URIs are relative to *http://localhost/data*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**delete_project_files_resource**](ProjectsApi.md#delete_project_files_resource) | **DELETE** /projects/{project_id}/files | 
-[**get_hospital_resource**](ProjectsApi.md#get_hospital_resource) | **GET** /projects/hospitals/{hospital_id} | 
-[**get_hospitals_resource**](ProjectsApi.md#get_hospitals_resource) | **GET** /projects/{project_id}/hospitals | 
-[**get_project_download_file_resource**](ProjectsApi.md#get_project_download_file_resource) | **GET** /projects/{project_id}/download-files | 
-[**get_project_files_resource**](ProjectsApi.md#get_project_files_resource) | **GET** /projects/{project_id}/files | 
-[**get_project_resource**](ProjectsApi.md#get_project_resource) | **GET** /projects/{project_id} | 
-[**get_project_types_resource**](ProjectsApi.md#get_project_types_resource) | **GET** /project-types | 
-[**get_projects_resource**](ProjectsApi.md#get_projects_resource) | **GET** /projects | 
-[**post_hospitals_resource**](ProjectsApi.md#post_hospitals_resource) | **POST** /projects/{project_id}/hospitals | 
-[**post_project_files_resource**](ProjectsApi.md#post_project_files_resource) | **POST** /projects/{project_id}/files | This create project files endpoint actually only stores the file size of a project_id + key combination
-[**post_projects_resource**](ProjectsApi.md#post_projects_resource) | **POST** /projects | 
+[**delete_project_files**](ProjectsApi.md#delete_project_files) | **DELETE** /projects/{project_id}/files | 
+[**get_institute**](ProjectsApi.md#get_institute) | **GET** /projects/hospitals/{hospital_id} | 
+[**get_institutes**](ProjectsApi.md#get_institutes) | **GET** /projects/{project_id}/hospitals | 
+[**get_project**](ProjectsApi.md#get_project) | **GET** /projects/{project_id} | 
+[**get_project_download_file**](ProjectsApi.md#get_project_download_file) | **GET** /projects/{project_id}/download-files | 
+[**get_project_files**](ProjectsApi.md#get_project_files) | **GET** /projects/{project_id}/files | 
+[**get_project_types**](ProjectsApi.md#get_project_types) | **GET** /project-types | 
+[**get_projects**](ProjectsApi.md#get_projects) | **GET** /projects | 
+[**post_institutes**](ProjectsApi.md#post_institutes) | **POST** /projects/{project_id}/hospitals | 
+[**post_project_files**](ProjectsApi.md#post_project_files) | **POST** /projects/{project_id}/files | This create project files endpoint actually only stores the file size of a project_id + key combination
+[**post_projects**](ProjectsApi.md#post_projects) | **POST** /projects | 
 
 
-# **delete_project_files_resource**
-> delete_project_files_resource(project_id)
+# **delete_project_files**
+> delete_project_files(project_id)
 
 
 
@@ -26,17 +26,16 @@ Method | HTTP request | Description
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import projects_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -61,12 +60,22 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = projects_api.ProjectsApi(api_client)
     project_id = "project_id_example" # str | 
+    keys = [
+        "[]",
+    ] # [str] |  (optional) if omitted the server will use the default value of []
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.delete_project_files_resource(project_id)
+        api_instance.delete_project_files(project_id)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->delete_project_files_resource: %s\n" % e)
+        print("Exception when calling ProjectsApi->delete_project_files: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        api_instance.delete_project_files(project_id, keys=keys)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling ProjectsApi->delete_project_files: %s\n" % e)
 ```
 
 
@@ -75,6 +84,7 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**|  |
+ **keys** | **[str]**|  | [optional] if omitted the server will use the default value of []
 
 ### Return type
 
@@ -91,7 +101,6 @@ void (empty response body)
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | No Data |  -  |
@@ -99,8 +108,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_hospital_resource**
-> HospitalResponse get_hospital_resource(hospital_id)
+# **get_institute**
+> Institute get_institute(hospital_id)
 
 
 
@@ -108,18 +117,17 @@ void (empty response body)
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import projects_api
-from igtcloud.client.services.entities.model.hospital_response import HospitalResponse
+from igtcloud.client.services.entities.model.institute import Institute
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -148,18 +156,18 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.get_hospital_resource(hospital_id)
+        api_response = api_instance.get_institute(hospital_id)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->get_hospital_resource: %s\n" % e)
+        print("Exception when calling ProjectsApi->get_institute: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_hospital_resource(hospital_id, x_fields=x_fields)
+        api_response = api_instance.get_institute(hospital_id, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->get_hospital_resource: %s\n" % e)
+        print("Exception when calling ProjectsApi->get_institute: %s\n" % e)
 ```
 
 
@@ -172,7 +180,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**HospitalResponse**](HospitalResponse.md)
+[**Institute**](Institute.md)
 
 ### Authorization
 
@@ -185,7 +193,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -193,8 +200,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_hospitals_resource**
-> HospitalsResponse get_hospitals_resource(project_id)
+# **get_institutes**
+> [Institute] get_institutes(project_id)
 
 
 
@@ -202,18 +209,17 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import projects_api
-from igtcloud.client.services.entities.model.hospitals_response import HospitalsResponse
+from igtcloud.client.services.entities.model.institute import Institute
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -242,18 +248,18 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.get_hospitals_resource(project_id)
+        api_response = api_instance.get_institutes(project_id)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->get_hospitals_resource: %s\n" % e)
+        print("Exception when calling ProjectsApi->get_institutes: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_hospitals_resource(project_id, x_fields=x_fields)
+        api_response = api_instance.get_institutes(project_id, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->get_hospitals_resource: %s\n" % e)
+        print("Exception when calling ProjectsApi->get_institutes: %s\n" % e)
 ```
 
 
@@ -266,7 +272,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**HospitalsResponse**](HospitalsResponse.md)
+[**[Institute]**](Institute.md)
 
 ### Authorization
 
@@ -279,7 +285,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -287,8 +292,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_project_download_file_resource**
-> file_type get_project_download_file_resource(project_id)
+# **get_project**
+> Project get_project(project_id)
 
 
 
@@ -296,195 +301,17 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import projects_api
+from igtcloud.client.services.entities.model.project import Project
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: csrf_token
-configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['csrf_token'] = 'Bearer'
-
-# Configure API key authorization: jwt
-configuration.api_key['jwt'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['jwt'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = projects_api.ProjectsApi(api_client)
-    project_id = "project_id_example" # str | 
-
-    # example passing only required values which don't have defaults set
-    try:
-        api_response = api_instance.get_project_download_file_resource(project_id)
-        pprint(api_response)
-    except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->get_project_download_file_resource: %s\n" % e)
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **str**|  |
-
-### Return type
-
-**file_type**
-
-### Authorization
-
-[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/zip
-
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | File |  -  |
-**400** | Bad request |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_project_files_resource**
-> FilesResponse get_project_files_resource(project_id)
-
-
-
-### Example
-
-* Api Key Authentication (csrf_token):
-* Api Key Authentication (jwt):
-
-```python
-import time
-import igtcloud.client.services.entities
-from igtcloud.client.services.entities.api import projects_api
-from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.files_response import FilesResponse
-from pprint import pprint
-# Defining the host is optional and defaults to /data
-# See configuration.py for a list of all supported configuration parameters.
-configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: csrf_token
-configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['csrf_token'] = 'Bearer'
-
-# Configure API key authorization: jwt
-configuration.api_key['jwt'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['jwt'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = projects_api.ProjectsApi(api_client)
-    project_id = "project_id_example" # str | 
-    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
-
-    # example passing only required values which don't have defaults set
-    try:
-        api_response = api_instance.get_project_files_resource(project_id)
-        pprint(api_response)
-    except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->get_project_files_resource: %s\n" % e)
-
-    # example passing only required values which don't have defaults set
-    # and optional values
-    try:
-        api_response = api_instance.get_project_files_resource(project_id, x_fields=x_fields)
-        pprint(api_response)
-    except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->get_project_files_resource: %s\n" % e)
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **str**|  |
- **x_fields** | **str**| An optional fields mask | [optional]
-
-### Return type
-
-[**FilesResponse**](FilesResponse.md)
-
-### Authorization
-
-[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Success |  -  |
-**400** | Bad request |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_project_resource**
-> ProjectResponse get_project_resource(project_id)
-
-
-
-### Example
-
-* Api Key Authentication (csrf_token):
-* Api Key Authentication (jwt):
-
-```python
-import time
-import igtcloud.client.services.entities
-from igtcloud.client.services.entities.api import projects_api
-from igtcloud.client.services.entities.model.project_response import ProjectResponse
-from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from pprint import pprint
-# Defining the host is optional and defaults to /data
-# See configuration.py for a list of all supported configuration parameters.
-configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -514,18 +341,18 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.get_project_resource(project_id)
+        api_response = api_instance.get_project(project_id)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->get_project_resource: %s\n" % e)
+        print("Exception when calling ProjectsApi->get_project: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_project_resource(project_id, include_child_relations=include_child_relations, x_fields=x_fields)
+        api_response = api_instance.get_project(project_id, include_child_relations=include_child_relations, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->get_project_resource: %s\n" % e)
+        print("Exception when calling ProjectsApi->get_project: %s\n" % e)
 ```
 
 
@@ -539,7 +366,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ProjectResponse**](ProjectResponse.md)
+[**Project**](Project.md)
 
 ### Authorization
 
@@ -552,7 +379,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -561,8 +387,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_project_types_resource**
-> ProjectTypesResponse get_project_types_resource()
+# **get_project_download_file**
+> file_type get_project_download_file(project_id)
 
 
 
@@ -570,190 +396,16 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import projects_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.project_types_response import ProjectTypesResponse
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: csrf_token
-configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['csrf_token'] = 'Bearer'
-
-# Configure API key authorization: jwt
-configuration.api_key['jwt'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['jwt'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = projects_api.ProjectsApi(api_client)
-    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
-
-    # example passing only required values which don't have defaults set
-    # and optional values
-    try:
-        api_response = api_instance.get_project_types_resource(x_fields=x_fields)
-        pprint(api_response)
-    except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->get_project_types_resource: %s\n" % e)
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **x_fields** | **str**| An optional fields mask | [optional]
-
-### Return type
-
-[**ProjectTypesResponse**](ProjectTypesResponse.md)
-
-### Authorization
-
-[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Success |  -  |
-**400** | Bad request |  -  |
-**404** | Not found |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_projects_resource**
-> ProjectsResponse get_projects_resource()
-
-
-
-### Example
-
-* Api Key Authentication (csrf_token):
-* Api Key Authentication (jwt):
-
-```python
-import time
-import igtcloud.client.services.entities
-from igtcloud.client.services.entities.api import projects_api
-from igtcloud.client.services.entities.model.projects_response import ProjectsResponse
-from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from pprint import pprint
-# Defining the host is optional and defaults to /data
-# See configuration.py for a list of all supported configuration parameters.
-configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: csrf_token
-configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['csrf_token'] = 'Bearer'
-
-# Configure API key authorization: jwt
-configuration.api_key['jwt'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['jwt'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = projects_api.ProjectsApi(api_client)
-    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
-
-    # example passing only required values which don't have defaults set
-    # and optional values
-    try:
-        api_response = api_instance.get_projects_resource(x_fields=x_fields)
-        pprint(api_response)
-    except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->get_projects_resource: %s\n" % e)
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **x_fields** | **str**| An optional fields mask | [optional]
-
-### Return type
-
-[**ProjectsResponse**](ProjectsResponse.md)
-
-### Authorization
-
-[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Success |  -  |
-**400** | Bad request |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **post_hospitals_resource**
-> HospitalResponse post_hospitals_resource(project_id, payload)
-
-
-
-### Example
-
-* Api Key Authentication (csrf_token):
-* Api Key Authentication (jwt):
-
-```python
-import time
-import igtcloud.client.services.entities
-from igtcloud.client.services.entities.api import projects_api
-from igtcloud.client.services.entities.model.hospital_response import HospitalResponse
-from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.hospital_create_model import HospitalCreateModel
-from pprint import pprint
-# Defining the host is optional and defaults to /data
-# See configuration.py for a list of all supported configuration parameters.
-configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -778,26 +430,13 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = projects_api.ProjectsApi(api_client)
     project_id = "project_id_example" # str | 
-    payload = HospitalCreateModel(
-        name="name_example",
-        description="description_example",
-    ) # HospitalCreateModel | 
-    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.post_hospitals_resource(project_id, payload)
+        api_response = api_instance.get_project_download_file(project_id)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->post_hospitals_resource: %s\n" % e)
-
-    # example passing only required values which don't have defaults set
-    # and optional values
-    try:
-        api_response = api_instance.post_hospitals_resource(project_id, payload, x_fields=x_fields)
-        pprint(api_response)
-    except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->post_hospitals_resource: %s\n" % e)
+        print("Exception when calling ProjectsApi->get_project_download_file: %s\n" % e)
 ```
 
 
@@ -806,12 +445,360 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**|  |
- **payload** | [**HospitalCreateModel**](HospitalCreateModel.md)|  |
+
+### Return type
+
+**file_type**
+
+### Authorization
+
+[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/zip
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | File |  -  |
+**400** | Bad request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_project_files**
+> Files get_project_files(project_id)
+
+
+
+### Example
+
+* Api Key Authentication (csrf_token):
+* Api Key Authentication (jwt):
+```python
+import time
+import igtcloud.client.services.entities
+from igtcloud.client.services.entities.api import projects_api
+from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from igtcloud.client.services.entities.model.files import Files
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost/data
+# See configuration.py for a list of all supported configuration parameters.
+configuration = igtcloud.client.services.entities.Configuration(
+    host = "http://localhost/data"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: csrf_token
+configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['csrf_token'] = 'Bearer'
+
+# Configure API key authorization: jwt
+configuration.api_key['jwt'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['jwt'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = projects_api.ProjectsApi(api_client)
+    project_id = "project_id_example" # str | 
+    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
+
+    # example passing only required values which don't have defaults set
+    try:
+        api_response = api_instance.get_project_files(project_id)
+        pprint(api_response)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling ProjectsApi->get_project_files: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        api_response = api_instance.get_project_files(project_id, x_fields=x_fields)
+        pprint(api_response)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling ProjectsApi->get_project_files: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**|  |
  **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
 
-[**HospitalResponse**](HospitalResponse.md)
+[**Files**](Files.md)
+
+### Authorization
+
+[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Success |  -  |
+**400** | Bad request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_project_types**
+> [str] get_project_types()
+
+
+
+### Example
+
+* Api Key Authentication (csrf_token):
+* Api Key Authentication (jwt):
+```python
+import time
+import igtcloud.client.services.entities
+from igtcloud.client.services.entities.api import projects_api
+from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost/data
+# See configuration.py for a list of all supported configuration parameters.
+configuration = igtcloud.client.services.entities.Configuration(
+    host = "http://localhost/data"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: csrf_token
+configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['csrf_token'] = 'Bearer'
+
+# Configure API key authorization: jwt
+configuration.api_key['jwt'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['jwt'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = projects_api.ProjectsApi(api_client)
+
+    # example, this endpoint has no required or optional parameters
+    try:
+        api_response = api_instance.get_project_types()
+        pprint(api_response)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling ProjectsApi->get_project_types: %s\n" % e)
+```
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+**[str]**
+
+### Authorization
+
+[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Project types |  -  |
+**400** | Bad request |  -  |
+**404** | Not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_projects**
+> [Project] get_projects()
+
+
+
+### Example
+
+* Api Key Authentication (csrf_token):
+* Api Key Authentication (jwt):
+```python
+import time
+import igtcloud.client.services.entities
+from igtcloud.client.services.entities.api import projects_api
+from igtcloud.client.services.entities.model.project import Project
+from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost/data
+# See configuration.py for a list of all supported configuration parameters.
+configuration = igtcloud.client.services.entities.Configuration(
+    host = "http://localhost/data"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: csrf_token
+configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['csrf_token'] = 'Bearer'
+
+# Configure API key authorization: jwt
+configuration.api_key['jwt'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['jwt'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = projects_api.ProjectsApi(api_client)
+    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        api_response = api_instance.get_projects(x_fields=x_fields)
+        pprint(api_response)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling ProjectsApi->get_projects: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **x_fields** | **str**| An optional fields mask | [optional]
+
+### Return type
+
+[**[Project]**](Project.md)
+
+### Authorization
+
+[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Success |  -  |
+**400** | Bad request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **post_institutes**
+> Institute post_institutes(project_id, payload)
+
+
+
+### Example
+
+* Api Key Authentication (csrf_token):
+* Api Key Authentication (jwt):
+```python
+import time
+import igtcloud.client.services.entities
+from igtcloud.client.services.entities.api import projects_api
+from igtcloud.client.services.entities.model.institute import Institute
+from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost/data
+# See configuration.py for a list of all supported configuration parameters.
+configuration = igtcloud.client.services.entities.Configuration(
+    host = "http://localhost/data"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: csrf_token
+configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['csrf_token'] = 'Bearer'
+
+# Configure API key authorization: jwt
+configuration.api_key['jwt'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['jwt'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = projects_api.ProjectsApi(api_client)
+    project_id = "project_id_example" # str | 
+    payload = Institute(
+        name="name_example",
+        description="description_example",
+    ) # Institute | 
+    x_fields = "X-Fields_example" # str | An optional fields mask (optional)
+
+    # example passing only required values which don't have defaults set
+    try:
+        api_response = api_instance.post_institutes(project_id, payload)
+        pprint(api_response)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling ProjectsApi->post_institutes: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        api_response = api_instance.post_institutes(project_id, payload, x_fields=x_fields)
+        pprint(api_response)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling ProjectsApi->post_institutes: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**|  |
+ **payload** | [**Institute**](Institute.md)|  |
+ **x_fields** | **str**| An optional fields mask | [optional]
+
+### Return type
+
+[**Institute**](Institute.md)
 
 ### Authorization
 
@@ -824,7 +811,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Success |  -  |
@@ -832,8 +818,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **post_project_files_resource**
-> FilesResponse post_project_files_resource(project_id, payload)
+# **post_project_files**
+> Files post_project_files(project_id, payload)
 
 This create project files endpoint actually only stores the file size of a project_id + key combination
 
@@ -843,18 +829,17 @@ Used only for retrieving progress percentage of uploads.
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import projects_api
-from igtcloud.client.services.entities.model.file_sizes_model import FileSizesModel
-from igtcloud.client.services.entities.model.files_response import FilesResponse
+from igtcloud.client.services.entities.model.files import Files
+from igtcloud.client.services.entities.model.file import File
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -879,32 +864,30 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = projects_api.ProjectsApi(api_client)
     project_id = "project_id_example" # str | 
-    payload = FileSizesModel(
-        file_sizes=[
-            FileSizeModel(
-                key="key_example",
-                file_size=1,
-            ),
-        ],
-    ) # FileSizesModel | 
+    payload = [
+        File(
+            key="key_example",
+            file_size=1,
+        ),
+    ] # [File] | 
     x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
     try:
         # This create project files endpoint actually only stores the file size of a project_id + key combination
-        api_response = api_instance.post_project_files_resource(project_id, payload)
+        api_response = api_instance.post_project_files(project_id, payload)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->post_project_files_resource: %s\n" % e)
+        print("Exception when calling ProjectsApi->post_project_files: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
         # This create project files endpoint actually only stores the file size of a project_id + key combination
-        api_response = api_instance.post_project_files_resource(project_id, payload, x_fields=x_fields)
+        api_response = api_instance.post_project_files(project_id, payload, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->post_project_files_resource: %s\n" % e)
+        print("Exception when calling ProjectsApi->post_project_files: %s\n" % e)
 ```
 
 
@@ -913,12 +896,12 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**|  |
- **payload** | [**FileSizesModel**](FileSizesModel.md)|  |
+ **payload** | [**[File]**](File.md)|  |
  **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
 
-[**FilesResponse**](FilesResponse.md)
+[**Files**](Files.md)
 
 ### Authorization
 
@@ -931,15 +914,14 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **post_projects_resource**
-> [ProjectResponse] post_projects_resource(payload)
+# **post_projects**
+> [Project] post_projects(payload)
 
 
 
@@ -947,19 +929,17 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import projects_api
-from igtcloud.client.services.entities.model.project_create_model import ProjectCreateModel
-from igtcloud.client.services.entities.model.project_response import ProjectResponse
+from igtcloud.client.services.entities.model.project import Project
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -983,29 +963,30 @@ configuration.api_key['jwt'] = 'YOUR_API_KEY'
 with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = projects_api.ProjectsApi(api_client)
-    payload = ProjectCreateModel(
+    payload = Project(
         name="name_example",
         description="description_example",
+        project_type_name="project_type_name_example",
         continents=[
             "continents_example",
         ],
-    ) # ProjectCreateModel | 
+    ) # Project | 
     x_fields = "X-Fields_example" # str | An optional fields mask (optional)
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.post_projects_resource(payload)
+        api_response = api_instance.post_projects(payload)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->post_projects_resource: %s\n" % e)
+        print("Exception when calling ProjectsApi->post_projects: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.post_projects_resource(payload, x_fields=x_fields)
+        api_response = api_instance.post_projects(payload, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ProjectsApi->post_projects_resource: %s\n" % e)
+        print("Exception when calling ProjectsApi->post_projects: %s\n" % e)
 ```
 
 
@@ -1013,12 +994,12 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **payload** | [**ProjectCreateModel**](ProjectCreateModel.md)|  |
+ **payload** | [**Project**](Project.md)|  |
  **x_fields** | **str**| An optional fields mask | [optional]
 
 ### Return type
 
-[**[ProjectResponse]**](ProjectResponse.md)
+[**[Project]**](Project.md)
 
 ### Authorization
 
@@ -1031,7 +1012,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |

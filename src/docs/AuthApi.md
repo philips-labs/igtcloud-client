@@ -1,6 +1,6 @@
 # igtcloud.client.services.auth.AuthApi
 
-All URIs are relative to */auth*
+All URIs are relative to *http://localhost/auth*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -22,7 +22,6 @@ Method | HTTP request | Description
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.auth
@@ -30,10 +29,10 @@ from igtcloud.client.services.auth.api import auth_api
 from igtcloud.client.services.auth.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.auth.model.introspect_response import IntrospectResponse
 from pprint import pprint
-# Defining the host is optional and defaults to /auth
+# Defining the host is optional and defaults to http://localhost/auth
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.auth.Configuration(
-    host = "/auth"
+    host = "http://localhost/auth"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -90,7 +89,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -107,7 +105,6 @@ Gets a list of permissions
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.auth
@@ -115,10 +112,10 @@ from igtcloud.client.services.auth.api import auth_api
 from igtcloud.client.services.auth.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.auth.model.permissions_response import PermissionsResponse
 from pprint import pprint
-# Defining the host is optional and defaults to /auth
+# Defining the host is optional and defaults to http://localhost/auth
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.auth.Configuration(
-    host = "/auth"
+    host = "http://localhost/auth"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -176,7 +173,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -193,7 +189,6 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.auth
@@ -201,10 +196,10 @@ from igtcloud.client.services.auth.api import auth_api
 from igtcloud.client.services.auth.model.s3_credential_response import S3CredentialResponse
 from igtcloud.client.services.auth.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /auth
+# Defining the host is optional and defaults to http://localhost/auth
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.auth.Configuration(
-    host = "/auth"
+    host = "http://localhost/auth"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -272,7 +267,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -289,17 +283,16 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.auth
 from igtcloud.client.services.auth.api import auth_api
 from igtcloud.client.services.auth.model.audit_trail import AuditTrail
 from pprint import pprint
-# Defining the host is optional and defaults to /auth
+# Defining the host is optional and defaults to http://localhost/auth
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.auth.Configuration(
-    host = "/auth"
+    host = "http://localhost/auth"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -366,7 +359,6 @@ void (empty response body)
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -384,7 +376,6 @@ Set the grant type to 'password' for user authentication.             Set the gr
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.auth
@@ -393,10 +384,10 @@ from igtcloud.client.services.auth.model.login_response import LoginResponse
 from igtcloud.client.services.auth.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.auth.model.login_model import LoginModel
 from pprint import pprint
-# Defining the host is optional and defaults to /auth
+# Defining the host is optional and defaults to http://localhost/auth
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.auth.Configuration(
-    host = "/auth"
+    host = "http://localhost/auth"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -469,7 +460,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -487,17 +477,16 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.auth
 from igtcloud.client.services.auth.api import auth_api
 from igtcloud.client.services.auth.model.logout_response import LogoutResponse
 from pprint import pprint
-# Defining the host is optional and defaults to /auth
+# Defining the host is optional and defaults to http://localhost/auth
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.auth.Configuration(
-    host = "/auth"
+    host = "http://localhost/auth"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -554,7 +543,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -570,7 +558,6 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.auth
@@ -578,10 +565,10 @@ from igtcloud.client.services.auth.api import auth_api
 from igtcloud.client.services.auth.model.login_response import LoginResponse
 from igtcloud.client.services.auth.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /auth
+# Defining the host is optional and defaults to http://localhost/auth
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.auth.Configuration(
-    host = "/auth"
+    host = "http://localhost/auth"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -633,7 +620,6 @@ This endpoint does not need any parameter.
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |

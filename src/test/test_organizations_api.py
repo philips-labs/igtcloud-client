@@ -23,38 +23,38 @@ class TestOrganizationsApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_delete_service_resource(self):
-        """Test case for delete_service_resource
+    def test_delete_service(self):
+        """Test case for delete_service
 
         """
         pass
 
-    def test_get_groups_resource(self):
-        """Test case for get_groups_resource
+    def test_get_groups(self):
+        """Test case for get_groups
 
         """
         pass
 
-    def test_get_services_resource(self):
-        """Test case for get_services_resource
+    def test_get_services(self):
+        """Test case for get_services
 
         """
         pass
 
-    def test_get_users_groups_resource(self):
-        """Test case for get_users_groups_resource
+    def test_get_users_groups(self):
+        """Test case for get_users_groups
 
         """
         pass
 
-    def test_post_services_resource(self):
-        """Test case for post_services_resource
+    def test_post_services(self):
+        """Test case for post_services
 
         """
         pass
 
-    def test_put_users_groups_resource(self):
-        """Test case for put_users_groups_resource
+    def test_put_users_groups(self):
+        """Test case for put_users_groups
 
         """
         pass

@@ -23,14 +23,14 @@ class TestTasksApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_get_task_resource(self):
-        """Test case for get_task_resource
+    def test_get_task(self):
+        """Test case for get_task
 
         """
         pass
 
-    def test_post_task_resource(self):
-        """Test case for post_task_resource
+    def test_post_task(self):
+        """Test case for post_task
 
         """
         pass

@@ -15,7 +15,7 @@ import igtcloud.client.services.entities
 from igtcloud.client.services.entities.model.annotation_study import AnnotationStudy
 from igtcloud.client.services.entities.model.base_study import BaseStudy
 from igtcloud.client.services.entities.model.core_labs_study import CoreLabsStudy
-from igtcloud.client.services.entities.model.echo_nav import EchoNav
+from igtcloud.client.services.entities.model.echo_nav_study import EchoNavStudy
 from igtcloud.client.services.entities.model.epd_study import EpdStudy
 from igtcloud.client.services.entities.model.i_guide_u_study import IGuideUStudy
 from igtcloud.client.services.entities.model.marvel_study import MarvelStudy
@@ -24,7 +24,7 @@ from igtcloud.client.services.entities.model.we_trust_study import WeTrustStudy
 globals()['AnnotationStudy'] = AnnotationStudy
 globals()['BaseStudy'] = BaseStudy
 globals()['CoreLabsStudy'] = CoreLabsStudy
-globals()['EchoNav'] = EchoNav
+globals()['EchoNavStudy'] = EchoNavStudy
 globals()['EpdStudy'] = EpdStudy
 globals()['IGuideUStudy'] = IGuideUStudy
 globals()['MarvelStudy'] = MarvelStudy

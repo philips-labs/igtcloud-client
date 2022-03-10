@@ -23,26 +23,26 @@ class TestIntegrationsApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_get_ai_suite_collections_resource(self):
-        """Test case for get_ai_suite_collections_resource
+    def test_get_ai_suite_collections(self):
+        """Test case for get_ai_suite_collections
 
         """
         pass
 
-    def test_get_ai_suite_connections_resource(self):
-        """Test case for get_ai_suite_connections_resource
+    def test_get_ai_suite_connections(self):
+        """Test case for get_ai_suite_connections
 
         """
         pass
 
-    def test_get_ai_suite_projects_resource(self):
-        """Test case for get_ai_suite_projects_resource
+    def test_get_ai_suite_projects(self):
+        """Test case for get_ai_suite_projects
 
         """
         pass
 
-    def test_post_ai_suite_collections_resource(self):
-        """Test case for post_ai_suite_collections_resource
+    def test_post_ai_suite_collections(self):
+        """Test case for post_ai_suite_collections
 
         """
         pass

@@ -41,8 +41,12 @@ setup(
     package_dir={"": "src"},
     packages=find_namespace_packages(include=['igtcloud.*'], where="src"),
     install_requires=requires,
-    scripts=['scripts/igtcloud'],
     classifiers=[
         'Programming Language :: Python :: 3.9',
     ],
+    entry_points={
+        'console_scripts': [
+            'igtcloud = igtcloud.client.tools.cli:cli'
+        ]
+    }
 )

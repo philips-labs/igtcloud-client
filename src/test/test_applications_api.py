@@ -23,26 +23,26 @@ class TestApplicationsApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_get_applications_resource(self):
-        """Test case for get_applications_resource
+    def test_get_applications(self):
+        """Test case for get_applications
 
         """
         pass
 
-    def test_get_training_application_guide_resource(self):
-        """Test case for get_training_application_guide_resource
+    def test_get_training_application_guide(self):
+        """Test case for get_training_application_guide
 
         """
         pass
 
-    def test_get_training_application_storage_resource(self):
-        """Test case for get_training_application_storage_resource
+    def test_get_training_application_storage(self):
+        """Test case for get_training_application_storage
 
         """
         pass
 
-    def test_get_training_applications_resource(self):
-        """Test case for get_training_applications_resource
+    def test_get_training_applications(self):
+        """Test case for get_training_applications
 
         """
         pass

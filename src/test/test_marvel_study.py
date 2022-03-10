@@ -14,10 +14,10 @@ import unittest
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.model.base_study import BaseStudy
 from igtcloud.client.services.entities.model.marvel_study_all_of import MarvelStudyAllOf
-from igtcloud.client.services.entities.model.patient_model import PatientModel
+from igtcloud.client.services.entities.model.patient import Patient
 globals()['BaseStudy'] = BaseStudy
 globals()['MarvelStudyAllOf'] = MarvelStudyAllOf
-globals()['PatientModel'] = PatientModel
+globals()['Patient'] = Patient
 from igtcloud.client.services.entities.model.marvel_study import MarvelStudy
 
 

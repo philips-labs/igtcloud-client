@@ -23,69 +23,69 @@ class TestProjectsApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_delete_project_files_resource(self):
-        """Test case for delete_project_files_resource
+    def test_delete_project_files(self):
+        """Test case for delete_project_files
 
         """
         pass
 
-    def test_get_hospital_resource(self):
-        """Test case for get_hospital_resource
+    def test_get_institute(self):
+        """Test case for get_institute
 
         """
         pass
 
-    def test_get_hospitals_resource(self):
-        """Test case for get_hospitals_resource
+    def test_get_institutes(self):
+        """Test case for get_institutes
 
         """
         pass
 
-    def test_get_project_download_file_resource(self):
-        """Test case for get_project_download_file_resource
+    def test_get_project(self):
+        """Test case for get_project
 
         """
         pass
 
-    def test_get_project_files_resource(self):
-        """Test case for get_project_files_resource
+    def test_get_project_download_file(self):
+        """Test case for get_project_download_file
 
         """
         pass
 
-    def test_get_project_resource(self):
-        """Test case for get_project_resource
+    def test_get_project_files(self):
+        """Test case for get_project_files
 
         """
         pass
 
-    def test_get_project_types_resource(self):
-        """Test case for get_project_types_resource
+    def test_get_project_types(self):
+        """Test case for get_project_types
 
         """
         pass
 
-    def test_get_projects_resource(self):
-        """Test case for get_projects_resource
+    def test_get_projects(self):
+        """Test case for get_projects
 
         """
         pass
 
-    def test_post_hospitals_resource(self):
-        """Test case for post_hospitals_resource
+    def test_post_institutes(self):
+        """Test case for post_institutes
 
         """
         pass
 
-    def test_post_project_files_resource(self):
-        """Test case for post_project_files_resource
+    def test_post_project_files(self):
+        """Test case for post_project_files
 
         This create project files endpoint actually only stores the file size of a project_id + key combination  # noqa: E501
         """
         pass
 
-    def test_post_projects_resource(self):
-        """Test case for post_projects_resource
+    def test_post_projects(self):
+        """Test case for post_projects
 
         """
         pass

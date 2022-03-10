@@ -13,9 +13,9 @@ import unittest
 
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.model.base_study import BaseStudy
-from igtcloud.client.services.entities.model.patient_model import PatientModel
+from igtcloud.client.services.entities.model.patient import Patient
 globals()['BaseStudy'] = BaseStudy
-globals()['PatientModel'] = PatientModel
+globals()['Patient'] = Patient
 from igtcloud.client.services.entities.model.study import Study
 
 

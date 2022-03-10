@@ -73,7 +73,7 @@ class Configuration(object):
     :param server_operation_variables: Mapping from operation ID to a mapping with
       string values to replace variables in templated server configuration.
       The validation of enums is performed for variables with defined enum values before.
-    :param ssl_ca_cert: str - the path to a file of concatenated CA certificates
+    :param ssl_ca_cert: str - the path to a file of concatenated CA certificates 
       in PEM format
 
     :Example:
@@ -112,7 +112,7 @@ conf = igtcloud.client.services.auth.Configuration(
                  ):
         """Constructor
         """
-        self._base_path = "/auth" if host is None else host
+        self._base_path = "http://localhost/auth" if host is None else host
         """Default Base url
         """
         self.server_index = 0 if server_index is None and host is None else server_index
@@ -198,9 +198,6 @@ conf = igtcloud.client.services.auth.Configuration(
 
         self.proxy = None
         """Proxy URL
-        """
-        self.no_proxy = None
-        """bypass proxy for host in the no_proxy list.
         """
         self.proxy_headers = None
         """Proxy headers

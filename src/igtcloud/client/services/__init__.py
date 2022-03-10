@@ -1,28 +1,6 @@
 import os
 
-from igtcloud.client.core.auth import AuthHandler
-
-
-class BaseService:
-    def __init__(self, api_client, host_path):
-        self._host_path = host_path
-        self.api_client = api_client
-        self._auth_handler = None
-        api_client.configuration.auth_handler_provider = self._get_auth_handler
-
-    def _get_auth_handler(self):
-        if self._auth_handler is None:
-            self._auth_handler = AuthHandler()
-        self.api_client.configuration.host = f"{self._auth_handler.domain}{self._host_path}"
-        return self._auth_handler
-
-    @property
-    def auth_handler(self):
-        return self._get_auth_handler()
-
-    @auth_handler.setter
-    def auth_handler(self, value):
-        self._auth_handler = value
+from .base_service import BaseService
 
 
 def _setup_service(module):
@@ -48,35 +26,42 @@ def _setup_service(module):
 
 def _setup_entities():
     from . import entities
-    from .entities.apis import (ProjectsApi, HospitalsApi, IntegrationsApi, UsersApi, OrganizationsApi)
+    from .entities_service import EntitiesService, _patch_service
     client = _setup_service(entities)
+    service = EntitiesService(client)
+    _patch_service(service)
 
-    class EntitiesService(BaseService, ProjectsApi, HospitalsApi, IntegrationsApi, UsersApi, OrganizationsApi):
-        def __init__(self, api_client):
-            BaseService.__init__(self, api_client, '/api/data')
-            ProjectsApi.__init__(self, api_client)
-            HospitalsApi.__init__(self, api_client)
-            IntegrationsApi.__init__(self, api_client)
-            UsersApi.__init__(self, api_client)
-            OrganizationsApi.__init__(self, api_client)
-
-    return EntitiesService(client)
+    return service
 
 
 def _setup_auth():
     from . import auth
-    from .auth.apis import AuthApi
+    from .auth_service import AuthService, _patch_service
     client = _setup_service(auth)
+    service = AuthService(client)
+    _patch_service(service)
 
-    class AuthService(BaseService, AuthApi):
-        def __init__(self, api_client):
-            BaseService.__init__(self, api_client, '/api/auth')
-            AuthApi.__init__(self, api_client)
-
-    return AuthService(client)
+    return service
 
 
-entities_service = _setup_entities()
+def _setup_action():
+    from . import action
+    from .action_service import ActionService, _patch_service
+    client = _setup_service(action)
+    service = ActionService(client)
+    _patch_service(service)
+
+    return service
+
+
+def set_auth(auth):
+    auth_service.auth_handler = auth
+    action_service.auth_handler = auth
+    entities_service.auth_handler = auth
+
+
 auth_service = _setup_auth()
+action_service = _setup_action()
+entities_service = _setup_entities()
 
-__all__ = ['auth_service', 'entities_service']
+__all__ = ['auth_service', 'entities_service', 'action_service', 'set_auth']

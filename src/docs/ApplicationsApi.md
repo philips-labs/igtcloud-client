@@ -1,17 +1,17 @@
 # igtcloud.client.services.entities.ApplicationsApi
 
-All URIs are relative to */data*
+All URIs are relative to *http://localhost/data*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_applications_resource**](ApplicationsApi.md#get_applications_resource) | **GET** /applications | 
-[**get_training_application_guide_resource**](ApplicationsApi.md#get_training_application_guide_resource) | **GET** /training-applications/{training_application}/guide | 
-[**get_training_application_storage_resource**](ApplicationsApi.md#get_training_application_storage_resource) | **GET** /training-applications/{training_application}/$storage | 
-[**get_training_applications_resource**](ApplicationsApi.md#get_training_applications_resource) | **GET** /training-applications | 
+[**get_applications**](ApplicationsApi.md#get_applications) | **GET** /applications | 
+[**get_training_application_guide**](ApplicationsApi.md#get_training_application_guide) | **GET** /training-applications/{training_application}/guide | 
+[**get_training_application_storage**](ApplicationsApi.md#get_training_application_storage) | **GET** /training-applications/{training_application}/$storage | 
+[**get_training_applications**](ApplicationsApi.md#get_training_applications) | **GET** /training-applications | 
 
 
-# **get_applications_resource**
-> ApplicationsResponse get_applications_resource(project_id)
+# **get_applications**
+> [Application] get_applications(project_id)
 
 
 
@@ -19,18 +19,17 @@ Method | HTTP request | Description
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import applications_api
-from igtcloud.client.services.entities.model.applications_response import ApplicationsResponse
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from igtcloud.client.services.entities.model.application import Application
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -63,18 +62,18 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.get_applications_resource(project_id)
+        api_response = api_instance.get_applications(project_id)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ApplicationsApi->get_applications_resource: %s\n" % e)
+        print("Exception when calling ApplicationsApi->get_applications: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_applications_resource(project_id, application=application, format=format, vm_environment=vm_environment, does_open_on_study=does_open_on_study, x_fields=x_fields)
+        api_response = api_instance.get_applications(project_id, application=application, format=format, vm_environment=vm_environment, does_open_on_study=does_open_on_study, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ApplicationsApi->get_applications_resource: %s\n" % e)
+        print("Exception when calling ApplicationsApi->get_applications: %s\n" % e)
 ```
 
 
@@ -91,7 +90,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApplicationsResponse**](ApplicationsResponse.md)
+[**[Application]**](Application.md)
 
 ### Authorization
 
@@ -104,7 +103,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -112,8 +110,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_training_application_guide_resource**
-> file_type get_training_application_guide_resource(training_application)
+# **get_training_application_guide**
+> file_type get_training_application_guide(training_application)
 
 
 
@@ -121,17 +119,16 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import applications_api
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -159,10 +156,10 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.get_training_application_guide_resource(training_application)
+        api_response = api_instance.get_training_application_guide(training_application)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ApplicationsApi->get_training_application_guide_resource: %s\n" % e)
+        print("Exception when calling ApplicationsApi->get_training_application_guide: %s\n" % e)
 ```
 
 
@@ -187,7 +184,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | File |  -  |
@@ -195,8 +191,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_training_application_storage_resource**
-> StorageModel get_training_application_storage_resource(training_application)
+# **get_training_application_storage**
+> Storage get_training_application_storage(training_application)
 
 
 
@@ -204,18 +200,17 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import applications_api
-from igtcloud.client.services.entities.model.storage_model import StorageModel
+from igtcloud.client.services.entities.model.storage import Storage
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -245,18 +240,18 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.get_training_application_storage_resource(training_application)
+        api_response = api_instance.get_training_application_storage(training_application)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ApplicationsApi->get_training_application_storage_resource: %s\n" % e)
+        print("Exception when calling ApplicationsApi->get_training_application_storage: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_training_application_storage_resource(training_application, region=region, x_fields=x_fields)
+        api_response = api_instance.get_training_application_storage(training_application, region=region, x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ApplicationsApi->get_training_application_storage_resource: %s\n" % e)
+        print("Exception when calling ApplicationsApi->get_training_application_storage: %s\n" % e)
 ```
 
 
@@ -270,7 +265,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**StorageModel**](StorageModel.md)
+[**Storage**](Storage.md)
 
 ### Authorization
 
@@ -283,7 +278,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -291,8 +285,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_training_applications_resource**
-> TrainingApplicationsResponse get_training_applications_resource()
+# **get_training_applications**
+> [TrainingApplication] get_training_applications()
 
 
 
@@ -300,18 +294,17 @@ Name | Type | Description  | Notes
 
 * Api Key Authentication (csrf_token):
 * Api Key Authentication (jwt):
-
 ```python
 import time
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.api import applications_api
+from igtcloud.client.services.entities.model.training_application import TrainingApplication
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
-from igtcloud.client.services.entities.model.training_applications_response import TrainingApplicationsResponse
 from pprint import pprint
-# Defining the host is optional and defaults to /data
+# Defining the host is optional and defaults to http://localhost/data
 # See configuration.py for a list of all supported configuration parameters.
 configuration = igtcloud.client.services.entities.Configuration(
-    host = "/data"
+    host = "http://localhost/data"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -340,10 +333,10 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_response = api_instance.get_training_applications_resource(x_fields=x_fields)
+        api_response = api_instance.get_training_applications(x_fields=x_fields)
         pprint(api_response)
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ApplicationsApi->get_training_applications_resource: %s\n" % e)
+        print("Exception when calling ApplicationsApi->get_training_applications: %s\n" % e)
 ```
 
 
@@ -355,7 +348,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TrainingApplicationsResponse**](TrainingApplicationsResponse.md)
+[**[TrainingApplication]**](TrainingApplication.md)
 
 ### Authorization
 
@@ -368,7 +361,6 @@ Name | Type | Description  | Notes
 
 
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |

@@ -12,8 +12,8 @@ import sys
 import unittest
 
 import igtcloud.client.services.entities
-from igtcloud.client.services.entities.model.echo_nav import EchoNav
-globals()['EchoNav'] = EchoNav
+from igtcloud.client.services.entities.model.echo_nav_study import EchoNavStudy
+globals()['EchoNavStudy'] = EchoNavStudy
 from igtcloud.client.services.entities.model.echo_nav_series_all_of import EchoNavSeriesAllOf
 
 
