@@ -175,7 +175,3 @@ cli.add_command(get_token)
 cli.add_command(download)
 cli.add_command(upload)
 cli.add_command(csv)
-
-
-if __name__ == '__main__':
-    cli()
