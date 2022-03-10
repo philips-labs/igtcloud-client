@@ -42,7 +42,7 @@ jobs:
 
       - name: Build executable
         if: runner.os == 'Windows'
-        run: pyinstaller --name igtcloud-$env:RUNNER_OS -F .github/workflows/cli.py
+        run: pyinstaller --name igtcloud-$env:RUNNER_OS -F -i .github/workflows/philips.ico .github/workflows/cli.py
 
       - name: Build executable
         if: runner.os != 'Windows'
