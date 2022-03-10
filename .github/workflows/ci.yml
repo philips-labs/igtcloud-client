@@ -1,0 +1,75 @@
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches: [ master ]
+  
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, windows-latest, ubuntu-latest ]
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Needed for versioning based on tags
+      
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9' 
+          architecture: 'x64'
+
+      - name: Install requirements
+        run: |
+          pip install .
+          pip install -r requirements-dev.txt
+
+      - name: Build executable
+        if: runner.os == 'Windows'
+        run: pyinstaller --name igtcloud-$env:RUNNER_OS -F -i .github/workflows/philips.ico .github/workflows/cli.py
+
+      - name: Build executable
+        if: runner.os != 'Windows'
+        run: pyinstaller --name igtcloud-$RUNNER_OS -F .github/workflows/cli.py
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v3
+        with:
+          name: executables
+          path: dist/igtcloud*
+
+  release:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download executables
+        uses: actions/download-artifact@v3
+        with:
+          name: executables
+          path: dist
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/igtcloud*
+            LICENSE
+          
+
