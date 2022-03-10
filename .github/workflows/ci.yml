@@ -18,7 +18,10 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, windows-latest, ubuntu-latest ]
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -34,7 +37,7 @@ jobs:
         run: |
           pip install .
           pip install -r requirements-dev.txt
-          pyinstaller --name igtcloud-$RUNNER_OS -F -p src .github/workflows/cli.py
+          pyinstaller --name igtcloud -F .github/workflows/cli.py
       - name: Upload executable
         uses: actions/upload-artifact@v3
         with:
