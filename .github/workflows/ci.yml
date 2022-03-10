@@ -64,6 +64,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: executables
+          path: dist
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
