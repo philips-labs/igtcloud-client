@@ -32,19 +32,20 @@ jobs:
         with:
           python-version: '3.9' 
           architecture: 'x64'
-      
-      - name: build executable
+
+      - name: Install requirements
+        run: |
+          pip install .
+          pip install -r requirements-dev.txt
+
+      - name: Build executable
         if: runner.os == 'Windows'
-        run: |
-          pip install .
-          pip install -r requirements-dev.txt
-          pyinstaller --name igtcloud -F .github/workflows/cli.py
-      - name: build executable
+        run: pyinstaller --name igtcloud-$env:RUNNER_OS -F .github/workflows/cli.py
+
+      - name: Build executable
         if: runner.os != 'Windows'
-        run: |
-          pip install .
-          pip install -r requirements-dev.txt
-          pyinstaller --name igtcloud-$RUNNER_OS -F .github/workflows/cli.py
+        run: pyinstaller --name igtcloud-$RUNNER_OS -F .github/workflows/cli.py
+
       - name: Upload executable
         uses: actions/upload-artifact@v3
         with:
