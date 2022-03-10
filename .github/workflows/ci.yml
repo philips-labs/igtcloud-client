@@ -34,10 +34,17 @@ jobs:
           architecture: 'x64'
       
       - name: build executable
+        if: runner.os == 'Windows'
         run: |
           pip install .
           pip install -r requirements-dev.txt
           pyinstaller --name igtcloud -F .github/workflows/cli.py
+      - name: build executable
+        if: runner.os != 'Windows'
+        run: |
+          pip install .
+          pip install -r requirements-dev.txt
+          pyinstaller --name igtcloud-$RUNNER_OS -F .github/workflows/cli.py
       - name: Upload executable
         uses: actions/upload-artifact@v3
         with:
