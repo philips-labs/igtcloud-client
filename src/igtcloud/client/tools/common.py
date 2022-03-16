@@ -64,7 +64,8 @@ def filter_by_ext(ext: Optional[str]):
     if ext is None:
         return None
 
-    def ext_filter(file: File) -> bool:
+    def ext_filter(file: File, study: RootStudy) -> bool:
+        # Ignore study
         return file.type == ext
 
     return ext_filter
