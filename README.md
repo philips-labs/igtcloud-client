@@ -36,7 +36,7 @@ Commands:
 
 Use ```igtcloud [command] --help``` for more information about a command
 
-### Notes
+## Developers
 
 ### Generate code based on new OpenAPI specification
 
