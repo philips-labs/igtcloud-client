@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 def download_institute(project_name: str, institute_name: str, destination: str, categories: List[str] = None,
-                       studies_filter: Callable[[RootStudy], bool] = None, files_filter: Callable[[File], bool] = None):
+                       studies_filter: Callable[[RootStudy], bool] = None, files_filter: Callable[[File, RootStudy], bool] = None):
     project = find_project_by_name(project_name)
     if not project:
         logger.error(f"Project not found: {project_name}")
@@ -65,7 +65,7 @@ def _download_study(study, study_destination, categories, files_filter):
     for category in categories:
         files.extend(getattr(study, category).copy())
     if callable(files_filter):
-        files = list(filter(files_filter, files))
+        files = list(filter(lambda file: files_filter(file, study), files))
 
     total_size = sum([file.file_size for file in files if file.is_completed])
 
