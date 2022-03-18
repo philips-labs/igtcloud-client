@@ -1,4 +1,4 @@
-# IGT CLoud Client
+# IGT Cloud Client
 
 Python client for the Philips IGT Cloud Datalake.
 
