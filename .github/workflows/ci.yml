@@ -48,11 +48,20 @@ jobs:
         if: runner.os != 'Windows'
         run: pyinstaller --name igtcloud-$RUNNER_OS -F .github/workflows/cli.py
 
+      - name: Test CLI
+        if: runner.os == 'Windows'
+        run: dist/igtcloud-Windows.exe version
+
+      - name: Test CLI
+        if: runner.os != 'Windows'
+        run: dist/igtcloud-$RUNNER_OS version
+
       - name: Upload executable
         uses: actions/upload-artifact@v3
         with:
           name: executables
           path: dist/igtcloud*
+
 
   release:
     runs-on: ubuntu-latest
