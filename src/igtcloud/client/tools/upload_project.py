@@ -18,7 +18,8 @@ from igtcloud.client.tools.common import find_project_and_institutes, study_key
 logger = logging.getLogger(__name__)
 
 
-def upload_project(local_folder: str, project_name: str, institute_name: str = None, submit: bool = False):
+def upload_project(local_folder: str, project_name: str, institute_name: str = None, submit: bool = False,
+                   max_workers_studies: int = None, max_workers_files: int = None):
     project, institutes = find_project_and_institutes(project_name, institute_name)
     if not project:
         logger.error(f"Project not found: {project_name}")
@@ -35,7 +36,7 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
     # Filter institutes to match local folders
     institutes = list(filter(lambda i: os.path.isdir(os.path.join(local_folder, i.name)), institutes))
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers_studies or 4) as executor:
         for institute in institutes:
             logger.info(f"Uploading to institute: {institute.name}")
 
@@ -46,7 +47,7 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
                                    os.path.isdir(os.path.join(institute_dir, d)))
 
             fs = [executor.submit(upload_study, project.study_type, study_folder, institute.id, existing_studies,
-                                  _password) for study_folder in local_study_folders]
+                                  _password, max_workers_files) for study_folder in local_study_folders]
 
             for f in tqdm(concurrent.futures.as_completed(fs), total=len(fs), desc="Studies", unit='study'):
                 study, files_uploaded, files_skipped = f.result()
@@ -55,7 +56,7 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
 
 
 def upload_study(study_type: str, study_folder: str, institute_id: str, studies: CollectionWrapper[RootStudy],
-                 _submit_password: str = None) -> Tuple[RootStudy, List[str], List[str]]:
+                 _submit_password: str = None, max_workers_files: int = None) -> Tuple[RootStudy, List[str], List[str]]:
     local_study = None
     study_cls = entities_service.study_type_classes.get(study_type)
     study_json_file = os.path.join(study_folder, 'study.json')
@@ -96,7 +97,7 @@ def upload_study(study_type: str, study_folder: str, institute_id: str, studies:
     files_uploaded = list()
     files_skipped = list()
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers_files or 4) as executor:
         fs = dict()
         with tqdm(total=0, leave=False, desc=f"Study {patient_name}", unit='B', unit_scale=True,
                   unit_divisor=1024) as pbar:
