@@ -40,19 +40,17 @@ def download(target_folder, project, institute, environment, domain, user, ext, 
     from igtcloud.client.core.auth import smart_auth
     from igtcloud.client.services import set_auth
     from igtcloud.client.tools.common import filter_by_study_date, filter_by_ext
-    from igtcloud.client.tools.download_institute import download_institute
-    if domain is None:
-        if environment == 'PROD':
-            domain = "igt-web.eu1.phsdp.com"
-        elif environment == 'TEST':
-            domain = "igt-web-test.eu1.phsdp.com"
-        else:
-            raise RuntimeError("Unsupported environment")
+    from igtcloud.client.tools.download_institute import download_institutes
+
+    if institute == "*":
+        institute = None
+
+    domain = _get_domain(domain, environment)
     with smart_auth(domain, username=user) as auth:
         set_auth(auth)
         logger.info(f"Using url: {auth.domain}")
-        download_institute(project, institute, target_folder, categories=category, files_filter=filter_by_ext(ext),
-                           studies_filter=filter_by_study_date(start, end))
+        download_institutes(project, institute, target_folder, categories=category, files_filter=filter_by_ext(ext),
+                            studies_filter=filter_by_study_date(start, end))
 
 
 @click.command(short_help="List data from Philips Interventional Cloud in CSV file")
