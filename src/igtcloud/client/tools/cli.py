@@ -16,7 +16,7 @@ def cli():
 @click.command(short_help="Download data from Philips Interventional Cloud")
 @click.argument('target_folder')
 @click.argument('project')
-@click.argument('institute')
+@click.argument('institute', required=False, default='*')
 @click.argument('environment', required=False, default='PROD', type=click.Choice(['PROD', 'TEST'],
                                                                                  case_sensitive=False))
 @click.option('--domain', default=None, help='Overwrites the environment setting')
