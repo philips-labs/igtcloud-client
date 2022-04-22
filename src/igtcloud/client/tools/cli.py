@@ -112,7 +112,10 @@ def _get_domain(domain, environment):
 @click.option('--user', default=None, help='Username')
 @click.option('--submit', flag_value=True, help='Set electronic record state to submitted state')
 @click.option('--debug', flag_value=True, help='Enable debug logging')
-def upload(local_folder, project, institute, environment, domain, user, submit, debug):
+@click.option('--concurrent-studies', type=int, default=None, help='Maximum number of concurrent studies upload')
+@click.option('--concurrent-files', type=int, default=None, help='Maximum number of concurrent files upload per study')
+def upload(local_folder, project, institute, environment, domain, user, submit, debug, concurrent_studies,
+           concurrent_files):
     """Upload data to Philips Interventional Cloud.
 
     \b
@@ -133,7 +136,7 @@ def upload(local_folder, project, institute, environment, domain, user, submit, 
     with smart_auth(domain, username=user) as auth:
         set_auth(auth)
         logger.info(f"Using url: {auth.domain}")
-        upload_project(local_folder, project, institute, submit)
+        upload_project(local_folder, project, institute, submit, concurrent_studies, concurrent_files)
 
 
 @click.command(short_help="Login to Philips Interventional Cloud")
