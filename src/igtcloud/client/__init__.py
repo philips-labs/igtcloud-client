@@ -3,3 +3,5 @@ try:
 except ImportError:
     # Fallback, used only for testing without installing library
     __version__ = '0.0.0'
+
+__source__ = 'https://github.com/philips-labs/igtcloud-client'

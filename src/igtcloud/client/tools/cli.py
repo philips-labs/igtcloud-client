@@ -170,9 +170,34 @@ def version():
     print(__version__)
 
 
+@click.command(short_help="Upgrade this tool to a new version")
+@click.argument('package_version', required=False, default=None)
+def upgrade(package_version):
+    from igtcloud.client import __version__, __source__
+    if package_version is None:
+        import requests
+        resp = requests.get(f'{__source__}/releases/latest', allow_redirects=False)
+        if resp.status_code == 302:
+            redirect_url = resp.headers['Location']
+            tag_prefix = '/tag/'
+            ix = redirect_url.index(tag_prefix)
+            if ix > 0:
+                package_version = redirect_url[ix + len(tag_prefix):]
+                if __version__ == package_version[1:]:
+                    print(f"Already at latest version: {package_version}")
+                    return
+    if package_version is None:
+        print("Cannot determine version")
+        return
+    import subprocess
+    import sys
+    subprocess.Popen([sys.executable, '-m', 'pip', 'install', '--upgrade', f'git+{__source__}@{package_version}'])
+
+
 cli.add_command(version)
 cli.add_command(login)
 cli.add_command(get_token)
 cli.add_command(download)
 cli.add_command(upload)
 cli.add_command(csv)
+cli.add_command(upgrade)
