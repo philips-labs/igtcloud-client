@@ -1,4 +1,8 @@
 import logging
+import os.path
+import shutil
+import tempfile
+
 import click
 
 from . import logger
@@ -170,9 +174,69 @@ def version():
     print(__version__)
 
 
+@click.command(short_help="Upgrade this tool to a new version")
+@click.argument('package_version', required=False, default=None)
+def upgrade(package_version):
+    from igtcloud.client import __version__, __source__
+    import requests
+    if package_version is None:
+        resp = requests.get(f'{__source__}/releases/latest', allow_redirects=False)
+        if resp.status_code == 302:
+            redirect_url = resp.headers['Location']
+            tag_prefix = '/tag/'
+            ix = redirect_url.index(tag_prefix)
+            if ix > 0:
+                package_version = redirect_url[ix + len(tag_prefix):]
+                if __version__ == package_version[1:]:
+                    print(f"Already at latest version: {package_version}")
+                    return
+    if package_version is None:
+        print("Cannot determine version")
+        return
+
+    import sys
+    import subprocess
+    if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+        # running in a PyInstaller bundle
+        exe_path, exe_name = os.path.split(sys.executable)
+        url = f"{__source__}/releases/download/{package_version}/{exe_name}"
+
+        exe_name_split = os.path.splitext(exe_name)
+
+        r = requests.get(url, allow_redirects=True, stream=True)
+        if r.status_code == 200:
+            exe_new_path = os.path.join(tempfile.gettempdir(),
+                                        f"{exe_name_split[0]}-{package_version}{exe_name_split[1]}")
+            if os.path.exists(exe_new_path):
+                os.remove(exe_new_path)
+            with open(exe_new_path, 'wb') as f:
+                r.raw.decode_content = True
+                shutil.copyfileobj(r.raw, f)
+
+            if os.name == 'nt':
+                exe_old_path = os.path.join(exe_path, f"{exe_name_split[0]}-{__version__}{exe_name_split[1]}")
+                if os.path.exists(exe_old_path):
+                    os.remove(exe_old_path)
+                cmd = ['cmd.exe', '/C', 'move', sys.executable, exe_old_path,
+                       '&&', 'move', exe_new_path, sys.executable]
+            else:
+                current_mode = os.stat(sys.executable).st_mode
+                os.chmod(exe_new_path, current_mode)
+                cmd = ['mv', '-T', '-b', exe_new_path, sys.executable]
+
+            subprocess.Popen(cmd)
+        else:
+            print("Cannot find executable in release assets")
+
+    else:
+        # running in a normal Python process
+        subprocess.Popen([sys.executable, '-m', 'pip', 'install', '--upgrade', f'git+{__source__}@{package_version}'])
+
+
 cli.add_command(version)
 cli.add_command(login)
 cli.add_command(get_token)
 cli.add_command(download)
 cli.add_command(upload)
 cli.add_command(csv)
+cli.add_command(upgrade)
