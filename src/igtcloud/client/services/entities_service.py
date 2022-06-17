@@ -287,14 +287,13 @@ def download_fileobj(file: File, file_obj: io.IOBase):
     bucket.download_fileobj(Key=file.key, Fileobj=file_obj)
 
 
-def open_file(file: File, mode='rb', **kwargs):
+def open_file(file: File, mode='rb', buffering=-1, **kwargs):
     if 'r' not in mode:
         raise RuntimeError("Mode should contain 'r'")
     binary = 'b' in mode
     bucket = get_s3_bucket(file, 'GET')
     s3_file = S3File(bucket.Object(file.key), mode=mode)
     if binary:
-        buffering = kwargs.pop('buffering', 0)
         if buffering == 0:
             return s3_file
         else:
