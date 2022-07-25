@@ -274,6 +274,15 @@ def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = Tr
             callback(file.file_size)
         return False
     bucket = get_s3_bucket(file, 'GET')
+
+    # For annotation files, get the last modified date from S3 headers
+    if destination.endswith(".annotations.json"):
+        metadata = get_s3_file_metadata(file, 'GET')
+        last_modified = metadata['LastModified'].strftime("%Y%m%dT%H%M%SZ")
+        # Add the timestamp to the annotation file name.
+        # For the latest release of the annotation tool, this is the default.
+        destination = destination.replace(".annotations.json", f".annotations.{last_modified}.json")
+
     os.makedirs(os.path.abspath(os.path.dirname(destination)), exist_ok=True)
     kwargs = dict(Key=file.key, Filename=destination)
     if callback:
@@ -315,6 +324,20 @@ def get_s3_bucket(file: File, action: str):
     session = boto3.session.Session(**creds_dict)
     s3 = session.resource('s3')
     return s3.Bucket(creds.bucket)
+
+
+def get_s3_file_metadata(file: File, action: str):
+    creds = file.credentials(action)
+    if not creds:
+        raise RuntimeError("No valid credentials")
+    creds_dict = dict(aws_access_key_id=creds.access_key,
+                      aws_secret_access_key=creds.secret_key,
+                      aws_session_token=creds.session_token)
+    creds_dict = {k: v for k, v in creds_dict.items() if k}
+    session = boto3.session.Session(**creds_dict)
+    s3 = session.client('s3')
+
+    return s3.head_object(Bucket=creds.bucket, Key=file.key)
 
 
 def process_file(study: RootStudy, file: File):
