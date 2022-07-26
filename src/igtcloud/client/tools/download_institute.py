@@ -16,7 +16,8 @@ logger = logging.getLogger(__name__)
 
 
 def download_institutes(project_name: str, institute_name: str, destination: str, categories: List[str] = None,
-                        studies_filter: Callable[[RootStudy], bool] = None, files_filter: Callable[[File, RootStudy], bool] = None):
+                        studies_filter: Callable[[RootStudy], bool] = None,
+                        files_filter: Callable[[File, RootStudy], bool] = None, include_modified_date = False):
     project, institutes = find_project_and_institutes(project_name, institute_name)
     if not project:
         logger.error(f"Project not found: {project_name}")
@@ -44,7 +45,7 @@ def download_institutes(project_name: str, institute_name: str, destination: str
             with tqdm(total=len(studies), desc="Studies", unit='study') as pbar:
                 fs = {executor.submit(_download_study, study, os.path.join(destination, institute.name,
                                                                            study.study_id_human_readable),
-                                      categories, files_filter): study for study in studies}
+                                      categories, files_filter, include_modified_date): study for study in studies}
                 for future in as_completed(fs):
                     study = fs.pop(future)
                     pbar.update()
@@ -55,7 +56,7 @@ def download_institutes(project_name: str, institute_name: str, destination: str
                         logger.exception(f"Exception during download of {study.study_id_human_readable}")
 
 
-def _download_study(study, study_destination, categories, files_filter):
+def _download_study(study, study_destination, categories, files_filter, include_modified_date):
     study_json_file = os.path.join(study_destination, 'study.json')
     os.makedirs(os.path.dirname(study_json_file), exist_ok=True)
     with open(study_json_file, 'w') as f:
@@ -75,7 +76,8 @@ def _download_study(study, study_destination, categories, files_filter):
         return study_destination
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        fs = {executor.submit(file.download, study_destination_fn(file), overwrite=False): file for file in files}
+        fs = {executor.submit(file.download, study_destination_fn(file), overwrite=False,
+                              include_modified_date=include_modified_date): file for file in files}
         study_folder = os.path.basename(study_destination)
         with tqdm(total=total_size, leave=False, desc=f"Study {study_folder}", unit='B', unit_scale=True,
                   unit_divisor=1024) as pbar:

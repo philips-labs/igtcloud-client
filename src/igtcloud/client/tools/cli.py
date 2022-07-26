@@ -31,8 +31,11 @@ def cli():
 @click.option('--category', default=['files'], multiple=True, type=click.Choice(['files', 'dicom', 'annotations'],
                                                                                 case_sensitive=False),
               help='Categories of files to download')
+@click.option('--include-modified-date', flag_value=True,
+              help='Set the accurate file last modified date metadata instead of disk creation date')
 @click.option('--debug', flag_value=True, help='Enable debug logging')
-def download(target_folder, project, institute, environment, domain, user, ext, start, end, category, debug):
+def download(target_folder, project, institute, environment, domain, user, ext, start, end, category,
+             include_modified_date, debug):
     """Download data from Philips Interventional Cloud.
 
     \b
@@ -54,7 +57,8 @@ def download(target_folder, project, institute, environment, domain, user, ext, 
         set_auth(auth)
         logger.info(f"Using url: {auth.domain}")
         download_institutes(project, institute, target_folder, categories=category, files_filter=filter_by_ext(ext),
-                            studies_filter=filter_by_study_date(start, end))
+                            studies_filter=filter_by_study_date(start, end),
+                            include_modified_date=include_modified_date)
 
 
 @click.command(short_help="List data from Philips Interventional Cloud in CSV file")
