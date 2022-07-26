@@ -265,7 +265,8 @@ def get_file_creds(file: File, action: str) -> Optional[Credentials]:
         return s3_creds(action, file.key)
 
 
-def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = True, callback: Callable[[int], None] = None):
+def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = True,
+                  callback: Callable[[int], None] = None, include_modified_date: bool = False):
     if not file.is_completed:
         return False
     destination = os.path.abspath(os.path.join(destination_dir, file.file_name))
@@ -279,6 +280,12 @@ def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = Tr
     if callback:
         kwargs['Callback'] = callback
     bucket.download_file(**kwargs)
+
+    if include_modified_date:
+        metadata = get_s3_file_metadata(file, 'GET')
+        epoch = metadata['LastModified'].timestamp()
+        os.utime(destination, (epoch, epoch))
+
     return True
 
 
@@ -315,6 +322,20 @@ def get_s3_bucket(file: File, action: str):
     session = boto3.session.Session(**creds_dict)
     s3 = session.resource('s3')
     return s3.Bucket(creds.bucket)
+
+
+def get_s3_file_metadata(file: File, action: str):
+    creds = file.credentials(action)
+    if not creds:
+        raise RuntimeError("No valid credentials")
+    creds_dict = dict(aws_access_key_id=creds.access_key,
+                      aws_secret_access_key=creds.secret_key,
+                      aws_session_token=creds.session_token)
+    creds_dict = {k: v for k, v in creds_dict.items() if k}
+    session = boto3.session.Session(**creds_dict)
+    s3 = session.client('s3')
+
+    return s3.head_object(Bucket=creds.bucket, Key=file.key)
 
 
 def process_file(study: RootStudy, file: File):
