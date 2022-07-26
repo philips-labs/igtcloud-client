@@ -265,7 +265,8 @@ def get_file_creds(file: File, action: str) -> Optional[Credentials]:
         return s3_creds(action, file.key)
 
 
-def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = True, callback: Callable[[int], None] = None):
+def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = True,
+                  callback: Callable[[int], None] = None, include_modified_date: bool = False):
     if not file.is_completed:
         return False
     destination = os.path.abspath(os.path.join(destination_dir, file.file_name))
@@ -275,13 +276,10 @@ def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = Tr
         return False
     bucket = get_s3_bucket(file, 'GET')
 
-    # For annotation files, get the last modified date from S3 headers
-    if destination.endswith(".annotations.json"):
+    # Include the actual last modified date from S3 metadata
+    if include_modified_date:
         metadata = get_s3_file_metadata(file, 'GET')
-        last_modified = metadata['LastModified'].strftime("%Y%m%dT%H%M%SZ")
-        # Add the timestamp to the annotation file name.
-        # For the latest release of the annotation tool, this is the default.
-        destination = destination.replace(".annotations.json", f".annotations.{last_modified}.json")
+        file.last_modified_date = metadata['LastModified'].isoformat()
 
     os.makedirs(os.path.abspath(os.path.dirname(destination)), exist_ok=True)
     kwargs = dict(Key=file.key, Filename=destination)

@@ -3063,6 +3063,9 @@
                 "progressInBytes": {
                     "type": "integer",
                     "readOnly": true
+                },
+                "lastModifiedDate": {
+                    "type": "string"
                 }
             },
             "type": "object"

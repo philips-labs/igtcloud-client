@@ -81,6 +81,7 @@ class File(ModelNormal):
             'progress_percentage': (int,),  # noqa: E501
             'type': (str,),  # noqa: E501
             'progress_in_bytes': (int,),  # noqa: E501
+            'last_modified_date': (str,),  # noqa: E501
         }
 
     @cached_property
@@ -98,6 +99,7 @@ class File(ModelNormal):
         'progress_percentage': 'progressPercentage',  # noqa: E501
         'type': 'type',  # noqa: E501
         'progress_in_bytes': 'progressInBytes',  # noqa: E501
+        'last_modified_date': 'lastModifiedDate',  # noqa: E501
     }
 
     _composed_schemas = {}
@@ -157,6 +159,7 @@ class File(ModelNormal):
             progress_percentage (int): [optional]  # noqa: E501
             type (str): [optional]  # noqa: E501
             progress_in_bytes (int): [optional]  # noqa: E501
+            last_modified_date (str): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -184,6 +187,7 @@ class File(ModelNormal):
 
         self.key = key
         self.file_size = file_size
+        self.last_modified_date = None
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
