@@ -2,9 +2,11 @@ import concurrent.futures
 import json
 import logging
 import os.path
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from getpass import getpass
 from typing import Tuple, List
 
+from igtcloud.client.services.entities.model.project import Project
 from tqdm.auto import tqdm
 
 from igtcloud.client.services import entities_service
@@ -21,6 +23,7 @@ logger = logging.getLogger(__name__)
 def upload_project(local_folder: str, project_name: str, institute_name: str = None, submit: bool = False,
                    max_workers_studies: int = None, max_workers_files: int = None):
     project, institutes = find_project_and_institutes(project_name, institute_name)
+
     if not project:
         logger.error(f"Project not found: {project_name}")
         return
@@ -33,8 +36,18 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
     if submit:
         _password = getpass("For electronic record state it is required to reenter the password")
 
+    # Project level file upload when there is a "files" folder in the root directory
+    files_folder = os.path.join(local_folder, 'files')
+
+    upload_project_files(project, files_folder, max_workers_files)
+
     # Filter institutes to match local folders
     institutes = list(filter(lambda i: os.path.isdir(os.path.join(local_folder, i.name)), institutes))
+
+    if not institutes:
+        logger.info("No institute folders found to upload. Skipping...")
+
+        return
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers_studies or 4) as executor:
         for institute in institutes:
@@ -127,3 +140,43 @@ def upload_study(study_type: str, study_folder: str, institute_id: str, studies:
         entities_service.post_study_electronic_record_state(institute_id, study.study_database_id, ers)
 
     return study, files_uploaded, files_skipped
+
+
+def upload_project_files(project: Project, files_folder: str, max_workers_files: int):
+    if not os.path.isdir(files_folder):
+        logger.info("'files' is not a directory. Skipping project files upload...")
+
+        return
+
+    if not os.listdir(files_folder):
+        logger.info("No project files to upload. Skipping...")
+
+        return
+
+    fs = dict()
+    files_uploaded = list()
+    files_skipped = list()
+
+    with ThreadPoolExecutor(max_workers=max_workers_files or 4) as executor:
+        with tqdm(total=0, leave=False, desc="Project files", unit='B', unit_scale=True, unit_divisor=1024) as pbar:
+            for root, _, files in os.walk(files_folder):
+                for file in files:
+                    file_path = os.path.join(root, file)
+                    size = os.path.getsize(file_path)
+                    key = os.path.relpath(file_path, files_folder).replace(os.path.sep, '/')
+                    pbar.total += size
+                    future = executor.submit(project.files.upload, file_path, key, callback=pbar.update)
+                    fs[future] = (file, size)
+
+            for f in as_completed(fs.keys()):
+                file, size = fs.pop(f)
+
+                if f.result():
+                    files_uploaded.append(file)
+                else:
+                    files_skipped.append(file)
+
+    upload_count = len(files_uploaded)
+    skip_count = len(files_skipped)
+
+    logger.info(f"Project: {project.get('name')} files_uploaded: {upload_count}, files_skipped: {skip_count}")
