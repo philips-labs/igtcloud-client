@@ -36,12 +36,71 @@ Commands:
 
 Use ```igtcloud [command] --help``` for more information about a command
 
+## Upload folder structure
+```
+local_folder
+│
+└─── files
+│   │   file_1.txt
+│   │   file_2.txt
+│   │   ...
+│   │
+│   └─── subfolder1
+│       │   file_3.txt
+│       │   file_4.txt
+|       │   ...
+│
+└─── institute1
+│   │   series_1.dcm
+│   │   series_2.dcm
+    │   ...
+│   │
+│   └─── subfolder1
+│       │   series_3.dcm
+│       │   series_4.dcm
+│       │   ...
+│
+└─── institute2
+    │   series_1.dcm
+    │   series_2.dcm
+    │   ...
+    │
+    └─── subfolder1
+    │   │   series_3.dcm
+    │   │   series_4.dcm
+    │   │   ...
+    │
+    └─── subfolder2
+        │   series_5.dcm
+        │   series_6.dcm
+        │   ...
+```
+
+Where `local_folder` is the specified LOCAL_FOLDER via the `upload` command.
+
+### Uploading project-level files
+
+Files under the `local_folder/files` directory will be uploaded directly to the specified PROJECT via the `upload` command.
+
+### Uploading institute-level files
+
+Folders under the institute-named folders (`local_folder/<institute name>`) will be uploaded directly to the institute as a study then the nested folders are uploaded as normal study-level folders.
+
+Other folders/files under the `local_folder` directory will be ignored.
+
 ## Developers
 
 ### Generate code based on new OpenAPI specification
 
 ```BASH
 ./code-gen.sh
+```
+
+### Test the cli locally
+
+```BASH
+cd src
+python cli.py
 ```
 
 ### Community
