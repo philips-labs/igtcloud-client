@@ -158,7 +158,7 @@ def upload_project_files(project: Project, files_folder: str, max_workers_files:
     files_skipped = list()
 
     with ThreadPoolExecutor(max_workers=max_workers_files or 4) as executor:
-        with tqdm(total=0, leave=False, desc="Project files", unit='B', unit_scale=True, unit_divisor=1024) as pbar:
+        with tqdm(total=0, desc="Project files", unit='B', unit_scale=True, unit_divisor=1024) as pbar:
             for root, _, files in os.walk(files_folder):
                 for file in files:
                     file_path = os.path.join(root, file)

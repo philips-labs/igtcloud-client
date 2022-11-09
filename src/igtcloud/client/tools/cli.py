@@ -7,6 +7,7 @@ import click
 
 from . import logger
 from .common import TqdmLoggingHandler
+from .download_project import download_project
 
 logging.basicConfig(level=logging.INFO, handlers=[TqdmLoggingHandler()])
 
@@ -26,16 +27,33 @@ def cli():
 @click.option('--domain', default=None, help='Overwrites the environment setting')
 @click.option('--user', default=None, help='Username')
 @click.option('--ext', default=None, help='filter on specific file extension (i.e.: \'.txt\')')
-@click.option('--start', default=None, help='start date (YYYY-MM-DD) of date range filter. Default value is 1900-01-01.')
-@click.option('--end', default=None, help='end date (YYYY-MM-DD) of date range filter. Default value is 9999-12-31.')
-@click.option('--category', default=['files'], multiple=True, type=click.Choice(['files', 'dicom', 'annotations'],
-                                                                                case_sensitive=False),
-              help='Categories of files to download')
+@click.option(
+    '--start',
+    default=None,
+    help='start date (YYYY-MM-DD) of date range filter. Default value is 1900-01-01. Ignored if --project-files is set.'
+)
+@click.option(
+    '--end',
+    default=None,
+    help='end date (YYYY-MM-DD) of date range filter. Default value is 9999-12-31. Ignored if --project-files is set.'
+)
+@click.option(
+    '--category',
+    default=['files'],
+    multiple=True,
+    type=click.Choice(['files', 'dicom', 'annotations'], case_sensitive=False),
+    help='Categories of files to download. Ignored if --project-files is set.'
+)
 @click.option('--include-modified-date', flag_value=True,
               help='Set the accurate file last modified date metadata instead of disk creation date')
+@click.option(
+    '--project-files',
+    flag_value=True,
+    help='Only download the project files. If not set, only the study files are downloaded.'
+)
 @click.option('--debug', flag_value=True, help='Enable debug logging')
 def download(target_folder, project, institute, environment, domain, user, ext, start, end, category,
-             include_modified_date, debug):
+             include_modified_date, project_files, debug):
     """Download data from Philips Interventional Cloud.
 
     \b
@@ -56,6 +74,21 @@ def download(target_folder, project, institute, environment, domain, user, ext, 
     with smart_auth(domain, username=user) as auth:
         set_auth(auth)
         logger.info(f"Using url: {auth.domain}")
+
+        if project_files:
+            logger.info("Downloading only project files, this will skip all the institutes...")
+
+            download_project(
+                project,
+                target_folder,
+                files_filter=filter_by_ext(ext),
+                include_modified_date=include_modified_date
+            )
+
+            logger.info("Skipping institutes...")
+
+            return
+
         download_institutes(project, institute, target_folder, categories=category, files_filter=filter_by_ext(ext),
                             studies_filter=filter_by_study_date(start, end),
                             include_modified_date=include_modified_date)

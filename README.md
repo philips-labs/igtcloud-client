@@ -36,7 +36,8 @@ Commands:
 
 Use ```igtcloud [command] --help``` for more information about a command
 
-## Upload folder structure
+## Folder structure
+
 ```
 local_folder
 │
@@ -53,7 +54,7 @@ local_folder
 └─── institute1
 │   │   series_1.dcm
 │   │   series_2.dcm
-    │   ...
+│   │   ...
 │   │
 │   └─── subfolder1
 │       │   series_3.dcm
@@ -76,17 +77,23 @@ local_folder
         │   ...
 ```
 
-Where `local_folder` is the specified LOCAL_FOLDER via the `upload` command.
+Where `local_folder` is the specified LOCAL_FOLDER via the `upload` or `download` command.
 
-### Uploading project-level files
+### Project-level files
 
-Files under the `local_folder/files` directory will be uploaded directly to the specified PROJECT via the `upload` command.
+Files under the `local_folder/files` directory will be uploaded/downloaded based on the passed PROJECT argument via the `upload` or `download` command.
 
-### Uploading institute-level files
+> **_Note:_** for the `download` command, this will only work if the `--project-files` option is passed. 
+
+### Upload institute-level files
 
 Folders under the institute-named folders (`local_folder/<institute name>`) will be uploaded directly to the institute as a study then the nested folders are uploaded as normal study-level folders.
 
 Other folders/files under the `local_folder` directory will be ignored.
+
+### Download institute-level files
+
+Institutes will be downloaded to the LOCAL_FOLDER argument and will create sub folders based on the institute name/s. All studies of each institute will be downloaded as subdirectories under each institute folder. 
 
 ## Developers
 
