@@ -93,7 +93,7 @@ Other folders/files under the `local_folder` directory will be ignored.
 
 ### Download institute-level files
 
-Institutes will be downloaded to the LOCAL_FOLDER argument and will create sub folders based on the institute name/s. All studies of each institute will be downloaded as subdirectories under each institute folder. 
+Institutes will be downloaded to the LOCAL_FOLDER argument and will create sub folders based on the institute name. All studies of each institute will be downloaded as subdirectories under each institute folder. 
 
 ## Developers
 
