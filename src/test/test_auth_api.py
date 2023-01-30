@@ -29,6 +29,13 @@ class TestAuthApi(unittest.TestCase):
         """
         pass
 
+    def test_get_login_aud_resource(self):
+        """Test case for get_login_aud_resource
+
+        Retrieve 'aud' property used for assertion login  # noqa: E501
+        """
+        pass
+
     def test_get_permissions_resource(self):
         """Test case for get_permissions_resource
 

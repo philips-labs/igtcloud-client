@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**study_type** | **str** |  | [readonly] 
+**study_type** | **str** |  | 
 **study_database_id** | **str** |  | [optional] [readonly] 
 **institute_id** | **str** |  | [optional] [readonly] 
 **project_id** | **str** |  | [optional] [readonly] 

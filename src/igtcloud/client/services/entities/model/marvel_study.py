@@ -100,6 +100,11 @@ class MarvelStudy(ModelComposed):
             'pullback_direction': (str,),  # noqa: E501
             'pullback_stent_type': (str,),  # noqa: E501
             'pullback_stented_region': (str,),  # noqa: E501
+            'pullback_stent_size': (str,),  # noqa: E501
+            'pullback_disease_type': (str,),  # noqa: E501
+            'pullback_lesion_location': (str,),  # noqa: E501
+            'pullback_comment': (str,),  # noqa: E501
+            'pullback_usable': (str,),  # noqa: E501
             'study_database_id': (str,),  # noqa: E501
             'institute_id': (str,),  # noqa: E501
             'project_id': (str,),  # noqa: E501
@@ -147,6 +152,11 @@ class MarvelStudy(ModelComposed):
         'pullback_direction': 'pullbackDirection',  # noqa: E501
         'pullback_stent_type': 'pullbackStentType',  # noqa: E501
         'pullback_stented_region': 'pullbackStentedRegion',  # noqa: E501
+        'pullback_stent_size': 'pullbackStentSize',  # noqa: E501
+        'pullback_disease_type': 'pullbackDiseaseType',  # noqa: E501
+        'pullback_lesion_location': 'pullbackLesionLocation',  # noqa: E501
+        'pullback_comment': 'pullbackComment',  # noqa: E501
+        'pullback_usable': 'pullbackUsable',  # noqa: E501
         'study_database_id': 'studyDatabaseId',  # noqa: E501
         'institute_id': 'instituteId',  # noqa: E501
         'project_id': 'projectId',  # noqa: E501
@@ -234,6 +244,11 @@ class MarvelStudy(ModelComposed):
             pullback_direction (str): [optional]  # noqa: E501
             pullback_stent_type (str): [optional]  # noqa: E501
             pullback_stented_region (str): [optional]  # noqa: E501
+            pullback_stent_size (str): [optional]  # noqa: E501
+            pullback_disease_type (str): [optional]  # noqa: E501
+            pullback_lesion_location (str): [optional]  # noqa: E501
+            pullback_comment (str): [optional]  # noqa: E501
+            pullback_usable (str): [optional]  # noqa: E501
             study_database_id (str): [optional]  # noqa: E501
             institute_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501

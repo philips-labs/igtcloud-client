@@ -29,12 +29,8 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
 def lazy_import():
     from igtcloud.client.services.entities.model.ai_suite_collection_all_of import AISuiteCollectionAllOf
     from igtcloud.client.services.entities.model.ai_suite_resource import AISuiteResource
-    from igtcloud.client.services.entities.model.institute import Institute
-    from igtcloud.client.services.entities.model.project import Project
     globals()['AISuiteCollectionAllOf'] = AISuiteCollectionAllOf
     globals()['AISuiteResource'] = AISuiteResource
-    globals()['Institute'] = Institute
-    globals()['Project'] = Project
 
 
 class AISuiteCollection(ModelComposed):
@@ -96,8 +92,6 @@ class AISuiteCollection(ModelComposed):
             'reference': (str,),  # noqa: E501
             'version': (str,),  # noqa: E501
             'create_date': (int,),  # noqa: E501
-            'project': (Project,),  # noqa: E501
-            'institute': (Institute,),  # noqa: E501
         }
 
     @cached_property
@@ -112,8 +106,6 @@ class AISuiteCollection(ModelComposed):
         'reference': 'reference',  # noqa: E501
         'version': 'version',  # noqa: E501
         'create_date': 'createDate',  # noqa: E501
-        'project': 'project',  # noqa: E501
-        'institute': 'institute',  # noqa: E501
     }
 
     required_properties = set([
@@ -169,8 +161,6 @@ class AISuiteCollection(ModelComposed):
             reference (str): [optional]  # noqa: E501
             version (str): [optional]  # noqa: E501
             create_date (int): [optional]  # noqa: E501
-            project (Project): [optional]  # noqa: E501
-            institute (Institute): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

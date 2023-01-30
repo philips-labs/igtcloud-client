@@ -4,8 +4,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**series_type** | **str** |  | [readonly] 
+**series_type** | **str** |  | 
 **study** | [**AnnotationStudy**](AnnotationStudy.md) |  | [optional] 
+**has_sticky_note** | **bool** |  | [optional] 
 **series_database_id** | **str** |  | [optional] 
 **created_on** | **str** |  | [optional] [readonly] 
 **created_by** | **str** |  | [optional] [readonly] 

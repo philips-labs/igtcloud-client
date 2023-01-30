@@ -4,8 +4,10 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**study_type** | **str** |  | [readonly] 
+**study_type** | **str** |  | 
 **annotation_state** | **str** |  | [optional] 
+**case_labels** | **[str]** |  | [optional] 
+**has_sticky_note** | **bool** |  | [optional] 
 **study_database_id** | **str** |  | [optional] [readonly] 
 **institute_id** | **str** |  | [optional] [readonly] 
 **project_id** | **str** |  | [optional] [readonly] 

@@ -78,6 +78,7 @@ class AnnotationSeriesAllOf(ModelNormal):
         lazy_import()
         return {
             'study': (AnnotationStudy,),  # noqa: E501
+            'has_sticky_note': (bool,),  # noqa: E501
         }
 
     @cached_property
@@ -87,6 +88,7 @@ class AnnotationSeriesAllOf(ModelNormal):
 
     attribute_map = {
         'study': 'study',  # noqa: E501
+        'has_sticky_note': 'hasStickyNote',  # noqa: E501
     }
 
     _composed_schemas = {}
@@ -136,6 +138,7 @@ class AnnotationSeriesAllOf(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             study (AnnotationStudy): [optional]  # noqa: E501
+            has_sticky_note (bool): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

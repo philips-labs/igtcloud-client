@@ -23,6 +23,12 @@ class TestIntegrationsApi(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def test_get_ai_suite_attribute_mappings(self):
+        """Test case for get_ai_suite_attribute_mappings
+
+        """
+        pass
+
     def test_get_ai_suite_collections(self):
         """Test case for get_ai_suite_collections
 
@@ -35,14 +41,44 @@ class TestIntegrationsApi(unittest.TestCase):
         """
         pass
 
+    def test_get_ai_suite_file_mappings(self):
+        """Test case for get_ai_suite_file_mappings
+
+        """
+        pass
+
     def test_get_ai_suite_projects(self):
         """Test case for get_ai_suite_projects
 
         """
         pass
 
+    def test_get_ai_suite_sync(self):
+        """Test case for get_ai_suite_sync
+
+        """
+        pass
+
     def test_post_ai_suite_collections(self):
         """Test case for post_ai_suite_collections
+
+        """
+        pass
+
+    def test_post_ai_suite_mappings(self):
+        """Test case for post_ai_suite_mappings
+
+        """
+        pass
+
+    def test_post_ai_suite_sync(self):
+        """Test case for post_ai_suite_sync
+
+        """
+        pass
+
+    def test_post_ai_suite_task(self):
+        """Test case for post_ai_suite_task
 
         """
         pass

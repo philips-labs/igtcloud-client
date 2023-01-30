@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**study_type** | **str** |  | [readonly] 
+**study_type** | **str** |  | 
 **subject_id** | **str** |  | [optional] 
 **x_ray_system** | **str** |  | [optional] 
 **x_ray_software_release** | **str** |  | [optional] 
@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **ultrasound_system** | **str** |  | [optional] 
 **ultrasound_software_release** | **str** |  | [optional] 
 **ultrasound_hardware** | **str** |  | [optional] 
+**echo_navigator_empty** | **str** |  | [optional] 
 **echo_navigator_investigational_device** | **str** |  | [optional] 
 **echo_navigator_software_release** | **str** |  | [optional] 
 **hemo** | **str** |  | [optional] 

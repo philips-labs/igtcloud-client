@@ -90,6 +90,7 @@ class AnnotationSeries(ModelComposed):
         return {
             'series_type': (str,),  # noqa: E501
             'study': (AnnotationStudy,),  # noqa: E501
+            'has_sticky_note': (bool,),  # noqa: E501
             'series_database_id': (str,),  # noqa: E501
             'created_on': (str,),  # noqa: E501
             'created_by': (str,),  # noqa: E501
@@ -119,6 +120,7 @@ class AnnotationSeries(ModelComposed):
     attribute_map = {
         'series_type': 'seriesType',  # noqa: E501
         'study': 'study',  # noqa: E501
+        'has_sticky_note': 'hasStickyNote',  # noqa: E501
         'series_database_id': 'seriesDatabaseId',  # noqa: E501
         'created_on': 'createdOn',  # noqa: E501
         'created_by': 'createdBy',  # noqa: E501
@@ -188,6 +190,7 @@ class AnnotationSeries(ModelComposed):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             study (AnnotationStudy): [optional]  # noqa: E501
+            has_sticky_note (bool): [optional]  # noqa: E501
             series_database_id (str): [optional]  # noqa: E501
             created_on (str): [optional]  # noqa: E501
             created_by (str): [optional]  # noqa: E501

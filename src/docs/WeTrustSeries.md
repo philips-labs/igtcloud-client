@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**series_type** | **str** |  | [readonly] 
+**series_type** | **str** |  | 
 **study** | [**WeTrustStudy**](WeTrustStudy.md) |  | [optional] 
 **series_database_id** | **str** |  | [optional] 
 **created_on** | **str** |  | [optional] [readonly] 

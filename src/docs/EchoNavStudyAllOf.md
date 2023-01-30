@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **ultrasound_system** | **str** |  | [optional] 
 **ultrasound_software_release** | **str** |  | [optional] 
 **ultrasound_hardware** | **str** |  | [optional] 
+**echo_navigator_empty** | **str** |  | [optional] 
 **echo_navigator_investigational_device** | **str** |  | [optional] 
 **echo_navigator_software_release** | **str** |  | [optional] 
 **hemo** | **str** |  | [optional] 

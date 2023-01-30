@@ -22,6 +22,7 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
     validate_and_convert_types
 )
 from igtcloud.client.services.entities.model.annotation_state import AnnotationState
+from igtcloud.client.services.entities.model.case_label import CaseLabel
 from igtcloud.client.services.entities.model.electronic_record_state import ElectronicRecordState
 from igtcloud.client.services.entities.model.file import File
 from igtcloud.client.services.entities.model.files import Files
@@ -29,6 +30,7 @@ from igtcloud.client.services.entities.model.institute import Institute
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.entities.model.root_study import RootStudy
 from igtcloud.client.services.entities.model.series import Series
+from igtcloud.client.services.entities.model.study_sticky_note import StudyStickyNote
 
 
 class InstitutesApi(object):
@@ -170,6 +172,145 @@ class InstitutesApi(object):
             },
             api_client=api_client,
             callable=__delete_study
+        )
+
+        def __delete_study_annotations(
+            self,
+            hospital_id,
+            study_id,
+            patient_id,
+            **kwargs
+        ):
+            """delete_study_annotations  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.delete_study_annotations(hospital_id, study_id, patient_id, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                hospital_id (str):
+                study_id (str):
+                patient_id (str):
+
+            Keyword Args:
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                None
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['hospital_id'] = \
+                hospital_id
+            kwargs['study_id'] = \
+                study_id
+            kwargs['patient_id'] = \
+                patient_id
+            return self.call_with_http_info(**kwargs)
+
+        self.delete_study_annotations = _Endpoint(
+            settings={
+                'response_type': None,
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/hospitals/{hospital_id}/studies/{study_id}/annotations',
+                'operation_id': 'delete_study_annotations',
+                'http_method': 'DELETE',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'hospital_id',
+                    'study_id',
+                    'patient_id',
+                ],
+                'required': [
+                    'hospital_id',
+                    'study_id',
+                    'patient_id',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'hospital_id':
+                        (str,),
+                    'study_id':
+                        (str,),
+                    'patient_id':
+                        (str,),
+                },
+                'attribute_map': {
+                    'hospital_id': 'hospital_id',
+                    'study_id': 'study_id',
+                    'patient_id': 'patientId',
+                },
+                'location_map': {
+                    'hospital_id': 'path',
+                    'study_id': 'path',
+                    'patient_id': 'query',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            callable=__delete_study_annotations
         )
 
         def __delete_study_files(
@@ -1355,7 +1496,7 @@ class InstitutesApi(object):
                 study_id (str):
 
             Keyword Args:
-                auxiliary (bool): [optional] if omitted the server will use the default value of False
+                auxiliary (str): [optional] if omitted the server will use the default value of "false"
                 completed (bool): [optional] if omitted the server will use the default value of False
                 x_fields (str): An optional fields mask. [optional]
                 _return_http_data_only (bool): response data without head status
@@ -1450,7 +1591,7 @@ class InstitutesApi(object):
                     'study_id':
                         (str,),
                     'auxiliary':
-                        (bool,),
+                        (str,),
                     'completed':
                         (bool,),
                     'x_fields':
@@ -2026,6 +2167,146 @@ class InstitutesApi(object):
             },
             api_client=api_client,
             callable=__post_study_annotation_state
+        )
+
+        def __post_study_case_labels(
+            self,
+            hospital_id,
+            study_id,
+            payload,
+            **kwargs
+        ):
+            """post_study_case_labels  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.post_study_case_labels(hospital_id, study_id, payload, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                hospital_id (str):
+                study_id (str):
+                payload (CaseLabel):
+
+            Keyword Args:
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                RootStudy
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['hospital_id'] = \
+                hospital_id
+            kwargs['study_id'] = \
+                study_id
+            kwargs['payload'] = \
+                payload
+            return self.call_with_http_info(**kwargs)
+
+        self.post_study_case_labels = _Endpoint(
+            settings={
+                'response_type': (RootStudy,),
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/hospitals/{hospital_id}/studies/{study_id}/case-labels',
+                'operation_id': 'post_study_case_labels',
+                'http_method': 'POST',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'hospital_id',
+                    'study_id',
+                    'payload',
+                ],
+                'required': [
+                    'hospital_id',
+                    'study_id',
+                    'payload',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'hospital_id':
+                        (str,),
+                    'study_id':
+                        (str,),
+                    'payload':
+                        (CaseLabel,),
+                },
+                'attribute_map': {
+                    'hospital_id': 'hospital_id',
+                    'study_id': 'study_id',
+                },
+                'location_map': {
+                    'hospital_id': 'path',
+                    'study_id': 'path',
+                    'payload': 'body',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [
+                    'application/json'
+                ]
+            },
+            api_client=api_client,
+            callable=__post_study_case_labels
         )
 
         def __post_study_download_link(
@@ -2732,4 +3013,144 @@ class InstitutesApi(object):
             },
             api_client=api_client,
             callable=__put_study_series
+        )
+
+        def __put_study_sticky_note(
+            self,
+            hospital_id,
+            study_id,
+            payload,
+            **kwargs
+        ):
+            """put_study_sticky_note  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.put_study_sticky_note(hospital_id, study_id, payload, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                hospital_id (str):
+                study_id (str):
+                payload (StudyStickyNote):
+
+            Keyword Args:
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                RootStudy
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['hospital_id'] = \
+                hospital_id
+            kwargs['study_id'] = \
+                study_id
+            kwargs['payload'] = \
+                payload
+            return self.call_with_http_info(**kwargs)
+
+        self.put_study_sticky_note = _Endpoint(
+            settings={
+                'response_type': (RootStudy,),
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/hospitals/{hospital_id}/studies/{study_id}/sticky-note',
+                'operation_id': 'put_study_sticky_note',
+                'http_method': 'PUT',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'hospital_id',
+                    'study_id',
+                    'payload',
+                ],
+                'required': [
+                    'hospital_id',
+                    'study_id',
+                    'payload',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'hospital_id':
+                        (str,),
+                    'study_id':
+                        (str,),
+                    'payload':
+                        (StudyStickyNote,),
+                },
+                'attribute_map': {
+                    'hospital_id': 'hospital_id',
+                    'study_id': 'study_id',
+                },
+                'location_map': {
+                    'hospital_id': 'path',
+                    'study_id': 'path',
+                    'payload': 'body',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [
+                    'application/json'
+                ]
+            },
+            api_client=api_client,
+            callable=__put_study_sticky_note
         )

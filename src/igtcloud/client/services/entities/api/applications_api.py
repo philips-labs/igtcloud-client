@@ -22,6 +22,8 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
     validate_and_convert_types
 )
 from igtcloud.client.services.entities.model.application import Application
+from igtcloud.client.services.entities.model.inline_object import InlineObject
+from igtcloud.client.services.entities.model.inline_object1 import InlineObject1
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.entities.model.storage import Storage
 from igtcloud.client.services.entities.model.training_application import TrainingApplication
@@ -39,9 +41,359 @@ class ApplicationsApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
+        def __delete_application_specific(
+            self,
+            application_id,
+            **kwargs
+        ):
+            """delete_application_specific  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.delete_application_specific(application_id, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                application_id (int):
+
+            Keyword Args:
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                None
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['application_id'] = \
+                application_id
+            return self.call_with_http_info(**kwargs)
+
+        self.delete_application_specific = _Endpoint(
+            settings={
+                'response_type': None,
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/applications/{application_id}',
+                'operation_id': 'delete_application_specific',
+                'http_method': 'DELETE',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'application_id',
+                ],
+                'required': [
+                    'application_id',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'application_id':
+                        (int,),
+                },
+                'attribute_map': {
+                    'application_id': 'application_id',
+                },
+                'location_map': {
+                    'application_id': 'path',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            callable=__delete_application_specific
+        )
+
+        def __get_application_file_formats(
+            self,
+            **kwargs
+        ):
+            """get_application_file_formats  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.get_application_file_formats(async_req=True)
+            >>> result = thread.get()
+
+
+            Keyword Args:
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                None
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            return self.call_with_http_info(**kwargs)
+
+        self.get_application_file_formats = _Endpoint(
+            settings={
+                'response_type': None,
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/applications/file-formats',
+                'operation_id': 'get_application_file_formats',
+                'http_method': 'GET',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                ],
+                'required': [],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                },
+                'attribute_map': {
+                },
+                'location_map': {
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            callable=__get_application_file_formats
+        )
+
+        def __get_application_specific(
+            self,
+            application_id,
+            **kwargs
+        ):
+            """get_application_specific  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.get_application_specific(application_id, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                application_id (int):
+
+            Keyword Args:
+                x_fields (str): An optional fields mask. [optional]
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                Application
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['application_id'] = \
+                application_id
+            return self.call_with_http_info(**kwargs)
+
+        self.get_application_specific = _Endpoint(
+            settings={
+                'response_type': (Application,),
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/applications/{application_id}',
+                'operation_id': 'get_application_specific',
+                'http_method': 'GET',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'application_id',
+                    'x_fields',
+                ],
+                'required': [
+                    'application_id',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'application_id':
+                        (int,),
+                    'x_fields':
+                        (str,),
+                },
+                'attribute_map': {
+                    'application_id': 'application_id',
+                    'x_fields': 'X-Fields',
+                },
+                'location_map': {
+                    'application_id': 'path',
+                    'x_fields': 'header',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            callable=__get_application_specific
+        )
+
         def __get_applications(
             self,
-            project_id,
             **kwargs
         ):
             """get_applications  # noqa: E501
@@ -49,17 +401,12 @@ class ApplicationsApi(object):
             This method makes a synchronous HTTP request by default. To make an
             asynchronous HTTP request, please pass async_req=True
 
-            >>> thread = api.get_applications(project_id, async_req=True)
+            >>> thread = api.get_applications(async_req=True)
             >>> result = thread.get()
 
-            Args:
-                project_id (str):
 
             Keyword Args:
-                application (str): [optional]
-                format (str): [optional]
-                vm_environment (str): [optional]
-                does_open_on_study (bool): [optional]
+                enabled (bool): [optional]
                 x_fields (str): An optional fields mask. [optional]
                 _return_http_data_only (bool): response data without head status
                     code and headers. Default is True.
@@ -105,8 +452,6 @@ class ApplicationsApi(object):
                 '_check_return_type', True
             )
             kwargs['_host_index'] = kwargs.get('_host_index')
-            kwargs['project_id'] = \
-                project_id
             return self.call_with_http_info(**kwargs)
 
         self.get_applications = _Endpoint(
@@ -123,16 +468,10 @@ class ApplicationsApi(object):
             },
             params_map={
                 'all': [
-                    'project_id',
-                    'application',
-                    'format',
-                    'vm_environment',
-                    'does_open_on_study',
+                    'enabled',
                     'x_fields',
                 ],
-                'required': [
-                    'project_id',
-                ],
+                'required': [],
                 'nullable': [
                 ],
                 'enum': [
@@ -146,33 +485,17 @@ class ApplicationsApi(object):
                 'allowed_values': {
                 },
                 'openapi_types': {
-                    'project_id':
-                        (str,),
-                    'application':
-                        (str,),
-                    'format':
-                        (str,),
-                    'vm_environment':
-                        (str,),
-                    'does_open_on_study':
+                    'enabled':
                         (bool,),
                     'x_fields':
                         (str,),
                 },
                 'attribute_map': {
-                    'project_id': 'projectId',
-                    'application': 'application',
-                    'format': 'format',
-                    'vm_environment': 'vmEnvironment',
-                    'does_open_on_study': 'doesOpenOnStudy',
+                    'enabled': 'enabled',
                     'x_fields': 'X-Fields',
                 },
                 'location_map': {
-                    'project_id': 'query',
-                    'application': 'query',
-                    'format': 'query',
-                    'vm_environment': 'query',
-                    'does_open_on_study': 'query',
+                    'enabled': 'query',
                     'x_fields': 'header',
                 },
                 'collection_format_map': {
@@ -549,4 +872,266 @@ class ApplicationsApi(object):
             },
             api_client=api_client,
             callable=__get_training_applications
+        )
+
+        def __post_applications(
+            self,
+            payload,
+            **kwargs
+        ):
+            """post_applications  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.post_applications(payload, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                payload (InlineObject):
+
+            Keyword Args:
+                x_fields (str): An optional fields mask. [optional]
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                Application
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['payload'] = \
+                payload
+            return self.call_with_http_info(**kwargs)
+
+        self.post_applications = _Endpoint(
+            settings={
+                'response_type': (Application,),
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/applications',
+                'operation_id': 'post_applications',
+                'http_method': 'POST',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'payload',
+                    'x_fields',
+                ],
+                'required': [
+                    'payload',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'payload':
+                        (InlineObject,),
+                    'x_fields':
+                        (str,),
+                },
+                'attribute_map': {
+                    'x_fields': 'X-Fields',
+                },
+                'location_map': {
+                    'payload': 'body',
+                    'x_fields': 'header',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [
+                    'application/json'
+                ]
+            },
+            api_client=api_client,
+            callable=__post_applications
+        )
+
+        def __put_application_specific(
+            self,
+            application_id,
+            payload,
+            **kwargs
+        ):
+            """put_application_specific  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.put_application_specific(application_id, payload, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                application_id (int):
+                payload (InlineObject1):
+
+            Keyword Args:
+                x_fields (str): An optional fields mask. [optional]
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                Application
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['application_id'] = \
+                application_id
+            kwargs['payload'] = \
+                payload
+            return self.call_with_http_info(**kwargs)
+
+        self.put_application_specific = _Endpoint(
+            settings={
+                'response_type': (Application,),
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/applications/{application_id}',
+                'operation_id': 'put_application_specific',
+                'http_method': 'PUT',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'application_id',
+                    'payload',
+                    'x_fields',
+                ],
+                'required': [
+                    'application_id',
+                    'payload',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'application_id':
+                        (int,),
+                    'payload':
+                        (InlineObject1,),
+                    'x_fields':
+                        (str,),
+                },
+                'attribute_map': {
+                    'application_id': 'application_id',
+                    'x_fields': 'X-Fields',
+                },
+                'location_map': {
+                    'application_id': 'path',
+                    'payload': 'body',
+                    'x_fields': 'header',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [
+                    'application/json'
+                ]
+            },
+            api_client=api_client,
+            callable=__put_application_specific
         )

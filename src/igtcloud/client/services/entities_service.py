@@ -93,7 +93,8 @@ class FilesCollectionWrapper(CollectionWrapper[File]):
             self._credentials[action] = self._auth(action, self.s3_prefix)
         return self._credentials.get(action)
 
-    def upload(self, filename: str, key: str = None, overwrite: bool = False, callback: Callable[[int], None] = None) -> bool:
+    def upload(self, filename: str, key: str = None, overwrite: bool = False,
+               callback: Callable[[int], None] = None) -> bool:
         abs_path = os.path.abspath(filename)
         if not os.path.exists(abs_path):
             raise FileNotFoundError(f"File {filename} not found")
@@ -304,7 +305,7 @@ def open_file(file: File, mode='rb', buffering=-1, **kwargs):
         if buffering == 0:
             return s3_file
         else:
-            buffer_size = buffering if buffering > 0 else 10*1024**2
+            buffer_size = buffering if buffering > 0 else 10 * 1024 ** 2
             kwargs.setdefault('buffer_size', buffer_size)
             return io.BufferedReader(s3_file, **kwargs)
     else:
