@@ -142,6 +142,9 @@
         },
         "hospitalId": {
           "type": "string"
+        },
+        "isPrefix": {
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -153,6 +156,9 @@
     },
     "MaskError": {
       "description": "When any error occurs on mask"
+    },
+    "Exception": {
+      "description": "When a generic exception occurred"
     }
   }
 }
