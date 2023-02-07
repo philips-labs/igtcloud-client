@@ -74,6 +74,7 @@ class UpdateDatabaseRequest(ModelNormal):
         return {
             'uploaded_path': (str,),  # noqa: E501
             'hospital_id': (str,),  # noqa: E501
+            'is_prefix': (bool,),  # noqa: E501
         }
 
     @cached_property
@@ -84,6 +85,7 @@ class UpdateDatabaseRequest(ModelNormal):
     attribute_map = {
         'uploaded_path': 'uploadedPath',  # noqa: E501
         'hospital_id': 'hospitalId',  # noqa: E501
+        'is_prefix': 'isPrefix',  # noqa: E501
     }
 
     _composed_schemas = {}
@@ -134,6 +136,7 @@ class UpdateDatabaseRequest(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             uploaded_path (str): [optional]  # noqa: E501
             hospital_id (str): [optional]  # noqa: E501
+            is_prefix (bool): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

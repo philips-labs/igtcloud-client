@@ -141,6 +141,7 @@ with igtcloud.client.services.action.ApiClient(configuration) as api_client:
     payload = UpdateDatabaseRequest(
         uploaded_path="uploaded_path_example",
         hospital_id="hospital_id_example",
+        is_prefix=True,
     ) # UpdateDatabaseRequest | 
 
     # example passing only required values which don't have defaults set
