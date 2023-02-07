@@ -12,6 +12,7 @@
 from igtcloud.client.services.entities.model.ai_suite_collection import AISuiteCollection
 from igtcloud.client.services.entities.model.ai_suite_collection_all_of import AISuiteCollectionAllOf
 from igtcloud.client.services.entities.model.ai_suite_connection import AISuiteConnection
+from igtcloud.client.services.entities.model.ai_suite_database_collection import AISuiteDatabaseCollection
 from igtcloud.client.services.entities.model.ai_suite_project import AISuiteProject
 from igtcloud.client.services.entities.model.ai_suite_project_all_of import AISuiteProjectAllOf
 from igtcloud.client.services.entities.model.ai_suite_provider import AISuiteProvider
@@ -26,6 +27,7 @@ from igtcloud.client.services.entities.model.annotation_study_all_of import Anno
 from igtcloud.client.services.entities.model.application import Application
 from igtcloud.client.services.entities.model.base_study import BaseStudy
 from igtcloud.client.services.entities.model.base_study_all_of import BaseStudyAllOf
+from igtcloud.client.services.entities.model.case_label import CaseLabel
 from igtcloud.client.services.entities.model.contact import Contact
 from igtcloud.client.services.entities.model.core_labs_series import CoreLabsSeries
 from igtcloud.client.services.entities.model.core_labs_series_all_of import CoreLabsSeriesAllOf
@@ -36,6 +38,7 @@ from igtcloud.client.services.entities.model.echo_nav_series_all_of import EchoN
 from igtcloud.client.services.entities.model.echo_nav_study import EchoNavStudy
 from igtcloud.client.services.entities.model.echo_nav_study_all_of import EchoNavStudyAllOf
 from igtcloud.client.services.entities.model.electronic_record_state import ElectronicRecordState
+from igtcloud.client.services.entities.model.epd_site import EpdSite
 from igtcloud.client.services.entities.model.epd_study import EpdStudy
 from igtcloud.client.services.entities.model.epd_study_all_of import EpdStudyAllOf
 from igtcloud.client.services.entities.model.epd_study_event import EpdStudyEvent
@@ -49,6 +52,10 @@ from igtcloud.client.services.entities.model.i_guide_u_study import IGuideUStudy
 from igtcloud.client.services.entities.model.i_guide_u_study_all_of import IGuideUStudyAllOf
 from igtcloud.client.services.entities.model.igt_cloud_series import IgtCloudSeries
 from igtcloud.client.services.entities.model.igt_cloud_series_all_of import IgtCloudSeriesAllOf
+from igtcloud.client.services.entities.model.inline_object import InlineObject
+from igtcloud.client.services.entities.model.inline_object1 import InlineObject1
+from igtcloud.client.services.entities.model.inline_object2 import InlineObject2
+from igtcloud.client.services.entities.model.inline_object3 import InlineObject3
 from igtcloud.client.services.entities.model.institute import Institute
 from igtcloud.client.services.entities.model.marvel_series import MarvelSeries
 from igtcloud.client.services.entities.model.marvel_series_all_of import MarvelSeriesAllOf
@@ -66,6 +73,7 @@ from igtcloud.client.services.entities.model.storage import Storage
 from igtcloud.client.services.entities.model.storage_config import StorageConfig
 from igtcloud.client.services.entities.model.storage_credentials import StorageCredentials
 from igtcloud.client.services.entities.model.study import Study
+from igtcloud.client.services.entities.model.study_sticky_note import StudyStickyNote
 from igtcloud.client.services.entities.model.task_completed import TaskCompleted
 from igtcloud.client.services.entities.model.training_application import TrainingApplication
 from igtcloud.client.services.entities.model.user import User

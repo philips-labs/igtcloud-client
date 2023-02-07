@@ -23,6 +23,24 @@ class TestApplicationsApi(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def test_delete_application_specific(self):
+        """Test case for delete_application_specific
+
+        """
+        pass
+
+    def test_get_application_file_formats(self):
+        """Test case for get_application_file_formats
+
+        """
+        pass
+
+    def test_get_application_specific(self):
+        """Test case for get_application_specific
+
+        """
+        pass
+
     def test_get_applications(self):
         """Test case for get_applications
 
@@ -43,6 +61,18 @@ class TestApplicationsApi(unittest.TestCase):
 
     def test_get_training_applications(self):
         """Test case for get_training_applications
+
+        """
+        pass
+
+    def test_post_applications(self):
+        """Test case for post_applications
+
+        """
+        pass
+
+    def test_put_application_specific(self):
+        """Test case for put_application_specific
 
         """
         pass

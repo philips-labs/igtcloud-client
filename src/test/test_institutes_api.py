@@ -29,6 +29,12 @@ class TestInstitutesApi(unittest.TestCase):
         """
         pass
 
+    def test_delete_study_annotations(self):
+        """Test case for delete_study_annotations
+
+        """
+        pass
+
     def test_delete_study_files(self):
         """Test case for delete_study_files
 
@@ -113,6 +119,12 @@ class TestInstitutesApi(unittest.TestCase):
         """
         pass
 
+    def test_post_study_case_labels(self):
+        """Test case for post_study_case_labels
+
+        """
+        pass
+
     def test_post_study_download_link(self):
         """Test case for post_study_download_link
 
@@ -140,6 +152,12 @@ class TestInstitutesApi(unittest.TestCase):
 
     def test_put_study_series(self):
         """Test case for put_study_series
+
+        """
+        pass
+
+    def test_put_study_sticky_note(self):
+        """Test case for put_study_sticky_note
 
         """
         pass

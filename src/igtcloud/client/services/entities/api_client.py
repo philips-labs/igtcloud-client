@@ -721,7 +721,7 @@ class Endpoint(object):
 
     def __gather_params(self, kwargs):
         params = {
-            'body': None,
+            'body': {},
             'collection_format': {},
             'file': {},
             'form': [],
@@ -762,10 +762,10 @@ class Endpoint(object):
         Example:
 
         api_instance = ApplicationsApi()
-        api_instance.get_applications  # this is an instance of the class Endpoint
-        api_instance.get_applications()  # this invokes api_instance.get_applications.__call__()
+        api_instance.delete_application_specific  # this is an instance of the class Endpoint
+        api_instance.delete_application_specific()  # this invokes api_instance.delete_application_specific.__call__()
         which then invokes the callable functions stored in that endpoint at
-        api_instance.get_applications.callable or self.callable in this class
+        api_instance.delete_application_specific.callable or self.callable in this class
 
         """
         return self.callable(self, *args, **kwargs)

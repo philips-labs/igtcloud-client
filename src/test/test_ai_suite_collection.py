@@ -14,12 +14,8 @@ import unittest
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.model.ai_suite_collection_all_of import AISuiteCollectionAllOf
 from igtcloud.client.services.entities.model.ai_suite_resource import AISuiteResource
-from igtcloud.client.services.entities.model.institute import Institute
-from igtcloud.client.services.entities.model.project import Project
 globals()['AISuiteCollectionAllOf'] = AISuiteCollectionAllOf
 globals()['AISuiteResource'] = AISuiteResource
-globals()['Institute'] = Institute
-globals()['Project'] = Project
 from igtcloud.client.services.entities.model.ai_suite_collection import AISuiteCollection
 
 

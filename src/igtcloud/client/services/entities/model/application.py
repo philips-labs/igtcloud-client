@@ -72,9 +72,13 @@ class Application(ModelNormal):
                 and the value is attribute type.
         """
         return {
-            'application_id': (str,),  # noqa: E501
+            'id': (int,),  # noqa: E501
+            'app_id': (str,),  # noqa: E501
+            'name': (str,),  # noqa: E501
             'supported_formats': ([str],),  # noqa: E501
             'vm_environment': (str,),  # noqa: E501
+            'default_in_project_types': ([str],),  # noqa: E501
+            'enabled': (bool,),  # noqa: E501
         }
 
     @cached_property
@@ -83,9 +87,13 @@ class Application(ModelNormal):
 
 
     attribute_map = {
-        'application_id': 'applicationId',  # noqa: E501
+        'id': 'id',  # noqa: E501
+        'app_id': 'appId',  # noqa: E501
+        'name': 'name',  # noqa: E501
         'supported_formats': 'supportedFormats',  # noqa: E501
         'vm_environment': 'vmEnvironment',  # noqa: E501
+        'default_in_project_types': 'defaultInProjectTypes',  # noqa: E501
+        'enabled': 'enabled',  # noqa: E501
     }
 
     _composed_schemas = {}
@@ -134,9 +142,13 @@ class Application(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            application_id (str): [optional]  # noqa: E501
+            id (int): [optional]  # noqa: E501
+            app_id (str): [optional]  # noqa: E501
+            name (str): [optional]  # noqa: E501
             supported_formats ([str]): [optional]  # noqa: E501
             vm_environment (str): [optional]  # noqa: E501
+            default_in_project_types ([str]): [optional]  # noqa: E501
+            enabled (bool): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

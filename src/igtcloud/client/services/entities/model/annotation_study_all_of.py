@@ -73,6 +73,8 @@ class AnnotationStudyAllOf(ModelNormal):
         """
         return {
             'annotation_state': (str,),  # noqa: E501
+            'case_labels': ([str],),  # noqa: E501
+            'has_sticky_note': (bool,),  # noqa: E501
         }
 
     @cached_property
@@ -82,6 +84,8 @@ class AnnotationStudyAllOf(ModelNormal):
 
     attribute_map = {
         'annotation_state': 'annotationState',  # noqa: E501
+        'case_labels': 'caseLabels',  # noqa: E501
+        'has_sticky_note': 'hasStickyNote',  # noqa: E501
     }
 
     _composed_schemas = {}
@@ -131,6 +135,8 @@ class AnnotationStudyAllOf(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             annotation_state (str): [optional]  # noqa: E501
+            case_labels ([str]): [optional]  # noqa: E501
+            has_sticky_note (bool): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

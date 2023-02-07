@@ -206,7 +206,7 @@ class AuthRefresher:
 
     def _login(self, username=None):
         if self._token_data is None or self._token_data.get('refresh_token') is None:
-            logger.info("Login to IGT CLoud ({})".format(self._host))
+            logger.info("Login to IGT Cloud ({})".format(self._host))
             username = username or os.environ.get('CLOUD_USERNAME') or input("Username: ")
             password = getpass('{}@{}\'s password: '.format(username, self._host))
 

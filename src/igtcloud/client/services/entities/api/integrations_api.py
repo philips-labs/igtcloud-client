@@ -23,8 +23,10 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
 )
 from igtcloud.client.services.entities.model.ai_suite_collection import AISuiteCollection
 from igtcloud.client.services.entities.model.ai_suite_connection import AISuiteConnection
+from igtcloud.client.services.entities.model.ai_suite_database_collection import AISuiteDatabaseCollection
 from igtcloud.client.services.entities.model.ai_suite_project import AISuiteProject
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from igtcloud.client.services.entities.model.task_completed import TaskCompleted
 
 
 class IntegrationsApi(object):
@@ -39,10 +41,122 @@ class IntegrationsApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
+        def __get_ai_suite_attribute_mappings(
+            self,
+            **kwargs
+        ):
+            """get_ai_suite_attribute_mappings  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.get_ai_suite_attribute_mappings(async_req=True)
+            >>> result = thread.get()
+
+
+            Keyword Args:
+                project_id (str): IGTCloud project. [optional]
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                None
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            return self.call_with_http_info(**kwargs)
+
+        self.get_ai_suite_attribute_mappings = _Endpoint(
+            settings={
+                'response_type': None,
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/integrations/aisuite/mappings/attributes',
+                'operation_id': 'get_ai_suite_attribute_mappings',
+                'http_method': 'GET',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'project_id',
+                ],
+                'required': [],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'project_id':
+                        (str,),
+                },
+                'attribute_map': {
+                    'project_id': 'projectId',
+                },
+                'location_map': {
+                    'project_id': 'query',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            callable=__get_ai_suite_attribute_mappings
+        )
+
         def __get_ai_suite_collections(
             self,
             connection_name,
-            aisuite_project_id,
             **kwargs
         ):
             """get_ai_suite_collections  # noqa: E501
@@ -50,16 +164,17 @@ class IntegrationsApi(object):
             This method makes a synchronous HTTP request by default. To make an
             asynchronous HTTP request, please pass async_req=True
 
-            >>> thread = api.get_ai_suite_collections(connection_name, aisuite_project_id, async_req=True)
+            >>> thread = api.get_ai_suite_collections(connection_name, async_req=True)
             >>> result = thread.get()
 
             Args:
                 connection_name (str): Name of AI Suite connection
-                aisuite_project_id (str): AI Suite project id or reference
 
             Keyword Args:
-                project_id (str): IGTCloud project. [optional]
-                institute_id (str): IGTCloud institute. [optional]
+                igtcloud_identifier (str): IGTCloud identifier. [optional]
+                igtcloud_identifier_type (str): IGTCloud identifier type (project / institute). [optional]
+                aisuite_project_id (str): AI Suite project id. [optional]
+                aisuite_collection_id (str): AI Suite collection id. [optional]
                 x_fields (str): An optional fields mask. [optional]
                 _return_http_data_only (bool): response data without head status
                     code and headers. Default is True.
@@ -82,7 +197,7 @@ class IntegrationsApi(object):
                 async_req (bool): execute request asynchronously
 
             Returns:
-                [AISuiteCollection]
+                [AISuiteDatabaseCollection]
                     If the method is called asynchronously, returns the request
                     thread.
             """
@@ -107,18 +222,16 @@ class IntegrationsApi(object):
             kwargs['_host_index'] = kwargs.get('_host_index')
             kwargs['connection_name'] = \
                 connection_name
-            kwargs['aisuite_project_id'] = \
-                aisuite_project_id
             return self.call_with_http_info(**kwargs)
 
         self.get_ai_suite_collections = _Endpoint(
             settings={
-                'response_type': ([AISuiteCollection],),
+                'response_type': ([AISuiteDatabaseCollection],),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
-                'endpoint_path': '/integrations/aisuite/{connection_name}/projects/{aisuite_project_id}',
+                'endpoint_path': '/integrations/aisuite/{connection_name}/collections',
                 'operation_id': 'get_ai_suite_collections',
                 'http_method': 'GET',
                 'servers': None,
@@ -126,14 +239,14 @@ class IntegrationsApi(object):
             params_map={
                 'all': [
                     'connection_name',
+                    'igtcloud_identifier',
+                    'igtcloud_identifier_type',
                     'aisuite_project_id',
-                    'project_id',
-                    'institute_id',
+                    'aisuite_collection_id',
                     'x_fields',
                 ],
                 'required': [
                     'connection_name',
-                    'aisuite_project_id',
                 ],
                 'nullable': [
                 ],
@@ -150,27 +263,31 @@ class IntegrationsApi(object):
                 'openapi_types': {
                     'connection_name':
                         (str,),
+                    'igtcloud_identifier':
+                        (str,),
+                    'igtcloud_identifier_type':
+                        (str,),
                     'aisuite_project_id':
                         (str,),
-                    'project_id':
-                        (str,),
-                    'institute_id':
+                    'aisuite_collection_id':
                         (str,),
                     'x_fields':
                         (str,),
                 },
                 'attribute_map': {
                     'connection_name': 'connection_name',
-                    'aisuite_project_id': 'aisuite_project_id',
-                    'project_id': 'projectId',
-                    'institute_id': 'instituteId',
+                    'igtcloud_identifier': 'igtcloudIdentifier',
+                    'igtcloud_identifier_type': 'igtcloudIdentifierType',
+                    'aisuite_project_id': 'aisuiteProjectId',
+                    'aisuite_collection_id': 'aisuiteCollectionId',
                     'x_fields': 'X-Fields',
                 },
                 'location_map': {
                     'connection_name': 'path',
-                    'aisuite_project_id': 'path',
-                    'project_id': 'query',
-                    'institute_id': 'query',
+                    'igtcloud_identifier': 'query',
+                    'igtcloud_identifier_type': 'query',
+                    'aisuite_project_id': 'query',
+                    'aisuite_collection_id': 'query',
                     'x_fields': 'header',
                 },
                 'collection_format_map': {
@@ -299,6 +416,119 @@ class IntegrationsApi(object):
             callable=__get_ai_suite_connections
         )
 
+        def __get_ai_suite_file_mappings(
+            self,
+            **kwargs
+        ):
+            """get_ai_suite_file_mappings  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.get_ai_suite_file_mappings(async_req=True)
+            >>> result = thread.get()
+
+
+            Keyword Args:
+                project_id (str): IGTCloud project. [optional]
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                None
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            return self.call_with_http_info(**kwargs)
+
+        self.get_ai_suite_file_mappings = _Endpoint(
+            settings={
+                'response_type': None,
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/integrations/aisuite/mappings/files',
+                'operation_id': 'get_ai_suite_file_mappings',
+                'http_method': 'GET',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'project_id',
+                ],
+                'required': [],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'project_id':
+                        (str,),
+                },
+                'attribute_map': {
+                    'project_id': 'projectId',
+                },
+                'location_map': {
+                    'project_id': 'query',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            callable=__get_ai_suite_file_mappings
+        )
+
         def __get_ai_suite_projects(
             self,
             connection_name,
@@ -424,18 +654,18 @@ class IntegrationsApi(object):
             callable=__get_ai_suite_projects
         )
 
-        def __post_ai_suite_collections(
+        def __get_ai_suite_sync(
             self,
             connection_name,
             aisuite_project_id,
             **kwargs
         ):
-            """post_ai_suite_collections  # noqa: E501
+            """get_ai_suite_sync  # noqa: E501
 
             This method makes a synchronous HTTP request by default. To make an
             asynchronous HTTP request, please pass async_req=True
 
-            >>> thread = api.post_ai_suite_collections(connection_name, aisuite_project_id, async_req=True)
+            >>> thread = api.get_ai_suite_sync(connection_name, aisuite_project_id, async_req=True)
             >>> result = thread.get()
 
             Args:
@@ -445,6 +675,7 @@ class IntegrationsApi(object):
             Keyword Args:
                 project_id (str): IGTCloud project. [optional]
                 institute_id (str): IGTCloud institute. [optional]
+                x_authorization_code (str): Authorization code. [optional]
                 x_fields (str): An optional fields mask. [optional]
                 _return_http_data_only (bool): response data without head status
                     code and headers. Default is True.
@@ -467,7 +698,7 @@ class IntegrationsApi(object):
                 async_req (bool): execute request asynchronously
 
             Returns:
-                AISuiteCollection
+                [AISuiteCollection]
                     If the method is called asynchronously, returns the request
                     thread.
             """
@@ -496,16 +727,16 @@ class IntegrationsApi(object):
                 aisuite_project_id
             return self.call_with_http_info(**kwargs)
 
-        self.post_ai_suite_collections = _Endpoint(
+        self.get_ai_suite_sync = _Endpoint(
             settings={
-                'response_type': (AISuiteCollection,),
+                'response_type': ([AISuiteCollection],),
                 'auth': [
                     'csrf_token',
                     'jwt'
                 ],
                 'endpoint_path': '/integrations/aisuite/{connection_name}/projects/{aisuite_project_id}',
-                'operation_id': 'post_ai_suite_collections',
-                'http_method': 'POST',
+                'operation_id': 'get_ai_suite_sync',
+                'http_method': 'GET',
                 'servers': None,
             },
             params_map={
@@ -514,6 +745,7 @@ class IntegrationsApi(object):
                     'aisuite_project_id',
                     'project_id',
                     'institute_id',
+                    'x_authorization_code',
                     'x_fields',
                 ],
                 'required': [
@@ -541,6 +773,8 @@ class IntegrationsApi(object):
                         (str,),
                     'institute_id':
                         (str,),
+                    'x_authorization_code':
+                        (str,),
                     'x_fields':
                         (str,),
                 },
@@ -549,6 +783,7 @@ class IntegrationsApi(object):
                     'aisuite_project_id': 'aisuite_project_id',
                     'project_id': 'projectId',
                     'institute_id': 'instituteId',
+                    'x_authorization_code': 'X-AUTHORIZATION-CODE',
                     'x_fields': 'X-Fields',
                 },
                 'location_map': {
@@ -556,6 +791,178 @@ class IntegrationsApi(object):
                     'aisuite_project_id': 'path',
                     'project_id': 'query',
                     'institute_id': 'query',
+                    'x_authorization_code': 'header',
+                    'x_fields': 'header',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            callable=__get_ai_suite_sync
+        )
+
+        def __post_ai_suite_collections(
+            self,
+            connection_name,
+            aisuite_url,
+            identifier,
+            identifier_type,
+            aisuite_collection_id,
+            **kwargs
+        ):
+            """post_ai_suite_collections  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.post_ai_suite_collections(connection_name, aisuite_url, identifier, identifier_type, aisuite_collection_id, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                connection_name (str): Name of AI Suite connection
+                aisuite_url (str):
+                identifier (str):
+                identifier_type (str):
+                aisuite_collection_id (str):
+
+            Keyword Args:
+                aisuite_project_id (str): [optional]
+                x_fields (str): An optional fields mask. [optional]
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                AISuiteDatabaseCollection
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['connection_name'] = \
+                connection_name
+            kwargs['aisuite_url'] = \
+                aisuite_url
+            kwargs['identifier'] = \
+                identifier
+            kwargs['identifier_type'] = \
+                identifier_type
+            kwargs['aisuite_collection_id'] = \
+                aisuite_collection_id
+            return self.call_with_http_info(**kwargs)
+
+        self.post_ai_suite_collections = _Endpoint(
+            settings={
+                'response_type': (AISuiteDatabaseCollection,),
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/integrations/aisuite/{connection_name}/collections',
+                'operation_id': 'post_ai_suite_collections',
+                'http_method': 'POST',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'connection_name',
+                    'aisuite_url',
+                    'identifier',
+                    'identifier_type',
+                    'aisuite_collection_id',
+                    'aisuite_project_id',
+                    'x_fields',
+                ],
+                'required': [
+                    'connection_name',
+                    'aisuite_url',
+                    'identifier',
+                    'identifier_type',
+                    'aisuite_collection_id',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'connection_name':
+                        (str,),
+                    'aisuite_url':
+                        (str,),
+                    'identifier':
+                        (str,),
+                    'identifier_type':
+                        (str,),
+                    'aisuite_collection_id':
+                        (str,),
+                    'aisuite_project_id':
+                        (str,),
+                    'x_fields':
+                        (str,),
+                },
+                'attribute_map': {
+                    'connection_name': 'connection_name',
+                    'aisuite_url': 'aisuiteUrl',
+                    'identifier': 'identifier',
+                    'identifier_type': 'identifierType',
+                    'aisuite_collection_id': 'aisuiteCollectionId',
+                    'aisuite_project_id': 'aisuiteProjectId',
+                    'x_fields': 'X-Fields',
+                },
+                'location_map': {
+                    'connection_name': 'path',
+                    'aisuite_url': 'query',
+                    'identifier': 'query',
+                    'identifier_type': 'query',
+                    'aisuite_collection_id': 'query',
+                    'aisuite_project_id': 'query',
                     'x_fields': 'header',
                 },
                 'collection_format_map': {
@@ -569,4 +976,392 @@ class IntegrationsApi(object):
             },
             api_client=api_client,
             callable=__post_ai_suite_collections
+        )
+
+        def __post_ai_suite_mappings(
+            self,
+            **kwargs
+        ):
+            """post_ai_suite_mappings  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.post_ai_suite_mappings(async_req=True)
+            >>> result = thread.get()
+
+
+            Keyword Args:
+                project_id (str): IGTCloud project. [optional]
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                None
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            return self.call_with_http_info(**kwargs)
+
+        self.post_ai_suite_mappings = _Endpoint(
+            settings={
+                'response_type': None,
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/integrations/aisuite/mappings/$generate',
+                'operation_id': 'post_ai_suite_mappings',
+                'http_method': 'POST',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'project_id',
+                ],
+                'required': [],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'project_id':
+                        (str,),
+                },
+                'attribute_map': {
+                    'project_id': 'projectId',
+                },
+                'location_map': {
+                    'project_id': 'query',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            callable=__post_ai_suite_mappings
+        )
+
+        def __post_ai_suite_sync(
+            self,
+            connection_name,
+            aisuite_project_id,
+            **kwargs
+        ):
+            """post_ai_suite_sync  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.post_ai_suite_sync(connection_name, aisuite_project_id, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                connection_name (str): Name of AI Suite connection
+                aisuite_project_id (str): AI Suite project id or reference
+
+            Keyword Args:
+                project_id (str): IGTCloud project. [optional]
+                institute_id (str): IGTCloud institute. [optional]
+                x_authorization_code (str): Authorization code. [optional]
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                None
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['connection_name'] = \
+                connection_name
+            kwargs['aisuite_project_id'] = \
+                aisuite_project_id
+            return self.call_with_http_info(**kwargs)
+
+        self.post_ai_suite_sync = _Endpoint(
+            settings={
+                'response_type': None,
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/integrations/aisuite/{connection_name}/projects/{aisuite_project_id}',
+                'operation_id': 'post_ai_suite_sync',
+                'http_method': 'POST',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'connection_name',
+                    'aisuite_project_id',
+                    'project_id',
+                    'institute_id',
+                    'x_authorization_code',
+                ],
+                'required': [
+                    'connection_name',
+                    'aisuite_project_id',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'connection_name':
+                        (str,),
+                    'aisuite_project_id':
+                        (str,),
+                    'project_id':
+                        (str,),
+                    'institute_id':
+                        (str,),
+                    'x_authorization_code':
+                        (str,),
+                },
+                'attribute_map': {
+                    'connection_name': 'connection_name',
+                    'aisuite_project_id': 'aisuite_project_id',
+                    'project_id': 'projectId',
+                    'institute_id': 'instituteId',
+                    'x_authorization_code': 'X-AUTHORIZATION-CODE',
+                },
+                'location_map': {
+                    'connection_name': 'path',
+                    'aisuite_project_id': 'path',
+                    'project_id': 'query',
+                    'institute_id': 'query',
+                    'x_authorization_code': 'header',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            callable=__post_ai_suite_sync
+        )
+
+        def __post_ai_suite_task(
+            self,
+            callback_token,
+            payload,
+            **kwargs
+        ):
+            """post_ai_suite_task  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.post_ai_suite_task(callback_token, payload, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                callback_token (str):
+                payload (TaskCompleted):
+
+            Keyword Args:
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                None
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['callback_token'] = \
+                callback_token
+            kwargs['payload'] = \
+                payload
+            return self.call_with_http_info(**kwargs)
+
+        self.post_ai_suite_task = _Endpoint(
+            settings={
+                'response_type': None,
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/integrations/aisuite/tasks/completed/{callback_token}',
+                'operation_id': 'post_ai_suite_task',
+                'http_method': 'POST',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'callback_token',
+                    'payload',
+                ],
+                'required': [
+                    'callback_token',
+                    'payload',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'callback_token':
+                        (str,),
+                    'payload':
+                        (TaskCompleted,),
+                },
+                'attribute_map': {
+                    'callback_token': 'callback_token',
+                },
+                'location_map': {
+                    'callback_token': 'path',
+                    'payload': 'body',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [],
+                'content_type': [
+                    'application/json'
+                ]
+            },
+            api_client=api_client,
+            callable=__post_ai_suite_task
         )

@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost/auth*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**get_introspect_resource**](AuthApi.md#get_introspect_resource) | **GET** /introspect | 
+[**get_login_aud_resource**](AuthApi.md#get_login_aud_resource) | **GET** /login/$aud | Retrieve &#39;aud&#39; property used for assertion login
 [**get_permissions_resource**](AuthApi.md#get_permissions_resource) | **GET** /permissions | Gets a list of permissions
 [**get_s3_credentials_resource**](AuthApi.md#get_s3_credentials_resource) | **GET** /s3credentials | 
 [**post_audit_resource**](AuthApi.md#post_audit_resource) | **POST** /audit-trail | 
@@ -93,6 +94,82 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Success |  -  |
 **400** | Bad Request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_login_aud_resource**
+> str get_login_aud_resource()
+
+Retrieve 'aud' property used for assertion login
+
+### Example
+
+* Api Key Authentication (csrf_token):
+* Api Key Authentication (jwt):
+```python
+import time
+import igtcloud.client.services.auth
+from igtcloud.client.services.auth.api import auth_api
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost/auth
+# See configuration.py for a list of all supported configuration parameters.
+configuration = igtcloud.client.services.auth.Configuration(
+    host = "http://localhost/auth"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: csrf_token
+configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['csrf_token'] = 'Bearer'
+
+# Configure API key authorization: jwt
+configuration.api_key['jwt'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['jwt'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with igtcloud.client.services.auth.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = auth_api.AuthApi(api_client)
+
+    # example, this endpoint has no required or optional parameters
+    try:
+        # Retrieve 'aud' property used for assertion login
+        api_response = api_instance.get_login_aud_resource()
+        pprint(api_response)
+    except igtcloud.client.services.auth.ApiException as e:
+        print("Exception when calling AuthApi->get_login_aud_resource: %s\n" % e)
+```
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+**str**
+
+### Authorization
+
+[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**study_type** | **str** |  | [readonly] 
+**study_type** | **str** |  | 
 **is_philips_data** | **str** |  | [optional] 
 **study_name** | **str** |  | [optional] 
 **application_type** | **str** |  | [optional] 

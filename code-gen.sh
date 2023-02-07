@@ -8,6 +8,7 @@ docker run --user $(id -u):$(id -g) --rm -v $(pwd):/local openapitools/openapi-g
     -i /local/openapi/entities.json \
     -g python \
     -o /local/src \
+    -t /local/templates \
     --package-name igtcloud.client.services.entities \
     --http-user-agent 'igtcloud-python-client'
 

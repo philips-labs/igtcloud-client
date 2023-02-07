@@ -90,6 +90,8 @@ class AnnotationStudy(ModelComposed):
         return {
             'study_type': (str,),  # noqa: E501
             'annotation_state': (str,),  # noqa: E501
+            'case_labels': ([str],),  # noqa: E501
+            'has_sticky_note': (bool,),  # noqa: E501
             'study_database_id': (str,),  # noqa: E501
             'institute_id': (str,),  # noqa: E501
             'project_id': (str,),  # noqa: E501
@@ -135,6 +137,8 @@ class AnnotationStudy(ModelComposed):
     attribute_map = {
         'study_type': 'studyType',  # noqa: E501
         'annotation_state': 'annotationState',  # noqa: E501
+        'case_labels': 'caseLabels',  # noqa: E501
+        'has_sticky_note': 'hasStickyNote',  # noqa: E501
         'study_database_id': 'studyDatabaseId',  # noqa: E501
         'institute_id': 'instituteId',  # noqa: E501
         'project_id': 'projectId',  # noqa: E501
@@ -220,6 +224,8 @@ class AnnotationStudy(ModelComposed):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             annotation_state (str): [optional]  # noqa: E501
+            case_labels ([str]): [optional]  # noqa: E501
+            has_sticky_note (bool): [optional]  # noqa: E501
             study_database_id (str): [optional]  # noqa: E501
             institute_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501

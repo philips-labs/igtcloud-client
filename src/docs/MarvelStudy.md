@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**study_type** | **str** |  | [readonly] 
+**study_type** | **str** |  | 
 **clinical_study** | **str** |  | [optional] 
 **date** | **datetime** |  | [optional] 
 **anatomy** | **str** |  | [optional] 
@@ -16,6 +16,11 @@ Name | Type | Description | Notes
 **pullback_direction** | **str** |  | [optional] 
 **pullback_stent_type** | **str** |  | [optional] 
 **pullback_stented_region** | **str** |  | [optional] 
+**pullback_stent_size** | **str** |  | [optional] 
+**pullback_disease_type** | **str** |  | [optional] 
+**pullback_lesion_location** | **str** |  | [optional] 
+**pullback_comment** | **str** |  | [optional] 
+**pullback_usable** | **str** |  | [optional] 
 **study_database_id** | **str** |  | [optional] [readonly] 
 **institute_id** | **str** |  | [optional] [readonly] 
 **project_id** | **str** |  | [optional] [readonly] 

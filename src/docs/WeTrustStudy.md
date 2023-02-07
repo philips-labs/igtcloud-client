@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**study_type** | **str** |  | [readonly] 
+**study_type** | **str** |  | 
 **subject_id** | **str** |  | [optional] 
 **corelab_id** | **str** |  | [optional] 
 **classification** | **str** |  | [optional] 

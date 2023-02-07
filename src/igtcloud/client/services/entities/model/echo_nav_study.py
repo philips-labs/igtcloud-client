@@ -98,6 +98,7 @@ class EchoNavStudy(ModelComposed):
             'ultrasound_system': (str,),  # noqa: E501
             'ultrasound_software_release': (str,),  # noqa: E501
             'ultrasound_hardware': (str,),  # noqa: E501
+            'echo_navigator_empty': (str,),  # noqa: E501
             'echo_navigator_investigational_device': (str,),  # noqa: E501
             'echo_navigator_software_release': (str,),  # noqa: E501
             'hemo': (str,),  # noqa: E501
@@ -164,6 +165,7 @@ class EchoNavStudy(ModelComposed):
         'ultrasound_system': 'ultrasoundSystem',  # noqa: E501
         'ultrasound_software_release': 'ultrasoundSoftwareRelease',  # noqa: E501
         'ultrasound_hardware': 'ultrasoundHardware',  # noqa: E501
+        'echo_navigator_empty': 'echoNavigatorEmpty',  # noqa: E501
         'echo_navigator_investigational_device': 'echoNavigatorInvestigationalDevice',  # noqa: E501
         'echo_navigator_software_release': 'echoNavigatorSoftwareRelease',  # noqa: E501
         'hemo': 'hemo',  # noqa: E501
@@ -270,6 +272,7 @@ class EchoNavStudy(ModelComposed):
             ultrasound_system (str): [optional]  # noqa: E501
             ultrasound_software_release (str): [optional]  # noqa: E501
             ultrasound_hardware (str): [optional]  # noqa: E501
+            echo_navigator_empty (str): [optional]  # noqa: E501
             echo_navigator_investigational_device (str): [optional]  # noqa: E501
             echo_navigator_software_release (str): [optional]  # noqa: E501
             hemo (str): [optional]  # noqa: E501

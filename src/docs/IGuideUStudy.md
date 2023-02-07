@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**study_type** | **str** |  | [readonly] 
+**study_type** | **str** |  | 
 **hospital_id** | **str** |  | [optional] 
 **subject_id** | **str** |  | [optional] 
 **visit_name** | **str** |  | [optional] 

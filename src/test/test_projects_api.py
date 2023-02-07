@@ -23,6 +23,24 @@ class TestProjectsApi(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def test_delete_institute(self):
+        """Test case for delete_institute
+
+        """
+        pass
+
+    def test_delete_project(self):
+        """Test case for delete_project
+
+        """
+        pass
+
+    def test_delete_project_application_specific(self):
+        """Test case for delete_project_application_specific
+
+        """
+        pass
+
     def test_delete_project_files(self):
         """Test case for delete_project_files
 
@@ -47,8 +65,26 @@ class TestProjectsApi(unittest.TestCase):
         """
         pass
 
+    def test_get_project_applications(self):
+        """Test case for get_project_applications
+
+        """
+        pass
+
     def test_get_project_download_file(self):
         """Test case for get_project_download_file
+
+        """
+        pass
+
+    def test_get_project_epd_sites(self):
+        """Test case for get_project_epd_sites
+
+        """
+        pass
+
+    def test_get_project_file_content(self):
+        """Test case for get_project_file_content
 
         """
         pass
@@ -73,6 +109,12 @@ class TestProjectsApi(unittest.TestCase):
 
     def test_post_institutes(self):
         """Test case for post_institutes
+
+        """
+        pass
+
+    def test_post_project_applications(self):
+        """Test case for post_project_applications
 
         """
         pass
