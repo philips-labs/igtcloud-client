@@ -183,10 +183,16 @@ def upload(local_folder, project, institute, environment, domain, user, submit, 
 @click.command(short_help="Login to Philips Interventional Cloud")
 @click.option('-d', '--domain', default=None, type=str)
 @click.option('-u', '--user', default=None, type=str)
-def login(domain, user):
+@click.option('-s', '--service-file', default=None, type=str, help='Use a service certificate to perform login')
+def login(domain, user, service_file):
     from igtcloud.client.core.auth import AuthRefresher
     auth_refresher = AuthRefresher()
-    auth_refresher.start(domain=domain, username=user)
+    key = None
+    if service_file:
+        user = user or os.path.splitext(os.path.basename(service_file))[0]
+        with open(service_file) as fp:
+            key = fp.read()
+    auth_refresher.start(domain=domain, username=user, key=key)
 
 
 @click.command('get-token', short_help="Get token for Philips Interventional Cloud")

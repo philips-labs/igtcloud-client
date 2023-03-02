@@ -6,7 +6,7 @@ import signal
 import sys
 import tempfile
 from contextlib import contextmanager
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from getpass import getpass
 from http import cookies
 from threading import Lock, Timer
@@ -16,6 +16,7 @@ from urllib.parse import urlparse, urljoin
 import requests
 import logging
 
+from jwt import JWT, jwk_from_pem
 from requests import RequestException
 from tenacity import retry, wait_exponential, stop_after_delay, retry_if_exception_type
 
@@ -23,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 @contextmanager
-def smart_auth(domain, username=None):
+def smart_auth(domain, username=None, key=None):
     url = urlparse(domain)
     if not url.scheme:
         url = urlparse('https://' + domain)
@@ -37,7 +38,7 @@ def smart_auth(domain, username=None):
         pass
     try:
         if auth is None:
-            with AuthRefresher(domain=domain, username=username) as auth:
+            with AuthRefresher(domain=domain, username=username, key=key) as auth:
                 yield auth
         else:
             yield auth
@@ -180,6 +181,33 @@ class AuthRefresher:
         self._token_data = self._oauth_token(data, 'login')
         self._token_data["csrf"] = self._token_data["CSRFToken"]  # Copy csrf, is only valid on logon, not refresh
 
+    def _oauth_login_jwt(self, sub, key, aud=None):
+        if aud is None:
+            resp = requests.get(urljoin(self._domain, '/api/auth/login/$aud'))
+            if resp.ok:
+                aud = resp.json()
+            else:
+                logger.error(resp.text)
+                resp.raise_for_status()
+        payload = dict(
+            aud=[aud],
+            iss=sub,
+            sub=sub,
+            exp=int((datetime.utcnow().replace(tzinfo=timezone.utc) + timedelta(hours=1)).timestamp()))
+
+        jwt = JWT()
+        signing_key = jwk_from_pem(key.encode())
+        assertion = jwt.encode(payload, signing_key, 'RS256')
+
+        data = {'grantType': 'jwt-key',
+                'assertion': assertion,
+                'hospitalOrgId': ""
+                }
+        self._token_data = self._oauth_token(data, 'login')
+        self._token_data["csrf"] = self._token_data["CSRFToken"]  # Copy csrf, is only valid on logon, not refresh
+        self._token_data["key"] = key  # Store key to allow re-login
+        self._token_data["aud"] = aud  # Store aud to allow re-login
+
     def _oauth_token(self, data, action='login'):
         url = urljoin(self._domain, f'/api/auth/{action}')
         headers = {'Content-Type': 'application/json',
@@ -204,16 +232,23 @@ class AuthRefresher:
             logger.error(resp.text)
             resp.raise_for_status()
 
-    def _login(self, username=None):
+    def _login(self, username=None, key=None):
         if self._token_data is None or self._token_data.get('refresh_token') is None:
             logger.info("Login to IGT Cloud ({})".format(self._host))
-            username = username or os.environ.get('CLOUD_USERNAME') or input("Username: ")
-            password = getpass('{}@{}\'s password: '.format(username, self._host))
 
-            try:
-                self._oauth_login(username, password)
-            except:
-                raise RuntimeError('Error during login')
+            if username and key:
+                try:
+                    self._oauth_login_jwt(username, key)
+                except:
+                    raise RuntimeError('Error during login')
+            else:
+                username = username or os.environ.get('CLOUD_USERNAME') or input("Username: ")
+                password = getpass('{}@{}\'s password: '.format(username, self._host))
+
+                try:
+                    self._oauth_login(username, password)
+                except:
+                    raise RuntimeError('Error during login')
         else:
             try:
                 self._oauth_refresh_token()
@@ -234,10 +269,16 @@ class AuthRefresher:
     def _refresh_token(self):
         logger.info('Refreshing token')
         try:
-            csrf = self._token_data.get('csrf')
-            self._oauth_refresh_token()
+            if self._token_data.get('jwt_data', {}).get('refresh_token') is not None:
+                csrf = self._token_data.get('csrf')
+                self._oauth_refresh_token()
 
-            self._token_data['csrf'] = csrf
+                self._token_data['csrf'] = csrf
+            elif self._token_data.get('key') is not None:
+                self._oauth_login_jwt(self._token_data.get('sub'), self._token_data.get('key'),
+                                      self._token_data.get('aud'))
+            else:
+                raise RuntimeError()
             self._save_data()
         except:
             logger.error("Error during refresh")
@@ -277,7 +318,7 @@ class AuthRefresher:
             self._running = False
             logger.info("Stopped IGT Cloud authentication handler")
 
-    def start(self, domain=None, username=None, blocking=True):
+    def start(self, domain=None, username=None, key=None, blocking=True):
         self._setup_mmap()
         try:
             logger.info("Starting IGT Cloud authentication handler...")
@@ -293,7 +334,7 @@ class AuthRefresher:
             self._domain = url.geturl()
             self._host = url.netloc
 
-            self._login(username=username)
+            self._login(username=username, key=key)
             self._rt.start()
             while blocking and self._running:
                 sleep(1)
