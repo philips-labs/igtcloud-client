@@ -236,7 +236,9 @@ class AuthRefresher:
         if self._token_data is None or self._token_data.get('refresh_token') is None:
             logger.info("Login to IGT Cloud ({})".format(self._host))
 
-            if username and key:
+            if key:
+                if not username:
+                    raise RuntimeError("Login with private key requires username")
                 try:
                     self._oauth_login_jwt(username, key)
                 except:
