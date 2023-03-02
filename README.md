@@ -19,22 +19,66 @@ Includes both a Python interface and a CLI (Command line interface) to perform t
 
 ## CLI
 ```
-Usage: igtcloud [OPTIONS] COMMAND [ARGS]...
-
-  Philips Interventional Cloud CLI
-
-Options:
-  --help  Show this message and exit.
-
-Commands:
-  download   Download data from Philips Interventional Cloud
-  get-token  Get token for Philips Interventional Cloud     
-  login      Login to Philips Interventional Cloud
-  upload     Upload data to Philips Interventional Cloud    
+Usage: igtcloud [OPTIONS] COMMAND [ARGS]...                         
+                                                                    
+  Philips Interventional Cloud CLI                                  
+                                                                    
+Options:                                                            
+  --help  Show this message and exit.                               
+                                                                    
+Commands:                                                           
+  csv        List data from Philips Interventional Cloud in CSV file
+  download   Download data from Philips Interventional Cloud        
+  get-token  Get token for Philips Interventional Cloud             
+  login      Login to Philips Interventional Cloud                  
+  upgrade    Upgrade this tool to a new version                     
+  upload     Upload data to Philips Interventional Cloud            
   version    Print version of this tool
 ```
 
 Use ```igtcloud [command] --help``` for more information about a command
+
+### Login
+
+The `igtcloud login` command is a special CLI command that will do the authentication with Philips Interventional Cloud.
+This decouples the login flow from the real applications, which is particularly useful during development and testing.
+It prevents that you have to type your password everytime.
+
+This command will automatically refresh your token until you interrupt the process (`Ctrl + c`).
+
+The `download`, `upload` and `csv` commands are compatible with the `login` command.
+The `get-token` is available if you require an access token outside the IGT Cloud Client (CLI or Python).
+
+#### Service login
+
+A special option for the `login` command is to use a service identity.
+This requires that you have a `service_id` and matching `private_key`
+
+To use this service login you have to provide the private_key using the CLI:
+
+`igtcloud login -d <DOMAIN> -u <SERVICE_ID> -s <PRIVATE_KEY_FILENAME>`
+
+For convenience, you can discard the `-u <SERVICE_ID>`. Now the service_id will be the same as the private key filename without extension (e.g. `igtcloud login -d <DOMAIN> -s service_x@institute.project.philips.com.pem` will use `service_x@institute.project.philips.com` as `SERVICE_ID` and the content of the file as `PRIVATE_KEY`)
+
+To create a service identity you can use the following python example code:
+
+(this requires one of the following roles: `DATA_MANAGER`, `COORDINATOR` or `INVESTIGATOR`)
+```python
+from igtcloud.client.core.auth import smart_auth
+from igtcloud.client.services import entities_service, set_auth
+from igtcloud.client.services.entities.model.service import Service
+from igtcloud.client.services.utils.key import save_private_key
+
+domain = '<DOMAIN>'
+institute_id = '<INSTITUTE_ID>'
+service_name = '<SERVICE_NAME>'
+
+with smart_auth(domain) as auth:
+    set_auth(auth)
+
+    service = entities_service.post_services(institute_id, Service(name=service_name))
+    save_private_key(service.private_key, f"{service.service_id}.pem")
+```
 
 ## Folder structure
 
