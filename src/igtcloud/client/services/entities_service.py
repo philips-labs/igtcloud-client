@@ -1,6 +1,7 @@
 import datetime
 import io
 import os
+import uuid
 from typing import Optional, Iterable, Callable, Any
 
 import boto3
@@ -133,6 +134,7 @@ def _patch_service(service: EntitiesService):
     Project.institutes = property(lambda project: get_project_institutes(service, project), no_setter)
     Project.files = property(lambda project: get_project_files(service, project), no_setter)
     Institute.studies = property(lambda institute: get_institute_studies(service, institute), no_setter)
+    Institute.dicom = property(get_institute_dicom, no_setter)
     study_series = property(lambda study: get_study_series(service, study), no_setter)
     study_files = property(lambda study: get_study_files(service, study), no_setter)
     study_dicom = property(lambda study: get_dicom_files(service, study), no_setter)
@@ -178,6 +180,18 @@ def get_institute_studies(service: EntitiesService, institute: Institute) -> Col
                                                   f_remove=lambda x: service.delete_study(institute.id,
                                                                                           x.study_database_id))
     return data_store['studies']
+
+
+def get_institute_dicom(institute: Institute) -> FilesCollectionWrapper:
+    data_store = institute.get('_data_store')
+    initial_value = data_store.get('dicom_uploads', None)
+    if not isinstance(initial_value, FilesCollectionWrapper):
+        data_store['dicom_uploads'] = FilesCollectionWrapper(s3_prefix=institute.s3_prefix + f"Import/{uuid.uuid4()}/",
+                                                             f_auth=lambda action, prefix: s3_creds(action, prefix),
+                                                             f_extend=lambda x: x,
+                                                             f_callback=lambda x: update_database(
+                                                                 institute, x, institute.s3_prefix + "Import/"))
+    return data_store['dicom_uploads']
 
 
 def get_study_series(service: EntitiesService, study: RootStudy) -> CollectionWrapper[Series]:
@@ -348,6 +362,15 @@ def process_file(study: RootStudy, file: File):
                                        patient_id=getattr(study, 'patient_database_id', None),
                                        uploaded_path=file.file_name)
         action_service.post_preprocess_file(request)
+
+
+def update_database(institute: Institute, file: File, common_prefix: str):
+    from . import action_service
+    from .action.model.update_database_request import UpdateDatabaseRequest
+    request = UpdateDatabaseRequest(hospital_id=institute.id,
+                                    uploaded_path=file.key.replace(common_prefix, ""),
+                                    is_prefix=True)
+    action_service.post_update_database(request)
 
 
 def get_category(file: File) -> str:
