@@ -6,6 +6,8 @@ from typing import Optional, Iterable, Callable, Any
 
 import boto3
 import dateutil.parser
+from botocore.exceptions import HTTPClientError
+from tenacity import retry, wait_exponential, retry_if_exception_type, stop_after_attempt
 
 from .auth.model.credentials import Credentials
 from .base_service import BaseService, CollectionWrapper
@@ -280,6 +282,8 @@ def get_file_creds(file: File, action: str) -> Optional[Credentials]:
         return s3_creds(action, file.key)
 
 
+@retry(stop=(stop_after_attempt(3)), wait=wait_exponential(),
+       retry=retry_if_exception_type(HTTPClientError), reraise=True)
 def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = True,
                   callback: Callable[[int], None] = None, include_modified_date: bool = False):
     if not file.is_completed:
@@ -304,6 +308,8 @@ def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = Tr
     return True
 
 
+@retry(stop=(stop_after_attempt(3)), wait=wait_exponential(),
+       retry=retry_if_exception_type(HTTPClientError), reraise=True)
 def download_fileobj(file: File, file_obj: io.IOBase):
     bucket = get_s3_bucket(file, 'GET')
     bucket.download_fileobj(Key=file.key, Fileobj=file_obj)
