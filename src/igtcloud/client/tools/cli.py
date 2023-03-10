@@ -52,8 +52,10 @@ def cli():
     help='Only download the project files. If not set, only the study files are downloaded.'
 )
 @click.option('--debug', flag_value=True, help='Enable debug logging')
+@click.option('--concurrent-studies', type=int, default=None, help='Maximum number of concurrent studies download')
+@click.option('--concurrent-files', type=int, default=None, help='Maximum number of concurrent files download per study')
 def download(target_folder, project, institute, environment, domain, user, ext, start, end, category,
-             include_modified_date, project_files, debug):
+             include_modified_date, project_files, debug, concurrent_studies, concurrent_files):
     """Download data from Philips Interventional Cloud.
 
     \b
@@ -91,7 +93,8 @@ def download(target_folder, project, institute, environment, domain, user, ext, 
 
         download_institutes(project, institute, target_folder, categories=category, files_filter=filter_by_ext(ext),
                             studies_filter=filter_by_study_date(start, end),
-                            include_modified_date=include_modified_date)
+                            include_modified_date=include_modified_date, max_workers_studies=concurrent_studies,
+                            max_workers_files=concurrent_files)
 
 
 @click.command(short_help="List data from Philips Interventional Cloud in CSV file")
