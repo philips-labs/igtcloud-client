@@ -21,6 +21,7 @@ Method | HTTP request | Description
 [**post_studies**](InstitutesApi.md#post_studies) | **POST** /hospitals/{hospital_id}/studies | 
 [**post_study_annotation_state**](InstitutesApi.md#post_study_annotation_state) | **POST** /hospitals/{hospital_id}/studies/{study_id}/annotation-state | 
 [**post_study_case_labels**](InstitutesApi.md#post_study_case_labels) | **POST** /hospitals/{hospital_id}/studies/{study_id}/case-labels | 
+[**post_study_comments**](InstitutesApi.md#post_study_comments) | **POST** /hospitals/{hospital_id}/studies/{study_id}/study_comments | 
 [**post_study_download_link**](InstitutesApi.md#post_study_download_link) | **POST** /hospitals/{hospital_id}/studies/{study_id}/download-link | 
 [**post_study_electronic_record_state**](InstitutesApi.md#post_study_electronic_record_state) | **POST** /hospitals/{hospital_id}/studies/{study_id}/electronic-record-state | 
 [**post_study_files**](InstitutesApi.md#post_study_files) | **POST** /hospitals/{hospital_id}/studies/{study_id}/files | This create study files endpoint actually only stores the file size of a study_id + key combination
@@ -1494,6 +1495,95 @@ Name | Type | Description  | Notes
  **hospital_id** | **str**|  |
  **study_id** | **str**|  |
  **payload** | [**CaseLabel**](CaseLabel.md)|  |
+
+### Return type
+
+[**RootStudy**](RootStudy.md)
+
+### Authorization
+
+[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Study |  -  |
+**400** | Bad request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **post_study_comments**
+> RootStudy post_study_comments(hospital_id, study_id, payload)
+
+
+
+### Example
+
+* Api Key Authentication (csrf_token):
+* Api Key Authentication (jwt):
+```python
+import time
+import igtcloud.client.services.entities
+from igtcloud.client.services.entities.api import institutes_api
+from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from igtcloud.client.services.entities.model.study_comments import StudyComments
+from igtcloud.client.services.entities.model.root_study import RootStudy
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost/data
+# See configuration.py for a list of all supported configuration parameters.
+configuration = igtcloud.client.services.entities.Configuration(
+    host = "http://localhost/data"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: csrf_token
+configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['csrf_token'] = 'Bearer'
+
+# Configure API key authorization: jwt
+configuration.api_key['jwt'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['jwt'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = institutes_api.InstitutesApi(api_client)
+    hospital_id = "hospital_id_example" # str | 
+    study_id = "study_id_example" # str | 
+    payload = StudyComments(
+        study_comments="study_comments_example",
+    ) # StudyComments | 
+
+    # example passing only required values which don't have defaults set
+    try:
+        api_response = api_instance.post_study_comments(hospital_id, study_id, payload)
+        pprint(api_response)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling InstitutesApi->post_study_comments: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hospital_id** | **str**|  |
+ **study_id** | **str**|  |
+ **payload** | [**StudyComments**](StudyComments.md)|  |
 
 ### Return type
 

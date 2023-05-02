@@ -73,6 +73,7 @@ from igtcloud.client.services.entities.model.storage import Storage
 from igtcloud.client.services.entities.model.storage_config import StorageConfig
 from igtcloud.client.services.entities.model.storage_credentials import StorageCredentials
 from igtcloud.client.services.entities.model.study import Study
+from igtcloud.client.services.entities.model.study_comments import StudyComments
 from igtcloud.client.services.entities.model.study_sticky_note import StudyStickyNote
 from igtcloud.client.services.entities.model.task_completed import TaskCompleted
 from igtcloud.client.services.entities.model.training_application import TrainingApplication

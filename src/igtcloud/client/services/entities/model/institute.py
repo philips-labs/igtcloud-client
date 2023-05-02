@@ -83,6 +83,7 @@ class Institute(ModelNormal):
             'parent_id': (str,),  # noqa: E501
             'has_series': (bool,),  # noqa: E501
             'project_type_name': (str,),  # noqa: E501
+            'study_type': (str,),  # noqa: E501
             's3_prefix': (str,),  # noqa: E501
             'studies': ([RootStudy],),  # noqa: E501
         }
@@ -99,6 +100,7 @@ class Institute(ModelNormal):
         'parent_id': 'parentId',  # noqa: E501
         'has_series': 'hasSeries',  # noqa: E501
         'project_type_name': 'projectTypeName',  # noqa: E501
+        'study_type': 'studyType',  # noqa: E501
         's3_prefix': 's3Prefix',  # noqa: E501
         'studies': 'studies',  # noqa: E501
     }
@@ -155,6 +157,7 @@ class Institute(ModelNormal):
             parent_id (str): [optional]  # noqa: E501
             has_series (bool): [optional]  # noqa: E501
             project_type_name (str): [optional]  # noqa: E501
+            study_type (str): [optional]  # noqa: E501
             s3_prefix (str): [optional]  # noqa: E501
             studies ([RootStudy]): [optional]  # noqa: E501
         """
