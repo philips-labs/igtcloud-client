@@ -24,22 +24,19 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
                    max_workers_studies: int = None, max_workers_files: int = None):
     project, institutes = find_project_and_institutes(project_name, institute_name)
 
-    if not project:
-        logger.error(f"Project not found: {project_name}")
-        return
-
-    if not institutes:
-        logger.error(f"No institutes found")
+    if not project and not institutes:
+        logger.error("No project and institutes found")
         return
 
     _password = None
     if submit:
         _password = getpass("For electronic record state it is required to reenter the password")
 
-    # Project level file upload when there is a "files" folder in the root directory
-    files_folder = os.path.join(local_folder, 'files')
+    if project:
+        # Project level file upload when there is a "files" folder in the root directory
+        files_folder = os.path.join(local_folder, 'files')
 
-    upload_project_files(project, files_folder, max_workers_files)
+        upload_project_files(project, files_folder, max_workers_files)
 
     # Filter institutes to match local folders
     institutes = list(filter(lambda i: os.path.isdir(os.path.join(local_folder, i.name)), institutes))
@@ -59,7 +56,7 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
             local_study_folders = (os.path.join(institute_dir, d) for d in os.listdir(institute_dir) if
                                    os.path.isdir(os.path.join(institute_dir, d)))
 
-            fs = [executor.submit(upload_study, project.study_type, study_folder, institute.id, existing_studies,
+            fs = [executor.submit(upload_study, institute.study_type, study_folder, institute.id, existing_studies,
                                   _password, max_workers_files) for study_folder in local_study_folders]
 
             for f in tqdm(concurrent.futures.as_completed(fs), total=len(fs), desc="Studies", unit='study'):
