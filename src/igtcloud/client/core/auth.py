@@ -5,6 +5,7 @@ import os
 import signal
 import sys
 import tempfile
+from urllib import parse
 from contextlib import contextmanager
 from datetime import datetime, timezone, timedelta
 from getpass import getpass
@@ -32,7 +33,7 @@ def smart_auth(domain, username=None, key=None):
     auth = None
     try:
         try_auth = AuthHandler()
-        if try_auth.domain == domain and try_auth.is_valid and (not username or try_auth.username == username):
+        if _compare_domains(try_auth.domain, domain) and try_auth.is_valid and (not username or try_auth.username == username):
             auth = try_auth
     except RuntimeError:
         pass
@@ -44,6 +45,13 @@ def smart_auth(domain, username=None, key=None):
             yield auth
     finally:
         auth.close()
+
+
+def _compare_domains(domain, other_domain):
+    hostname = parse.urlparse(domain).hostname
+    other_hostname = parse.urlparse(other_domain).hostname
+
+    return hostname == other_hostname
 
 
 def _get_mmap_filename():
