@@ -60,7 +60,7 @@ def find_project_and_institutes(project_name: str, institute_name: str = None) -
 
         if institute:
             institutes.append(institute)
-    else:
+    elif project:
         institutes = project.institutes
 
     return project, institutes
