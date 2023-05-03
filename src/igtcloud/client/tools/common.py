@@ -60,11 +60,10 @@ def find_project_and_institutes(project_name: str, institute_name: str = None) -
 
         if institute:
             institutes.append(institute)
-
     else:
         institutes = project.institutes
 
-        return project, institutes
+    return project, institutes
 
 
 def filter_by_ext(ext: Optional[str]):
