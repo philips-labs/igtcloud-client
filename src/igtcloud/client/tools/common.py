@@ -36,8 +36,12 @@ def find_project_by_name(project_name: str) -> Optional[Project]:
     return None
 
 
-def find_institute_by_name(project_id: str, institute_name: str) -> Optional[Institute]:
-    institutes: Iterable[Institute] = entities_service.get_institutes(project_id)
+def find_institute_by_name(institute_name: str, project_id: str = None) -> Optional[Institute]:
+    if project_id:
+        institutes: Iterable[Institute] = entities_service.get_institutes(project_id)
+    else:
+        institutes: Iterable[Institute] = entities_service.get_all_institutes()
+
     institutes = filter(lambda i: i.name == institute_name, institutes)
     for institute in institutes:
         return institute
@@ -47,14 +51,16 @@ def find_institute_by_name(project_id: str, institute_name: str) -> Optional[Ins
 def find_project_and_institutes(project_name: str, institute_name: str = None) -> Tuple[Optional[Project], List[Institute]]:
     institutes = list()
     project = find_project_by_name(project_name)
-    if not project:
-        return None, institutes
 
     if institute_name:
-        institute = find_institute_by_name(project.id, institute_name)
+        if project:
+            institute = find_institute_by_name(institute_name, project_id=project.id)
+        else:
+            institute = find_institute_by_name(institute_name)
+
         if institute:
             institutes.append(institute)
-    else:
+    elif project:
         institutes = project.institutes
 
     return project, institutes
@@ -64,7 +70,7 @@ def filter_by_ext(ext: Optional[str]):
     if ext is None:
         return None
 
-    def ext_filter(file: File, study: Optional[RootStudy] = None) -> bool:
+    def ext_filter(file: File) -> bool:
         # Ignore study
         return file.type == ext
 

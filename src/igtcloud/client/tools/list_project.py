@@ -1,5 +1,3 @@
-import io
-import json
 import logging
 import os
 from csv import DictWriter, DictReader
@@ -8,8 +6,7 @@ from typing import Optional, Callable
 from igtcloud.client.services.entities.model.file import File
 from igtcloud.client.services.entities.model.root_study import RootStudy
 from igtcloud.client.services.entities.model_utils import model_to_dict
-from igtcloud.client.tools.common import find_project_by_name, find_institute_by_name, flatten_dict, \
-    find_project_and_institutes
+from igtcloud.client.tools.common import flatten_dict, find_project_and_institutes
 
 logger = logging.getLogger(__name__)
 

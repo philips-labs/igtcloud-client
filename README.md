@@ -80,6 +80,8 @@ with smart_auth(domain) as auth:
     save_private_key(service.private_key, f"{service.service_id}.pem")
 ```
 
+> **_Note:_** Service identities can only be used for uploading data, not downloading.
+
 ## Folder structure
 
 ```

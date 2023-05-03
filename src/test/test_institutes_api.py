@@ -125,6 +125,12 @@ class TestInstitutesApi(unittest.TestCase):
         """
         pass
 
+    def test_post_study_comments(self):
+        """Test case for post_study_comments
+
+        """
+        pass
+
     def test_post_study_download_link(self):
         """Test case for post_study_download_link
 

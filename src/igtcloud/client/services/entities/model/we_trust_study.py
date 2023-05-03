@@ -111,6 +111,8 @@ class WeTrustStudy(ModelComposed):
             'instance_uid': (str,),  # noqa: E501
             'state': (str,),  # noqa: E501
             'description': (str,),  # noqa: E501
+            'study_comments': (str,),  # noqa: E501
+            'comments': (str,),  # noqa: E501
             'study_date': (datetime,),  # noqa: E501
             'accession_number': (str,),  # noqa: E501
             'hospital_id': (str,),  # noqa: E501
@@ -150,6 +152,8 @@ class WeTrustStudy(ModelComposed):
         'instance_uid': 'instanceUid',  # noqa: E501
         'state': 'state',  # noqa: E501
         'description': 'description',  # noqa: E501
+        'study_comments': 'studyComments',  # noqa: E501
+        'comments': 'comments',  # noqa: E501
         'study_date': 'studyDate',  # noqa: E501
         'accession_number': 'accessionNumber',  # noqa: E501
         'hospital_id': 'hospitalId',  # noqa: E501
@@ -229,6 +233,8 @@ class WeTrustStudy(ModelComposed):
             instance_uid (str): [optional]  # noqa: E501
             state (str): [optional]  # noqa: E501
             description (str): [optional]  # noqa: E501
+            study_comments (str): [optional]  # noqa: E501
+            comments (str): [optional]  # noqa: E501
             study_date (datetime): [optional]  # noqa: E501
             accession_number (str): [optional]  # noqa: E501
             hospital_id (str): [optional]  # noqa: E501

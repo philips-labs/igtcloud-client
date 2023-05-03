@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **parent_id** | **str** |  | [optional] [readonly] 
 **has_series** | **bool** |  | [optional] [readonly] 
 **project_type_name** | **str** |  | [optional] [readonly] 
+**study_type** | **str** |  | [optional] [readonly] 
 **s3_prefix** | **str** |  | [optional] [readonly] 
 **studies** | [**[RootStudy]**](RootStudy.md) |  | [optional] [readonly] 
 
