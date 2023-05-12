@@ -28,12 +28,14 @@ from igtcloud.client.services.entities.model_utils import (  # noqa: F401
 
 def lazy_import():
     from igtcloud.client.services.entities.model.annotation_series import AnnotationSeries
+    from igtcloud.client.services.entities.model.clinical_image_library_series import ClinicalImageLibrarySeries
     from igtcloud.client.services.entities.model.core_labs_series import CoreLabsSeries
     from igtcloud.client.services.entities.model.echo_nav_series import EchoNavSeries
     from igtcloud.client.services.entities.model.igt_cloud_series import IgtCloudSeries
     from igtcloud.client.services.entities.model.marvel_series import MarvelSeries
     from igtcloud.client.services.entities.model.we_trust_series import WeTrustSeries
     globals()['AnnotationSeries'] = AnnotationSeries
+    globals()['ClinicalImageLibrarySeries'] = ClinicalImageLibrarySeries
     globals()['CoreLabsSeries'] = CoreLabsSeries
     globals()['EchoNavSeries'] = EchoNavSeries
     globals()['IgtCloudSeries'] = IgtCloudSeries
@@ -111,6 +113,7 @@ class Series(ModelNormal):
         lazy_import()
         val = {
             'AnnotationSeries': AnnotationSeries,
+            'ClinicalImageLibrarySeries': ClinicalImageLibrarySeries,
             'CoreLabsSeries': CoreLabsSeries,
             'EchoNavSeries': EchoNavSeries,
             'IgtCloudSeries': IgtCloudSeries,

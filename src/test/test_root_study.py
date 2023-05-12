@@ -14,6 +14,7 @@ import unittest
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.model.annotation_study import AnnotationStudy
 from igtcloud.client.services.entities.model.base_study import BaseStudy
+from igtcloud.client.services.entities.model.clinical_image_library_study import ClinicalImageLibraryStudy
 from igtcloud.client.services.entities.model.core_labs_study import CoreLabsStudy
 from igtcloud.client.services.entities.model.echo_nav_study import EchoNavStudy
 from igtcloud.client.services.entities.model.epd_study import EpdStudy
@@ -23,6 +24,7 @@ from igtcloud.client.services.entities.model.study import Study
 from igtcloud.client.services.entities.model.we_trust_study import WeTrustStudy
 globals()['AnnotationStudy'] = AnnotationStudy
 globals()['BaseStudy'] = BaseStudy
+globals()['ClinicalImageLibraryStudy'] = ClinicalImageLibraryStudy
 globals()['CoreLabsStudy'] = CoreLabsStudy
 globals()['EchoNavStudy'] = EchoNavStudy
 globals()['EpdStudy'] = EpdStudy
