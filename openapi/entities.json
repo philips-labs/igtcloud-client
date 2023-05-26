@@ -152,23 +152,6 @@
           "Applications"
         ]
       },
-      "delete": {
-        "responses": {
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          },
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "operationId": "delete_application_specific",
-        "tags": [
-          "Applications"
-        ]
-      },
       "put": {
         "responses": {
           "200": {
@@ -222,6 +205,23 @@
             "description": "An optional fields mask"
           }
         ],
+        "tags": [
+          "Applications"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "operationId": "delete_application_specific",
         "tags": [
           "Applications"
         ]
@@ -362,23 +362,6 @@
           "EpdSites"
         ]
       },
-      "delete": {
-        "responses": {
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          },
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "operationId": "delete_epd_site_specific",
-        "tags": [
-          "EpdSites"
-        ]
-      },
       "put": {
         "responses": {
           "200": {
@@ -412,6 +395,23 @@
             "description": "An optional fields mask"
           }
         ],
+        "tags": [
+          "EpdSites"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "operationId": "delete_epd_site_specific",
         "tags": [
           "EpdSites"
         ]
@@ -677,10 +677,13 @@
           "Institutes"
         ]
       },
-      "delete": {
+      "patch": {
         "responses": {
-          "204": {
-            "description": "Study Deleted"
+          "200": {
+            "description": "Study",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
           },
           "400": {
             "description": "Bad request",
@@ -689,7 +692,17 @@
             }
           }
         },
-        "operationId": "delete_study",
+        "operationId": "patch_study",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          }
+        ],
         "tags": [
           "Institutes"
         ]
@@ -724,13 +737,10 @@
           "Institutes"
         ]
       },
-      "patch": {
+      "delete": {
         "responses": {
-          "200": {
-            "description": "Study",
-            "schema": {
-              "$ref": "#/definitions/RootStudy"
-            }
+          "204": {
+            "description": "Study Deleted"
           },
           "400": {
             "description": "Bad request",
@@ -739,17 +749,7 @@
             }
           }
         },
-        "operationId": "patch_study",
-        "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/RootStudy"
-            }
-          }
-        ],
+        "operationId": "delete_study",
         "tags": [
           "Institutes"
         ]
@@ -1062,35 +1062,6 @@
           "Institutes"
         ]
       },
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_study_files",
-        "parameters": [
-          {
-            "name": "keys",
-            "in": "query",
-            "type": "array",
-            "default": [],
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi"
-          }
-        ],
-        "tags": [
-          "Institutes"
-        ]
-      },
       "post": {
         "responses": {
           "200": {
@@ -1121,6 +1092,72 @@
             "type": "string",
             "format": "mask",
             "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "Institutes"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_study_files",
+        "parameters": [
+          {
+            "name": "keys",
+            "in": "query",
+            "type": "array",
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "Institutes"
+        ]
+      }
+    },
+    "/hospitals/{hospital_id}/studies/{study_id}/files/$file-upload-completed": {
+      "parameters": [
+        {
+          "name": "hospital_id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "study_id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "post_study_files_complete",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/FileUploadCompleted"
+            }
           }
         ],
         "tags": [
@@ -1195,23 +1232,6 @@
           "type": "string"
         }
       ],
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No content"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_study_series",
-        "tags": [
-          "Institutes"
-        ]
-      },
       "put": {
         "responses": {
           "200": {
@@ -1238,6 +1258,23 @@
             }
           }
         ],
+        "tags": [
+          "Institutes"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_study_series",
         "tags": [
           "Institutes"
         ]
@@ -2407,35 +2444,6 @@
           "Projects"
         ]
       },
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No Data"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_project_files",
-        "parameters": [
-          {
-            "name": "keys",
-            "in": "query",
-            "type": "array",
-            "default": [],
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi"
-          }
-        ],
-        "tags": [
-          "Projects"
-        ]
-      },
       "post": {
         "responses": {
           "200": {
@@ -2466,6 +2474,35 @@
             "type": "string",
             "format": "mask",
             "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "Projects"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No Data"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_project_files",
+        "parameters": [
+          {
+            "name": "keys",
+            "in": "query",
+            "type": "array",
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
           }
         ],
         "tags": [
@@ -3207,23 +3244,6 @@
           "Users"
         ]
       },
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_user",
-        "tags": [
-          "Users"
-        ]
-      },
       "put": {
         "responses": {
           "204": {
@@ -3247,6 +3267,23 @@
             }
           }
         ],
+        "tags": [
+          "Users"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_user",
         "tags": [
           "Users"
         ]
@@ -4126,13 +4163,43 @@
         },
         {
           "properties": {
-            "subjectId": {
+            "studyName": {
               "type": "string"
             },
-            "corelabId": {
+            "createdName": {
               "type": "string"
             },
-            "classification": {
+            "systemType": {
+              "type": "string"
+            },
+            "projectName": {
+              "type": "string"
+            },
+            "treatment": {
+              "type": "string"
+            },
+            "anatomy": {
+              "type": "string"
+            },
+            "instituteName": {
+              "type": "string"
+            },
+            "segment": {
+              "type": "string"
+            },
+            "softwareVersion": {
+              "type": "string"
+            },
+            "interventionalTool": {
+              "type": "string"
+            },
+            "manufacturer": {
+              "type": "string"
+            },
+            "environment": {
+              "type": "string"
+            },
+            "modalityVersion": {
               "type": "string"
             }
           },
@@ -4314,6 +4381,25 @@
         }
       },
       "discriminator": "seriesType",
+      "type": "object"
+    },
+    "FileUploadCompleted": {
+      "required": [
+        "hospitalId",
+        "studyId",
+        "uploadPath"
+      ],
+      "properties": {
+        "uploadPath": {
+          "type": "string"
+        },
+        "hospitalId": {
+          "type": "string"
+        },
+        "studyId": {
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "StudyStickyNote": {

@@ -5,9 +5,19 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **study_type** | **str** |  | 
-**subject_id** | **str** |  | [optional] 
-**corelab_id** | **str** |  | [optional] 
-**classification** | **str** |  | [optional] 
+**study_name** | **str** |  | [optional] 
+**created_name** | **str** |  | [optional] 
+**system_type** | **str** |  | [optional] 
+**project_name** | **str** |  | [optional] 
+**treatment** | **str** |  | [optional] 
+**anatomy** | **str** |  | [optional] 
+**institute_name** | **str** |  | [optional] 
+**segment** | **str** |  | [optional] 
+**software_version** | **str** |  | [optional] 
+**interventional_tool** | **str** |  | [optional] 
+**manufacturer** | **str** |  | [optional] 
+**environment** | **str** |  | [optional] 
+**modality_version** | **str** |  | [optional] 
 **study_database_id** | **str** |  | [optional] [readonly] 
 **institute_id** | **str** |  | [optional] [readonly] 
 **project_id** | **str** |  | [optional] [readonly] 

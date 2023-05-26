@@ -31,6 +31,7 @@ from igtcloud.client.services.entities.model.case_label import CaseLabel
 from igtcloud.client.services.entities.model.clinical_image_library_series import ClinicalImageLibrarySeries
 from igtcloud.client.services.entities.model.clinical_image_library_series_all_of import ClinicalImageLibrarySeriesAllOf
 from igtcloud.client.services.entities.model.clinical_image_library_study import ClinicalImageLibraryStudy
+from igtcloud.client.services.entities.model.clinical_image_library_study_all_of import ClinicalImageLibraryStudyAllOf
 from igtcloud.client.services.entities.model.contact import Contact
 from igtcloud.client.services.entities.model.core_labs_series import CoreLabsSeries
 from igtcloud.client.services.entities.model.core_labs_series_all_of import CoreLabsSeriesAllOf
@@ -46,6 +47,7 @@ from igtcloud.client.services.entities.model.epd_study import EpdStudy
 from igtcloud.client.services.entities.model.epd_study_all_of import EpdStudyAllOf
 from igtcloud.client.services.entities.model.epd_study_event import EpdStudyEvent
 from igtcloud.client.services.entities.model.file import File
+from igtcloud.client.services.entities.model.file_upload_completed import FileUploadCompleted
 from igtcloud.client.services.entities.model.files import Files
 from igtcloud.client.services.entities.model.group import Group
 from igtcloud.client.services.entities.model.hsdp_details import HsdpDetails

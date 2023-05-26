@@ -13,11 +13,11 @@ import unittest
 
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.model.base_study import BaseStudy
+from igtcloud.client.services.entities.model.clinical_image_library_study_all_of import ClinicalImageLibraryStudyAllOf
 from igtcloud.client.services.entities.model.patient import Patient
-from igtcloud.client.services.entities.model.we_trust_study_all_of import WeTrustStudyAllOf
 globals()['BaseStudy'] = BaseStudy
+globals()['ClinicalImageLibraryStudyAllOf'] = ClinicalImageLibraryStudyAllOf
 globals()['Patient'] = Patient
-globals()['WeTrustStudyAllOf'] = WeTrustStudyAllOf
 from igtcloud.client.services.entities.model.clinical_image_library_study import ClinicalImageLibraryStudy
 
 
