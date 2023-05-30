@@ -150,12 +150,6 @@ class TestInstitutesApi(unittest.TestCase):
         """
         pass
 
-    def test_post_study_files_complete(self):
-        """Test case for post_study_files_complete
-
-        """
-        pass
-
     def test_put_study(self):
         """Test case for put_study
 
