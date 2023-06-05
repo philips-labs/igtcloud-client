@@ -28,6 +28,10 @@ from igtcloud.client.services.entities.model.application import Application
 from igtcloud.client.services.entities.model.base_study import BaseStudy
 from igtcloud.client.services.entities.model.base_study_all_of import BaseStudyAllOf
 from igtcloud.client.services.entities.model.case_label import CaseLabel
+from igtcloud.client.services.entities.model.clinical_image_library_series import ClinicalImageLibrarySeries
+from igtcloud.client.services.entities.model.clinical_image_library_series_all_of import ClinicalImageLibrarySeriesAllOf
+from igtcloud.client.services.entities.model.clinical_image_library_study import ClinicalImageLibraryStudy
+from igtcloud.client.services.entities.model.clinical_image_library_study_all_of import ClinicalImageLibraryStudyAllOf
 from igtcloud.client.services.entities.model.contact import Contact
 from igtcloud.client.services.entities.model.core_labs_series import CoreLabsSeries
 from igtcloud.client.services.entities.model.core_labs_series_all_of import CoreLabsSeriesAllOf

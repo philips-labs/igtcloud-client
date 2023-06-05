@@ -13,12 +13,14 @@ import unittest
 
 import igtcloud.client.services.entities
 from igtcloud.client.services.entities.model.annotation_series import AnnotationSeries
+from igtcloud.client.services.entities.model.clinical_image_library_series import ClinicalImageLibrarySeries
 from igtcloud.client.services.entities.model.core_labs_series import CoreLabsSeries
 from igtcloud.client.services.entities.model.echo_nav_series import EchoNavSeries
 from igtcloud.client.services.entities.model.igt_cloud_series import IgtCloudSeries
 from igtcloud.client.services.entities.model.marvel_series import MarvelSeries
 from igtcloud.client.services.entities.model.we_trust_series import WeTrustSeries
 globals()['AnnotationSeries'] = AnnotationSeries
+globals()['ClinicalImageLibrarySeries'] = ClinicalImageLibrarySeries
 globals()['CoreLabsSeries'] = CoreLabsSeries
 globals()['EchoNavSeries'] = EchoNavSeries
 globals()['IgtCloudSeries'] = IgtCloudSeries
