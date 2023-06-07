@@ -97,7 +97,7 @@ class FilesCollectionWrapper(CollectionWrapper[File]):
         return self._credentials.get(action)
 
     def upload(self, filename: str, key: str = None, overwrite: bool = False,
-               callback: Callable[[int], None] = None) -> bool:
+               callback: Callable[[int], None] = None, trigger_action: bool = True) -> bool:
         abs_path = os.path.abspath(filename)
         if not os.path.exists(abs_path):
             raise FileNotFoundError(f"File {filename} not found")
@@ -127,7 +127,7 @@ class FilesCollectionWrapper(CollectionWrapper[File]):
         file.progress_percentage = 100
         file.type = os.path.splitext(abs_path)[1]
         file.file_name = key[len(self.s3_prefix):]
-        if callable(self._callback):
+        if callable(self._callback) and trigger_action:
             self._callback(file)
         return True
 
@@ -227,7 +227,7 @@ def get_study_files(service: EntitiesService, study: RootStudy) -> FilesCollecti
                                                      f_remove=lambda x: service.delete_study_files(study.institute_id,
                                                                                                    study.study_database_id,
                                                                                                    keys=[x.key]),
-                                                     f_callback=lambda x: process_file(study, x))
+                                                     f_callback=lambda x: file_upload_completed(study, x))
     return data_store['files']
 
 
@@ -359,15 +359,13 @@ def get_s3_file_metadata(file: File, action: str):
     return s3.head_object(Bucket=creds.bucket, Key=file.key)
 
 
-def process_file(study: RootStudy, file: File):
-    if study.study_type in ['AnnotationStudy'] and file.type in ['.dcm', '.fxd', '']:
-        from . import action_service
-        from .action.model.preprocessing_request import PreprocessingRequest
-        request = PreprocessingRequest(hospital_id=study.institute_id,
-                                       study_id=study.study_database_id,
-                                       patient_id=getattr(study, 'patient_database_id', None),
-                                       uploaded_path=file.file_name)
-        action_service.post_preprocess_file(request)
+def file_upload_completed(study: RootStudy, file: File):
+    from . import entities_service
+    from .entities.model.file_upload_completed import FileUploadCompleted
+    request = FileUploadCompleted(uploaded_path=file.file_name, trigger_action=True)
+    entities_service.post_study_files_upload_completed(payload=request,
+                                                       hospital_id=study.institute_id,
+                                                       study_id=study.study_database_id)
 
 
 def update_database(institute: Institute, file: File, common_prefix: str):
