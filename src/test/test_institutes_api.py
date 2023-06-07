@@ -119,6 +119,12 @@ class TestInstitutesApi(unittest.TestCase):
         """
         pass
 
+    def test_post_study_annotations_updated(self):
+        """Test case for post_study_annotations_updated
+
+        """
+        pass
+
     def test_post_study_case_labels(self):
         """Test case for post_study_case_labels
 
@@ -147,6 +153,13 @@ class TestInstitutesApi(unittest.TestCase):
         """Test case for post_study_files
 
         This create study files endpoint actually only stores the file size of a study_id + key combination  # noqa: E501
+        """
+        pass
+
+    def test_post_study_files_upload_completed(self):
+        """Test case for post_study_files_upload_completed
+
+        Initiates a background job and should be invoked with a token that is valid for at least 10 minutes  # noqa: E501
         """
         pass
 

@@ -25,8 +25,10 @@ from igtcloud.client.services.entities.model.annotation_state import AnnotationS
 from igtcloud.client.services.entities.model.case_label import CaseLabel
 from igtcloud.client.services.entities.model.electronic_record_state import ElectronicRecordState
 from igtcloud.client.services.entities.model.file import File
+from igtcloud.client.services.entities.model.file_upload_completed import FileUploadCompleted
 from igtcloud.client.services.entities.model.files import Files
 from igtcloud.client.services.entities.model.institute import Institute
+from igtcloud.client.services.entities.model.latest_annotations import LatestAnnotations
 from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
 from igtcloud.client.services.entities.model.root_study import RootStudy
 from igtcloud.client.services.entities.model.series import Series
@@ -2170,6 +2172,146 @@ class InstitutesApi(object):
             callable=__post_study_annotation_state
         )
 
+        def __post_study_annotations_updated(
+            self,
+            hospital_id,
+            study_id,
+            payload,
+            **kwargs
+        ):
+            """post_study_annotations_updated  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.post_study_annotations_updated(hospital_id, study_id, payload, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                hospital_id (str):
+                study_id (str):
+                payload (LatestAnnotations):
+
+            Keyword Args:
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                RootStudy
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['hospital_id'] = \
+                hospital_id
+            kwargs['study_id'] = \
+                study_id
+            kwargs['payload'] = \
+                payload
+            return self.call_with_http_info(**kwargs)
+
+        self.post_study_annotations_updated = _Endpoint(
+            settings={
+                'response_type': (RootStudy,),
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/hospitals/{hospital_id}/studies/{study_id}/annotations_updated',
+                'operation_id': 'post_study_annotations_updated',
+                'http_method': 'POST',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'hospital_id',
+                    'study_id',
+                    'payload',
+                ],
+                'required': [
+                    'hospital_id',
+                    'study_id',
+                    'payload',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'hospital_id':
+                        (str,),
+                    'study_id':
+                        (str,),
+                    'payload':
+                        (LatestAnnotations,),
+                },
+                'attribute_map': {
+                    'hospital_id': 'hospital_id',
+                    'study_id': 'study_id',
+                },
+                'location_map': {
+                    'hospital_id': 'path',
+                    'study_id': 'path',
+                    'payload': 'body',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [
+                    'application/json'
+                ]
+            },
+            api_client=api_client,
+            callable=__post_study_annotations_updated
+        )
+
         def __post_study_case_labels(
             self,
             hospital_id,
@@ -2864,6 +3006,146 @@ class InstitutesApi(object):
             },
             api_client=api_client,
             callable=__post_study_files
+        )
+
+        def __post_study_files_upload_completed(
+            self,
+            hospital_id,
+            study_id,
+            payload,
+            **kwargs
+        ):
+            """Initiates a background job and should be invoked with a token that is valid for at least 10 minutes  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.post_study_files_upload_completed(hospital_id, study_id, payload, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                hospital_id (str):
+                study_id (str):
+                payload (FileUploadCompleted):
+
+            Keyword Args:
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (float/tuple): timeout setting for this request. If one
+                    number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                None
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['hospital_id'] = \
+                hospital_id
+            kwargs['study_id'] = \
+                study_id
+            kwargs['payload'] = \
+                payload
+            return self.call_with_http_info(**kwargs)
+
+        self.post_study_files_upload_completed = _Endpoint(
+            settings={
+                'response_type': None,
+                'auth': [
+                    'csrf_token',
+                    'jwt'
+                ],
+                'endpoint_path': '/hospitals/{hospital_id}/studies/{study_id}/files/$file-upload-completed',
+                'operation_id': 'post_study_files_upload_completed',
+                'http_method': 'POST',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'hospital_id',
+                    'study_id',
+                    'payload',
+                ],
+                'required': [
+                    'hospital_id',
+                    'study_id',
+                    'payload',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'hospital_id':
+                        (str,),
+                    'study_id':
+                        (str,),
+                    'payload':
+                        (FileUploadCompleted,),
+                },
+                'attribute_map': {
+                    'hospital_id': 'hospital_id',
+                    'study_id': 'study_id',
+                },
+                'location_map': {
+                    'hospital_id': 'path',
+                    'study_id': 'path',
+                    'payload': 'body',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [
+                    'application/json'
+                ]
+            },
+            api_client=api_client,
+            callable=__post_study_files_upload_completed
         )
 
         def __put_study(

@@ -20,11 +20,13 @@ Method | HTTP request | Description
 [**patch_study**](InstitutesApi.md#patch_study) | **PATCH** /hospitals/{hospital_id}/studies/{study_id} | 
 [**post_studies**](InstitutesApi.md#post_studies) | **POST** /hospitals/{hospital_id}/studies | 
 [**post_study_annotation_state**](InstitutesApi.md#post_study_annotation_state) | **POST** /hospitals/{hospital_id}/studies/{study_id}/annotation-state | 
+[**post_study_annotations_updated**](InstitutesApi.md#post_study_annotations_updated) | **POST** /hospitals/{hospital_id}/studies/{study_id}/annotations_updated | 
 [**post_study_case_labels**](InstitutesApi.md#post_study_case_labels) | **POST** /hospitals/{hospital_id}/studies/{study_id}/case-labels | 
 [**post_study_comments**](InstitutesApi.md#post_study_comments) | **POST** /hospitals/{hospital_id}/studies/{study_id}/study_comments | 
 [**post_study_download_link**](InstitutesApi.md#post_study_download_link) | **POST** /hospitals/{hospital_id}/studies/{study_id}/download-link | 
 [**post_study_electronic_record_state**](InstitutesApi.md#post_study_electronic_record_state) | **POST** /hospitals/{hospital_id}/studies/{study_id}/electronic-record-state | 
 [**post_study_files**](InstitutesApi.md#post_study_files) | **POST** /hospitals/{hospital_id}/studies/{study_id}/files | This create study files endpoint actually only stores the file size of a study_id + key combination
+[**post_study_files_upload_completed**](InstitutesApi.md#post_study_files_upload_completed) | **POST** /hospitals/{hospital_id}/studies/{study_id}/files/$file-upload-completed | Initiates a background job and should be invoked with a token that is valid for at least 10 minutes
 [**put_study**](InstitutesApi.md#put_study) | **PUT** /hospitals/{hospital_id}/studies/{study_id} | 
 [**put_study_series**](InstitutesApi.md#put_study_series) | **PUT** /hospitals/{hospital_id}/studies/{study_id}/series/{series_id} | 
 [**put_study_sticky_note**](InstitutesApi.md#put_study_sticky_note) | **PUT** /hospitals/{hospital_id}/studies/{study_id}/sticky-note | 
@@ -1427,6 +1429,95 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **post_study_annotations_updated**
+> RootStudy post_study_annotations_updated(hospital_id, study_id, payload)
+
+
+
+### Example
+
+* Api Key Authentication (csrf_token):
+* Api Key Authentication (jwt):
+```python
+import time
+import igtcloud.client.services.entities
+from igtcloud.client.services.entities.api import institutes_api
+from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from igtcloud.client.services.entities.model.root_study import RootStudy
+from igtcloud.client.services.entities.model.latest_annotations import LatestAnnotations
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost/data
+# See configuration.py for a list of all supported configuration parameters.
+configuration = igtcloud.client.services.entities.Configuration(
+    host = "http://localhost/data"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: csrf_token
+configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['csrf_token'] = 'Bearer'
+
+# Configure API key authorization: jwt
+configuration.api_key['jwt'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['jwt'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = institutes_api.InstitutesApi(api_client)
+    hospital_id = "hospital_id_example" # str | 
+    study_id = "study_id_example" # str | 
+    payload = LatestAnnotations(
+        latest_annotations=dateutil_parser('1970-01-01T00:00:00.00Z'),
+    ) # LatestAnnotations | 
+
+    # example passing only required values which don't have defaults set
+    try:
+        api_response = api_instance.post_study_annotations_updated(hospital_id, study_id, payload)
+        pprint(api_response)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling InstitutesApi->post_study_annotations_updated: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hospital_id** | **str**|  |
+ **study_id** | **str**|  |
+ **payload** | [**LatestAnnotations**](LatestAnnotations.md)|  |
+
+### Return type
+
+[**RootStudy**](RootStudy.md)
+
+### Authorization
+
+[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Study |  -  |
+**400** | Bad request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **post_study_case_labels**
 > RootStudy post_study_case_labels(hospital_id, study_id, payload)
 
@@ -1881,6 +1972,95 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **post_study_files_upload_completed**
+> post_study_files_upload_completed(hospital_id, study_id, payload)
+
+Initiates a background job and should be invoked with a token that is valid for at least 10 minutes
+
+### Example
+
+* Api Key Authentication (csrf_token):
+* Api Key Authentication (jwt):
+```python
+import time
+import igtcloud.client.services.entities
+from igtcloud.client.services.entities.api import institutes_api
+from igtcloud.client.services.entities.model.file_upload_completed import FileUploadCompleted
+from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost/data
+# See configuration.py for a list of all supported configuration parameters.
+configuration = igtcloud.client.services.entities.Configuration(
+    host = "http://localhost/data"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: csrf_token
+configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['csrf_token'] = 'Bearer'
+
+# Configure API key authorization: jwt
+configuration.api_key['jwt'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['jwt'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = institutes_api.InstitutesApi(api_client)
+    hospital_id = "hospital_id_example" # str | 
+    study_id = "study_id_example" # str | 
+    payload = FileUploadCompleted(
+        uploaded_path="uploaded_path_example",
+        trigger_action=False,
+    ) # FileUploadCompleted | 
+
+    # example passing only required values which don't have defaults set
+    try:
+        # Initiates a background job and should be invoked with a token that is valid for at least 10 minutes
+        api_instance.post_study_files_upload_completed(hospital_id, study_id, payload)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling InstitutesApi->post_study_files_upload_completed: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hospital_id** | **str**|  |
+ **study_id** | **str**|  |
+ **payload** | [**FileUploadCompleted**](FileUploadCompleted.md)|  |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**204** | No Content |  -  |
+**400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

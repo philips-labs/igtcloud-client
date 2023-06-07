@@ -47,6 +47,7 @@ from igtcloud.client.services.entities.model.epd_study import EpdStudy
 from igtcloud.client.services.entities.model.epd_study_all_of import EpdStudyAllOf
 from igtcloud.client.services.entities.model.epd_study_event import EpdStudyEvent
 from igtcloud.client.services.entities.model.file import File
+from igtcloud.client.services.entities.model.file_upload_completed import FileUploadCompleted
 from igtcloud.client.services.entities.model.files import Files
 from igtcloud.client.services.entities.model.group import Group
 from igtcloud.client.services.entities.model.hsdp_details import HsdpDetails
@@ -61,6 +62,7 @@ from igtcloud.client.services.entities.model.inline_object1 import InlineObject1
 from igtcloud.client.services.entities.model.inline_object2 import InlineObject2
 from igtcloud.client.services.entities.model.inline_object3 import InlineObject3
 from igtcloud.client.services.entities.model.institute import Institute
+from igtcloud.client.services.entities.model.latest_annotations import LatestAnnotations
 from igtcloud.client.services.entities.model.marvel_series import MarvelSeries
 from igtcloud.client.services.entities.model.marvel_series_all_of import MarvelSeriesAllOf
 from igtcloud.client.services.entities.model.marvel_study import MarvelStudy
