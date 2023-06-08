@@ -5,6 +5,7 @@ import os
 import signal
 import sys
 import tempfile
+import threading
 from urllib import parse
 from contextlib import contextmanager
 from datetime import datetime, timezone, timedelta
@@ -156,11 +157,12 @@ class AuthRefresher:
         self._rt = Periodic(-1, self._refresh_token, autostart=False)
         self._running = False
 
-        signals = [signal.SIGABRT, signal.SIGINT, signal.SIGTERM]
-        if sys.platform != "win32":
-            signals.append(signal.SIGHUP)
-        for signum in signals:
-            signal.signal(signum, self._signal_handler)
+        if threading.current_thread() == threading.main_thread():
+            signals = [signal.SIGABRT, signal.SIGINT, signal.SIGTERM]
+            if sys.platform != "win32":
+                signals.append(signal.SIGHUP)
+            for signum in signals:
+                signal.signal(signum, self._signal_handler)
 
         self._start_kwargs = kwargs
 
