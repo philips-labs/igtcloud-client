@@ -49,7 +49,8 @@ def smart_auth(domain, username=None, key=None, auto_refresh=True, auto_logout=T
         else:
             yield auth
     finally:
-        auth.close()
+        if auto_logout:
+            auth.close()
 
 
 def _compare_domains(domain, other_domain):
