@@ -11,7 +11,7 @@ from tenacity import retry, wait_exponential, retry_if_exception_type, stop_afte
 
 from .auth.model.credentials import Credentials
 from .base_service import BaseService, CollectionWrapper
-from .entities.apis import (ProjectsApi, InstitutesApi, IntegrationsApi, UsersApi, OrganizationsApi)
+from .entities.apis import (ProjectsApi, InstitutesApi, IntegrationsApi, UsersApi, OrganizationsApi, ReportsApi)
 from .entities.model.file import File
 from .entities.model.institute import Institute
 from .entities.model.project import Project
@@ -20,7 +20,7 @@ from .entities.model.series import Series
 from .utils.s3 import S3File
 
 
-class EntitiesService(BaseService, ProjectsApi, InstitutesApi, IntegrationsApi, UsersApi, OrganizationsApi):
+class EntitiesService(BaseService, ProjectsApi, InstitutesApi, IntegrationsApi, UsersApi, OrganizationsApi, ReportsApi):
     def __init__(self, api_client):
         BaseService.__init__(self, api_client, '/api/data')
         ProjectsApi.__init__(self, api_client)
@@ -28,6 +28,7 @@ class EntitiesService(BaseService, ProjectsApi, InstitutesApi, IntegrationsApi, 
         IntegrationsApi.__init__(self, api_client)
         UsersApi.__init__(self, api_client)
         OrganizationsApi.__init__(self, api_client)
+        ReportsApi.__init__(self, api_client)
 
         self.study_type_classes = RootStudy.discriminator.get('study_type')
         self.series_type_classes = Series.discriminator.get('series_type')
