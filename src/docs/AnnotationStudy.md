@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **study_type** | **str** |  | 
 **annotation_state** | **str** |  | [optional] 
+**latest_annotations** | **datetime** |  | [optional] 
 **case_labels** | **[str]** |  | [optional] 
 **has_sticky_note** | **bool** |  | [optional] 
 **study_database_id** | **str** |  | [optional] [readonly] 

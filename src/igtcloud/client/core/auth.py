@@ -5,12 +5,14 @@ import os
 import signal
 import sys
 import tempfile
+import threading
 from urllib import parse
 from contextlib import contextmanager
 from datetime import datetime, timezone, timedelta
 from getpass import getpass
 from http import cookies
 from threading import Lock, Timer
+import time
 from time import sleep
 from urllib.parse import urlparse, urljoin
 
@@ -25,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 @contextmanager
-def smart_auth(domain, username=None, key=None):
+def smart_auth(domain, username=None, key=None, auto_refresh=True, auto_logout=True):
     url = urlparse(domain)
     if not url.scheme:
         url = urlparse('https://' + domain)
@@ -39,12 +41,17 @@ def smart_auth(domain, username=None, key=None):
         pass
     try:
         if auth is None:
-            with AuthRefresher(domain=domain, username=username, key=key) as auth:
+            with AuthRefresher(domain=domain,
+                               username=username,
+                               key=key,
+                               auto_refresh=auto_refresh,
+                               auto_logout=auto_logout) as auth:
                 yield auth
         else:
             yield auth
     finally:
-        auth.close()
+        if auto_logout:
+            auth.close()
 
 
 def _compare_domains(domain, other_domain):
@@ -150,11 +157,12 @@ class AuthRefresher:
         self._rt = Periodic(-1, self._refresh_token, autostart=False)
         self._running = False
 
-        signals = [signal.SIGABRT, signal.SIGINT, signal.SIGTERM]
-        if sys.platform != "win32":
-            signals.append(signal.SIGHUP)
-        for signum in signals:
-            signal.signal(signum, self._signal_handler)
+        if threading.current_thread() == threading.main_thread():
+            signals = [signal.SIGABRT, signal.SIGINT, signal.SIGTERM]
+            if sys.platform != "win32":
+                signals.append(signal.SIGHUP)
+            for signum in signals:
+                signal.signal(signum, self._signal_handler)
 
         self._start_kwargs = kwargs
 
@@ -165,7 +173,8 @@ class AuthRefresher:
         return self._authhandler
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.stop()
+        if self._start_kwargs.pop('auto_logout', True):
+            self.stop()
 
     def _save_data(self):
         self._rt.interval = int(self._token_data['expires_in']) - 180
@@ -216,6 +225,26 @@ class AuthRefresher:
         self._token_data["key"] = key  # Store key to allow re-login
         self._token_data["aud"] = aud  # Store aud to allow re-login
 
+    def _oauth_login_env_vars(self, jwt_token, csrf_token):
+        url = urljoin(self._domain, f'/api/auth/introspect')
+        headers = {'Content-Type': 'application/json',
+                   'Accept': 'application/json',
+                   'X-JWT': jwt_token,
+                   'X-CSRF-TOKEN': csrf_token}
+        resp = requests.get(url, headers=headers)
+        if resp.ok:
+            data = resp.json()
+            data["jwt"] = jwt_token
+            data["expires_in"] = data['exp'] - int(time.time())
+            data["jwt_data"] = self._extract_jwt_payload(data["jwt"])
+
+            self._token_data = data
+            self._token_data["csrf"] = csrf_token  # Copy csrf, is only valid on logon, not refresh
+        else:
+            logger.error(resp.text)
+            resp.raise_for_status()
+
+
     def _oauth_token(self, data, action='login'):
         url = urljoin(self._domain, f'/api/auth/{action}')
         headers = {'Content-Type': 'application/json',
@@ -232,19 +261,32 @@ class AuthRefresher:
             cookie.load(c)
             data["jwt"] = f"{cookie['jwt_header_payload'].value}.{cookie['jwt_signature'].value}"
             data["expires_in"] = float(cookie['jwt_header_payload']['max-age'])
-            jwt_payload = data["jwt"].split(".")[1]
-            jwt_payload += '=' * (-len(jwt_payload) % 4)  # pad payload
-            data["jwt_data"] = json.loads(base64.b64decode(jwt_payload))
+            data["jwt_data"] = self._extract_jwt_payload(data["jwt"])
             return data
         else:
             logger.error(resp.text)
             resp.raise_for_status()
 
+    @staticmethod
+    def _extract_jwt_payload(jwt_token: str) -> dict:
+        jwt_payload = jwt_token.split(".")[1]
+        jwt_payload += '=' * (-len(jwt_payload) % 4)  # pad payload
+
+        return json.loads(base64.b64decode(jwt_payload))
+
     def _login(self, username=None, key=None):
         if self._token_data is None or self._token_data.get('refresh_token') is None:
             logger.info("Login to IGT Cloud ({})".format(self._host))
 
-            if key:
+            jwt_token = os.environ.get('CLOUD_JWT_TOKEN')
+            csrf_token = os.environ.get('CLOUD_CSRF_TOKEN')
+
+            if jwt_token and csrf_token:
+                try:
+                    self._oauth_login_env_vars(jwt_token, csrf_token)
+                except:
+                    raise RuntimeError('Error during login')
+            elif key:
                 if not username:
                     raise RuntimeError("Login with private key requires username")
                 try:
@@ -265,8 +307,7 @@ class AuthRefresher:
             except:
                 raise RuntimeError('Error during login using refresh token')
 
-        logger.info(
-            'Logged in as: {sub}'.format(sub=self._token_data.get('sub', None)))
+        logger.info('Logged in as: {sub}'.format(sub=self._token_data.get('sub', None)))
         self._save_data()
 
     def _logout(self):
@@ -328,7 +369,7 @@ class AuthRefresher:
             self._running = False
             logger.info("Stopped IGT Cloud authentication handler")
 
-    def start(self, domain=None, username=None, key=None, blocking=True):
+    def start(self, domain=None, username=None, key=None, blocking=True, auto_refresh=True, auto_logout=True):
         self._setup_mmap()
         try:
             logger.info("Starting IGT Cloud authentication handler...")
@@ -345,7 +386,10 @@ class AuthRefresher:
             self._host = url.netloc
 
             self._login(username=username, key=key)
-            self._rt.start()
+
+            if auto_refresh:
+                self._rt.start()
+
             while blocking and self._running:
                 sleep(1)
         except (InterruptedError, KeyboardInterrupt):

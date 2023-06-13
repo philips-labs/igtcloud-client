@@ -1,13 +1,11 @@
-# AnnotationStudyAllOf
+# FileUploadCompleted
 
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**annotation_state** | **str** |  | [optional] 
-**latest_annotations** | **datetime** |  | [optional] 
-**case_labels** | **[str]** |  | [optional] 
-**has_sticky_note** | **bool** |  | [optional] 
+**uploaded_path** | **str** |  | 
+**trigger_action** | **bool** |  | [optional]  if omitted the server will use the default value of True
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

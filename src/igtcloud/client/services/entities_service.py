@@ -11,7 +11,7 @@ from tenacity import retry, wait_exponential, retry_if_exception_type, stop_afte
 
 from .auth.model.credentials import Credentials
 from .base_service import BaseService, CollectionWrapper
-from .entities.apis import (ProjectsApi, InstitutesApi, IntegrationsApi, UsersApi, OrganizationsApi)
+from .entities.apis import (ProjectsApi, InstitutesApi, IntegrationsApi, UsersApi, OrganizationsApi, ReportsApi)
 from .entities.model.file import File
 from .entities.model.institute import Institute
 from .entities.model.project import Project
@@ -20,7 +20,7 @@ from .entities.model.series import Series
 from .utils.s3 import S3File
 
 
-class EntitiesService(BaseService, ProjectsApi, InstitutesApi, IntegrationsApi, UsersApi, OrganizationsApi):
+class EntitiesService(BaseService, ProjectsApi, InstitutesApi, IntegrationsApi, UsersApi, OrganizationsApi, ReportsApi):
     def __init__(self, api_client):
         BaseService.__init__(self, api_client, '/api/data')
         ProjectsApi.__init__(self, api_client)
@@ -28,6 +28,7 @@ class EntitiesService(BaseService, ProjectsApi, InstitutesApi, IntegrationsApi, 
         IntegrationsApi.__init__(self, api_client)
         UsersApi.__init__(self, api_client)
         OrganizationsApi.__init__(self, api_client)
+        ReportsApi.__init__(self, api_client)
 
         self.study_type_classes = RootStudy.discriminator.get('study_type')
         self.series_type_classes = Series.discriminator.get('series_type')
@@ -97,7 +98,7 @@ class FilesCollectionWrapper(CollectionWrapper[File]):
         return self._credentials.get(action)
 
     def upload(self, filename: str, key: str = None, overwrite: bool = False,
-               callback: Callable[[int], None] = None) -> bool:
+               callback: Callable[[int], None] = None, trigger_action: bool = True) -> bool:
         abs_path = os.path.abspath(filename)
         if not os.path.exists(abs_path):
             raise FileNotFoundError(f"File {filename} not found")
@@ -127,7 +128,7 @@ class FilesCollectionWrapper(CollectionWrapper[File]):
         file.progress_percentage = 100
         file.type = os.path.splitext(abs_path)[1]
         file.file_name = key[len(self.s3_prefix):]
-        if callable(self._callback):
+        if callable(self._callback) and trigger_action:
             self._callback(file)
         return True
 
@@ -227,7 +228,7 @@ def get_study_files(service: EntitiesService, study: RootStudy) -> FilesCollecti
                                                      f_remove=lambda x: service.delete_study_files(study.institute_id,
                                                                                                    study.study_database_id,
                                                                                                    keys=[x.key]),
-                                                     f_callback=lambda x: process_file(study, x))
+                                                     f_callback=lambda x: file_upload_completed(service, study, x))
     return data_store['files']
 
 
@@ -359,15 +360,12 @@ def get_s3_file_metadata(file: File, action: str):
     return s3.head_object(Bucket=creds.bucket, Key=file.key)
 
 
-def process_file(study: RootStudy, file: File):
-    if study.study_type in ['AnnotationStudy'] and file.type in ['.dcm', '.fxd', '']:
-        from . import action_service
-        from .action.model.preprocessing_request import PreprocessingRequest
-        request = PreprocessingRequest(hospital_id=study.institute_id,
-                                       study_id=study.study_database_id,
-                                       patient_id=getattr(study, 'patient_database_id', None),
-                                       uploaded_path=file.file_name)
-        action_service.post_preprocess_file(request)
+def file_upload_completed(service: EntitiesService, study: RootStudy, file: File):
+    from .entities.model.file_upload_completed import FileUploadCompleted
+    request = FileUploadCompleted(uploaded_path=file.file_name, trigger_action=True)
+    service.post_study_files_upload_completed(payload=request,
+                                              hospital_id=study.institute_id,
+                                              study_id=study.study_database_id)
 
 
 def update_database(institute: Institute, file: File, common_prefix: str):
