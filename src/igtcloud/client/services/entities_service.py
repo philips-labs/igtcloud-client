@@ -228,7 +228,7 @@ def get_study_files(service: EntitiesService, study: RootStudy) -> FilesCollecti
                                                      f_remove=lambda x: service.delete_study_files(study.institute_id,
                                                                                                    study.study_database_id,
                                                                                                    keys=[x.key]),
-                                                     f_callback=lambda x: file_upload_completed(study, x))
+                                                     f_callback=lambda x: file_upload_completed(service, study, x))
     return data_store['files']
 
 
@@ -360,13 +360,12 @@ def get_s3_file_metadata(file: File, action: str):
     return s3.head_object(Bucket=creds.bucket, Key=file.key)
 
 
-def file_upload_completed(study: RootStudy, file: File):
-    from . import entities_service
+def file_upload_completed(service: EntitiesService, study: RootStudy, file: File):
     from .entities.model.file_upload_completed import FileUploadCompleted
     request = FileUploadCompleted(uploaded_path=file.file_name, trigger_action=True)
-    entities_service.post_study_files_upload_completed(payload=request,
-                                                       hospital_id=study.institute_id,
-                                                       study_id=study.study_database_id)
+    service.post_study_files_upload_completed(payload=request,
+                                              hospital_id=study.institute_id,
+                                              study_id=study.study_database_id)
 
 
 def update_database(institute: Institute, file: File, common_prefix: str):
