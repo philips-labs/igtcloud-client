@@ -2022,7 +2022,7 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
     study_id = "study_id_example" # str | 
     payload = FileUploadCompleted(
         uploaded_path="uploaded_path_example",
-        trigger_action=False,
+        trigger_action=True,
     ) # FileUploadCompleted | 
 
     # example passing only required values which don't have defaults set

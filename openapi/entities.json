@@ -123,23 +123,6 @@
           "type": "integer"
         }
       ],
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_application_specific",
-        "tags": [
-          "Applications"
-        ]
-      },
       "put": {
         "responses": {
           "200": {
@@ -193,6 +176,23 @@
             "description": "An optional fields mask"
           }
         ],
+        "tags": [
+          "Applications"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_application_specific",
         "tags": [
           "Applications"
         ]
@@ -333,23 +333,6 @@
           "type": "integer"
         }
       ],
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_epd_site_specific",
-        "tags": [
-          "EpdSites"
-        ]
-      },
       "put": {
         "responses": {
           "200": {
@@ -383,6 +366,23 @@
             "description": "An optional fields mask"
           }
         ],
+        "tags": [
+          "EpdSites"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_epd_site_specific",
         "tags": [
           "EpdSites"
         ]
@@ -657,6 +657,36 @@
           "type": "string"
         }
       ],
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Study",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "put_study",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RootStudy"
+            }
+          }
+        ],
+        "tags": [
+          "Institutes"
+        ]
+      },
       "delete": {
         "responses": {
           "204": {
@@ -690,36 +720,6 @@
           }
         },
         "operationId": "patch_study",
-        "parameters": [
-          {
-            "name": "payload",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/RootStudy"
-            }
-          }
-        ],
-        "tags": [
-          "Institutes"
-        ]
-      },
-      "put": {
-        "responses": {
-          "200": {
-            "description": "Study",
-            "schema": {
-              "$ref": "#/definitions/RootStudy"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "put_study",
         "parameters": [
           {
             "name": "payload",
@@ -1285,23 +1285,6 @@
           "type": "string"
         }
       ],
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No content"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_study_series",
-        "tags": [
-          "Institutes"
-        ]
-      },
       "put": {
         "responses": {
           "200": {
@@ -1328,6 +1311,23 @@
             }
           }
         ],
+        "tags": [
+          "Institutes"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_study_series",
         "tags": [
           "Institutes"
         ]
@@ -3268,23 +3268,6 @@
           "type": "string"
         }
       ],
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
-          }
-        },
-        "operationId": "delete_user",
-        "tags": [
-          "Users"
-        ]
-      },
       "put": {
         "responses": {
           "204": {
@@ -3308,6 +3291,23 @@
             }
           }
         ],
+        "tags": [
+          "Users"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          }
+        },
+        "operationId": "delete_user",
         "tags": [
           "Users"
         ]
@@ -4450,7 +4450,7 @@
         },
         "triggerAction": {
           "type": "boolean",
-          "default": false
+          "default": true
         }
       },
       "type": "object"

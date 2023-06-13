@@ -135,7 +135,7 @@ class FileUploadCompleted(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            trigger_action (bool): [optional] if omitted the server will use the default value of False  # noqa: E501
+            trigger_action (bool): [optional] if omitted the server will use the default value of True  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
