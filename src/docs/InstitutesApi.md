@@ -19,6 +19,7 @@ Method | HTTP request | Description
 [**get_study_series_list**](InstitutesApi.md#get_study_series_list) | **GET** /hospitals/{hospital_id}/studies/{study_id}/series | 
 [**patch_study**](InstitutesApi.md#patch_study) | **PATCH** /hospitals/{hospital_id}/studies/{study_id} | 
 [**post_studies**](InstitutesApi.md#post_studies) | **POST** /hospitals/{hospital_id}/studies | 
+[**post_study_action**](InstitutesApi.md#post_study_action) | **POST** /hospitals/{hospital_id}/studies/{study_id}/$action | Initiates a background job and should be invoked with a token that is valid for at least 10 minutes
 [**post_study_annotation_state**](InstitutesApi.md#post_study_annotation_state) | **POST** /hospitals/{hospital_id}/studies/{study_id}/annotation-state | 
 [**post_study_annotations_updated**](InstitutesApi.md#post_study_annotations_updated) | **POST** /hospitals/{hospital_id}/studies/{study_id}/annotations_updated | 
 [**post_study_case_labels**](InstitutesApi.md#post_study_case_labels) | **POST** /hospitals/{hospital_id}/studies/{study_id}/case-labels | 
@@ -1336,6 +1337,89 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Study |  -  |
+**400** | Bad request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **post_study_action**
+> post_study_action(hospital_id, study_id)
+
+Initiates a background job and should be invoked with a token that is valid for at least 10 minutes
+
+### Example
+
+* Api Key Authentication (csrf_token):
+* Api Key Authentication (jwt):
+```python
+import time
+import igtcloud.client.services.entities
+from igtcloud.client.services.entities.api import institutes_api
+from igtcloud.client.services.entities.model.model4xx_message import Model4xxMessage
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost/data
+# See configuration.py for a list of all supported configuration parameters.
+configuration = igtcloud.client.services.entities.Configuration(
+    host = "http://localhost/data"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: csrf_token
+configuration.api_key['csrf_token'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['csrf_token'] = 'Bearer'
+
+# Configure API key authorization: jwt
+configuration.api_key['jwt'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['jwt'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = institutes_api.InstitutesApi(api_client)
+    hospital_id = "hospital_id_example" # str | 
+    study_id = "study_id_example" # str | 
+
+    # example passing only required values which don't have defaults set
+    try:
+        # Initiates a background job and should be invoked with a token that is valid for at least 10 minutes
+        api_instance.post_study_action(hospital_id, study_id)
+    except igtcloud.client.services.entities.ApiException as e:
+        print("Exception when calling InstitutesApi->post_study_action: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hospital_id** | **str**|  |
+ **study_id** | **str**|  |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[csrf_token](../README.md#csrf_token), [jwt](../README.md#jwt)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**204** | Annotations deleted |  -  |
 **400** | Bad request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -72,6 +72,7 @@ from igtcloud.client.services.entities.model.organization_role import Organizati
 from igtcloud.client.services.entities.model.patient import Patient
 from igtcloud.client.services.entities.model.profile import Profile
 from igtcloud.client.services.entities.model.project import Project
+from igtcloud.client.services.entities.model.project_report_data import ProjectReportData
 from igtcloud.client.services.entities.model.root_study import RootStudy
 from igtcloud.client.services.entities.model.series import Series
 from igtcloud.client.services.entities.model.service import Service

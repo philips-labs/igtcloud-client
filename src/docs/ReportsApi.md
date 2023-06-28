@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost/data*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_project_report**](ReportsApi.md#get_project_report) | **GET** /reports/project | 
+[**post_project_report**](ReportsApi.md#post_project_report) | **POST** /reports/project | 
 
 
-# **get_project_report**
-> get_project_report()
+# **post_project_report**
+> post_project_report()
 
 
 
@@ -52,9 +52,9 @@ with igtcloud.client.services.entities.ApiClient(configuration) as api_client:
 
     # example, this endpoint has no required or optional parameters
     try:
-        api_instance.get_project_report()
+        api_instance.post_project_report()
     except igtcloud.client.services.entities.ApiException as e:
-        print("Exception when calling ReportsApi->get_project_report: %s\n" % e)
+        print("Exception when calling ReportsApi->post_project_report: %s\n" % e)
 ```
 
 
