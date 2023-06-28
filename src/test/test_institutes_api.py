@@ -113,6 +113,13 @@ class TestInstitutesApi(unittest.TestCase):
         """
         pass
 
+    def test_post_study_action(self):
+        """Test case for post_study_action
+
+        Initiates a background job and should be invoked with a token that is valid for at least 10 minutes  # noqa: E501
+        """
+        pass
+
     def test_post_study_annotation_state(self):
         """Test case for post_study_annotation_state
 

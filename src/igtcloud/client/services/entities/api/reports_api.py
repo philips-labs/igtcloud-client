@@ -36,16 +36,16 @@ class ReportsApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-        def __get_project_report(
+        def __post_project_report(
             self,
             **kwargs
         ):
-            """get_project_report  # noqa: E501
+            """post_project_report  # noqa: E501
 
             This method makes a synchronous HTTP request by default. To make an
             asynchronous HTTP request, please pass async_req=True
 
-            >>> thread = api.get_project_report(async_req=True)
+            >>> thread = api.post_project_report(async_req=True)
             >>> result = thread.get()
 
 
@@ -96,7 +96,7 @@ class ReportsApi(object):
             kwargs['_host_index'] = kwargs.get('_host_index')
             return self.call_with_http_info(**kwargs)
 
-        self.get_project_report = _Endpoint(
+        self.post_project_report = _Endpoint(
             settings={
                 'response_type': None,
                 'auth': [
@@ -104,8 +104,8 @@ class ReportsApi(object):
                     'jwt'
                 ],
                 'endpoint_path': '/reports/project',
-                'operation_id': 'get_project_report',
-                'http_method': 'GET',
+                'operation_id': 'post_project_report',
+                'http_method': 'POST',
                 'servers': None,
             },
             params_map={
@@ -140,5 +140,5 @@ class ReportsApi(object):
                 'content_type': [],
             },
             api_client=api_client,
-            callable=__get_project_report
+            callable=__post_project_report
         )

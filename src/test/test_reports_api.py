@@ -23,8 +23,8 @@ class TestReportsApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_get_project_report(self):
-        """Test case for get_project_report
+    def test_post_project_report(self):
+        """Test case for post_project_report
 
         """
         pass
