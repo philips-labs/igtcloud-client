@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 def upload_project(local_folder: str, project_name: str, institute_name: str = None, submit: bool = False,
-                   max_workers_studies: int = None, max_workers_files: int = None):
+                   max_workers_studies: int = None, max_workers_files: int = None, folder_structure: str = None):
     project, institutes = find_project_and_institutes(project_name, institute_name)
 
     if not project and not institutes:
@@ -46,6 +46,9 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
 
         return
 
+    if folder_structure not in ['flat', 'hierarchical']:
+        folder_structure = 'flat'
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers_studies or 4) as executor:
         for institute in institutes:
             logger.info(f"Uploading to institute: {institute.name}")
@@ -53,11 +56,26 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
             institute_dir = os.path.join(local_folder, institute.name)
             existing_studies = institute.studies
 
-            local_study_folders = (os.path.join(institute_dir, d) for d in os.listdir(institute_dir) if
-                                   os.path.isdir(os.path.join(institute_dir, d)))
+            local_studies = {}
 
-            fs = [executor.submit(upload_study, institute.study_type, study_folder, institute.id, existing_studies,
-                                  _password, max_workers_files) for study_folder in local_study_folders]
+            for d in os.listdir(institute_dir):
+                if os.path.isdir(os.path.join(institute_dir, d)):
+                    if folder_structure == 'flat':
+                        study_dir = os.path.join(institute_dir, d)
+                        patient_name = os.path.basename(study_dir)
+
+                        local_studies[study_dir] = patient_name
+                    else:
+                        patient_dir = os.path.join(institute_dir, d)
+                        patient_name = os.path.basename(patient_dir)
+
+                        for study_dir in os.listdir(patient_dir):
+                            study_dir = os.path.join(patient_dir, study_dir)
+
+                            local_studies[study_dir] = patient_name
+
+            fs = [executor.submit(upload_study, institute.study_type, study_folder, local_studies[study_folder],
+                                  institute.id, existing_studies, _password, max_workers_files) for study_folder in local_studies]
 
             for f in tqdm(concurrent.futures.as_completed(fs), total=len(fs), desc="Studies", unit='study'):
                 study, files_uploaded, files_skipped = f.result()
@@ -65,12 +83,13 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
                             f"files_skipped: {len(files_skipped)}")
 
 
-def upload_study(study_type: str, study_folder: str, institute_id: str, studies: CollectionWrapper[RootStudy],
-                 _submit_password: str = None, max_workers_files: int = None) -> Tuple[RootStudy, List[str], List[str]]:
+def upload_study(study_type: str, study_folder: str, patient_name: str, institute_id: str,
+                 studies: CollectionWrapper[RootStudy], _submit_password: str = None,
+                 max_workers_files: int = None) -> Tuple[RootStudy, List[str], List[str]]:
     local_study = None
     study_cls = entities_service.study_type_classes.get(study_type)
     study_json_file = os.path.join(study_folder, 'study.json')
-    patient_name = os.path.basename(study_folder)
+
     if os.path.exists(study_json_file):
         try:
             with open(study_json_file, 'r') as f:
