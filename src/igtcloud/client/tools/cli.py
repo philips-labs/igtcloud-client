@@ -166,7 +166,7 @@ def _get_domain(domain, environment):
 @click.option('--concurrent-files', type=int, default=None, help='Maximum number of concurrent files upload per study')
 @click.option(
     '--folder-structure',
-    default='hierarchical',
+    default='flat',
     type=click.Choice(['flat', 'hierarchical'], case_sensitive=False),
     help='Folder structure of the data to be uploaded.'
 )
