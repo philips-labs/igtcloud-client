@@ -84,6 +84,8 @@ with smart_auth(domain) as auth:
 
 ## Folder structure
 
+### Flat (default)
+
 ```
 local_folder
 │
@@ -98,29 +100,58 @@ local_folder
 |       │   ...
 │
 └─── institute1
-│   │   series_1.dcm
-│   │   series_2.dcm
+    │
+    └─── patient1---study1
+    │   │   series_1.dcm
+    │   │   series_2.dcm
+    │   │   ...
+    │
+    └─── patient1---study2
+    │   │   series_1.dcm
+    │   │   series_2.dcm
+    │   │   ...    
+    │
+    └─── patient2---study1
+        │   series_1.dcm
+        │   series_2.dcm
+        │   ...
+```
+
+### Hierarchical
+
+```
+local_folder
+│
+└─── files
+│   │   file_1.txt
+│   │   file_2.txt
 │   │   ...
 │   │
 │   └─── subfolder1
-│       │   series_3.dcm
-│       │   series_4.dcm
-│       │   ...
+│       │   file_3.txt
+│       │   file_4.txt
+|       │   ...
 │
-└─── institute2
-    │   series_1.dcm
-    │   series_2.dcm
-    │   ...
+└─── institute1
     │
-    └─── subfolder1
-    │   │   series_3.dcm
-    │   │   series_4.dcm
-    │   │   ...
+    └─── patient1
+    │   │
+    │   └─── study1
+    │   │   │   series_1.dcm
+    │   │   │   series_2.dcm    
+    │   │   │   ...
+    │   │
+    │   └─── study2
+    │       │   series_1.dcm
+    │       │   series_2.dcm    
+    │       │   ...    
     │
-    └─── subfolder2
-        │   series_5.dcm
-        │   series_6.dcm
-        │   ...
+    └─── patient2
+    │   │
+    │   └─── study1
+    │       │   series_1.dcm
+    │       │   series_2.dcm    
+    │       │   ...
 ```
 
 Where `local_folder` is the specified LOCAL_FOLDER via the `upload` or `download` command.
@@ -139,7 +170,18 @@ Other folders/files under the `local_folder` directory will be ignored.
 
 ### Download institute-level files
 
-Institutes will be downloaded to the LOCAL_FOLDER argument and will create sub folders based on the institute name. All studies of each institute will be downloaded as subdirectories under each institute folder. 
+Institutes will be downloaded to the LOCAL_FOLDER argument and will create sub folders based on the institute name. 
+
+#### Flat
+
+In `flat` file structure mode (default), all studies of each institute will be downloaded as flat subdirectories under each institute folder.
+The folder name will be a combination of the patient and study identifiers.
+
+#### Hierarchical 
+
+In `hierarchical` file structure mode, all studies of each institute will be downloaded in a nested folder structure.
+In the institute folder, the first level of directories will resemble the patients. 
+Each patient folder will contain nested folder for each study that belongs to this patient.
 
 ## Developers
 
