@@ -54,8 +54,14 @@ def cli():
 @click.option('--debug', flag_value=True, help='Enable debug logging')
 @click.option('--concurrent-studies', type=int, default=None, help='Maximum number of concurrent studies download')
 @click.option('--concurrent-files', type=int, default=None, help='Maximum number of concurrent files download per study')
+@click.option(
+    '--folder-structure',
+    default='flat',
+    type=click.Choice(['flat', 'hierarchical'], case_sensitive=False),
+    help='Folder structure of the data to be downloaded.'
+)
 def download(target_folder, project, institute, environment, domain, user, ext, start, end, category,
-             include_modified_date, project_files, debug, concurrent_studies, concurrent_files):
+             include_modified_date, project_files, debug, concurrent_studies, concurrent_files, folder_structure):
     """Download data from Philips Interventional Cloud.
 
     \b
@@ -91,10 +97,10 @@ def download(target_folder, project, institute, environment, domain, user, ext, 
 
             return
 
-        download_institutes(project, institute, target_folder, categories=category, files_filter=filter_by_ext(ext),
-                            studies_filter=filter_by_study_date(start, end),
+        download_institutes(project, institute, target_folder, categories=category,
+                            studies_filter=filter_by_study_date(start, end), files_filter=filter_by_ext(ext),
                             include_modified_date=include_modified_date, max_workers_studies=concurrent_studies,
-                            max_workers_files=concurrent_files)
+                            max_workers_files=concurrent_files, folder_structure=folder_structure)
 
 
 @click.command(short_help="List data from Philips Interventional Cloud in CSV file")
@@ -158,8 +164,14 @@ def _get_domain(domain, environment):
 @click.option('--debug', flag_value=True, help='Enable debug logging')
 @click.option('--concurrent-studies', type=int, default=None, help='Maximum number of concurrent studies upload')
 @click.option('--concurrent-files', type=int, default=None, help='Maximum number of concurrent files upload per study')
+@click.option(
+    '--folder-structure',
+    default='flat',
+    type=click.Choice(['flat', 'hierarchical'], case_sensitive=False),
+    help='Folder structure of the data to be uploaded.'
+)
 def upload(local_folder, project, institute, environment, domain, user, submit, debug, concurrent_studies,
-           concurrent_files):
+           concurrent_files, folder_structure):
     """Upload data to Philips Interventional Cloud.
 
     \b
@@ -180,7 +192,7 @@ def upload(local_folder, project, institute, environment, domain, user, submit, 
     with smart_auth(domain, username=user) as auth:
         set_auth(auth)
         logger.info(f"Using url: {auth.domain}")
-        upload_project(local_folder, project, institute, submit, concurrent_studies, concurrent_files)
+        upload_project(local_folder, project, institute, submit, concurrent_studies, concurrent_files, folder_structure)
 
 
 @click.command(short_help="Login to Philips Interventional Cloud")

@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 def download_institutes(project_name: str, institute_name: str, destination: str, categories: List[str] = None,
                         studies_filter: Callable[[RootStudy], bool] = None,
                         files_filter: Callable[[File, RootStudy], bool] = None, include_modified_date: bool = False,
-                        max_workers_studies: int = None, max_workers_files: int = None):
+                        max_workers_studies: int = None, max_workers_files: int = None, folder_structure: str = None):
     project, institutes = find_project_and_institutes(project_name, institute_name)
     if not project:
         logger.error(f"Project not found: {project_name}")
@@ -27,6 +27,13 @@ def download_institutes(project_name: str, institute_name: str, destination: str
     if not institutes:
         logger.error(f"No institutes found")
         return
+
+    categories = [category for category in categories or [] if category in ['files', 'dicom', 'annotations']]
+    if not categories:
+        categories = ['files']
+
+    if folder_structure not in ['flat', 'hierarchical']:
+        folder_structure = 'flat'
 
     for institute in tqdm(institutes, desc="Institutes", unit="Institute"):
         logger.info(f"Institute name: {institute.name}, project type: {project.project_type_name}, "
@@ -38,15 +45,11 @@ def download_institutes(project_name: str, institute_name: str, destination: str
         if callable(studies_filter):
             studies = list(filter(studies_filter, studies))
 
-        categories = [category for category in categories or [] if category in ['files', 'dicom', 'annotations']]
-        if not categories:
-            categories = ['files']
-
         with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers_studies or 4) as executor:
             with tqdm(total=len(studies), desc="Studies", unit='study') as pbar:
                 fs = {executor.submit(_download_study,
                                       study,
-                                      os.path.join(destination, institute.name, study.study_id_human_readable),
+                                      _create_study_destination_path(destination, institute, study, folder_structure),
                                       categories,
                                       files_filter,
                                       include_modified_date,
@@ -59,6 +62,13 @@ def download_institutes(project_name: str, institute_name: str, destination: str
                         logger.debug(f"Downloaded: {study.study_id_human_readable}")
                     except Exception:
                         logger.exception(f"Exception during download of {study.study_id_human_readable}")
+
+
+def _create_study_destination_path(destination: str, institute, study, folder_structure) -> str:
+    study_destination = study.study_id_human_readable
+    study_destination = study_destination.replace('/', '---') if folder_structure == 'flat' else study_destination
+
+    return os.path.join(destination, institute.name, os.path.normpath(study_destination))
 
 
 def _download_study(study, study_destination, categories, files_filter, include_modified_date, max_workers_files: int):
