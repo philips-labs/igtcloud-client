@@ -15,13 +15,15 @@ from igtcloud.client.services.entities.model.electronic_record_state import Elec
 from igtcloud.client.services.entities.model.patient import Patient
 from igtcloud.client.services.entities.model.root_study import RootStudy
 from igtcloud.client.services.entities.model_utils import validate_and_convert_types
+from igtcloud.client.services.entities_service import upload_annotation_files
 from igtcloud.client.tools.common import find_project_and_institutes, study_key
 
 logger = logging.getLogger(__name__)
 
 
 def upload_project(local_folder: str, project_name: str, institute_name: str = None, submit: bool = False,
-                   max_workers_studies: int = None, max_workers_files: int = None, folder_structure: str = None):
+                   max_workers_studies: int = None, max_workers_files: int = None, folder_structure: str = None,
+                   category: str = None):
     project, institutes = find_project_and_institutes(project_name, institute_name)
 
     if not project and not institutes:
@@ -31,6 +33,32 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
     _password = None
     if submit:
         _password = getpass("For electronic record state it is required to reenter the password")
+
+    if category.lower() == "annotation":
+        # Annotation file upload
+        logger.info("Annotation File Uploading...")
+        if os.path.isdir(local_folder):
+            for root, dirs, local_files in os.walk(local_folder):
+                key = root
+                annotation_file = local_files
+        else:
+            logger.error("Not a valid Directory")
+        key = key + "/" + str(annotation_file[0])
+        logger.debug("Upload annotation path" + key)
+        try:
+            f = open(os.path.abspath(key), "r")
+            json.loads(f.read())
+        except ValueError as e:
+            logger.error("Annotation File JSON is not valid : %s" % e)
+            return
+
+        is_uploaded = upload_annotation_files(s3_key=key, annotation_filename=key, s3_path=institutes[0].s3_prefix)
+        if is_uploaded:
+            logger.info("Annotation File uploaded successfully")
+        else:
+            logger.info("Annotation File failed to upload")
+
+        return
 
     if project:
         # Project level file upload when there is a "files" folder in the root directory

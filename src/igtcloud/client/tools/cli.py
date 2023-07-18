@@ -170,13 +170,22 @@ def _get_domain(domain, environment):
     type=click.Choice(['flat', 'hierarchical'], case_sensitive=False),
     help='Folder structure of the data to be uploaded.'
 )
+@click.option(
+    '--category',
+    default=['annotation'],
+    type=click.Choice(['annotation'], case_sensitive=False),
+    help='Uploads annotation file'
+)
 def upload(local_folder, project, institute, environment, domain, user, submit, debug, concurrent_studies,
-           concurrent_files, folder_structure):
+           concurrent_files, folder_structure, category):
     """Upload data to Philips Interventional Cloud.
 
     \b
     This tool will upload all files in LOCAL_FOLDER to project PROJECT.
-    the folder structure should be LOCAL_FOLDER / INSTITUTE / <patient study name> / <files and folders"""
+    the folder structure should be LOCAL_FOLDER / INSTITUTE / <patient study name> / <files and folders
+    \b
+    Folder structure should be maintained for annotation file upload as below
+    < patient_id > / < study_id > / annotations / 0 / < sequence_id > / < image > / < user_id > / <annotation_filename> """
     if debug:
         logging.getLogger('igtcloud.client').setLevel(logging.DEBUG)
 
@@ -192,7 +201,7 @@ def upload(local_folder, project, institute, environment, domain, user, submit, 
     with smart_auth(domain, username=user) as auth:
         set_auth(auth)
         logger.info(f"Using url: {auth.domain}")
-        upload_project(local_folder, project, institute, submit, concurrent_studies, concurrent_files, folder_structure)
+        upload_project(local_folder, project, institute, submit, concurrent_studies, concurrent_files, folder_structure, category)
 
 
 @click.command(short_help="Login to Philips Interventional Cloud")
