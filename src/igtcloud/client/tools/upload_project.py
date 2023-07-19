@@ -34,31 +34,8 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
     if submit:
         _password = getpass("For electronic record state it is required to reenter the password")
 
-    if category.lower() == "annotation":
-        # Annotation file upload
-        logger.info("Annotation File Uploading...")
-        if os.path.isdir(local_folder):
-            for root, dirs, local_files in os.walk(local_folder):
-                key = root
-                annotation_file = local_files
-        else:
-            logger.error("Not a valid Directory")
-        key = key + "/" + str(annotation_file[0])
-        logger.debug("Upload annotation path" + key)
-        try:
-            f = open(os.path.abspath(key), "r")
-            json.loads(f.read())
-        except ValueError as e:
-            logger.error("Annotation File JSON is not valid : %s" % e)
-            return
-
-        is_uploaded = upload_annotation_files(s3_key=key, annotation_filename=key, s3_path=institutes[0].s3_prefix)
-        if is_uploaded:
-            logger.info("Annotation File uploaded successfully")
-        else:
-            logger.info("Annotation File failed to upload")
-
-        return
+    if category.lower() == "annotations":
+        return upload_annotation_files_private_method(institutes, local_folder)
 
     if project:
         # Project level file upload when there is a "files" folder in the root directory
@@ -109,6 +86,49 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
                 study, files_uploaded, files_skipped = f.result()
                 logger.info(f"Study: {study.study_id_human_readable} files_uploaded: {len(files_uploaded)}, "
                             f"files_skipped: {len(files_skipped)}")
+
+
+def upload_annotation_files_private_method(institutes, local_folder):
+    # Annotation file upload
+    logger.info("Annotation File Uploading...")
+    annotation_files = []
+    if os.path.isdir(local_folder):
+        for root, dirs, local_files in os.walk(local_folder):
+            local_path = root
+            annotation_files.extend(local_files)
+    else:
+        logger.error("Not a valid Directory")
+    local_path = local_path.replace("/name", "")
+    initial_path = local_path.split('/')
+    annotation_paths = local_path.split('/0')
+    annotation_path = annotation_paths[1]
+    annotation_path = "annotations/0" + annotation_path
+    if "---" in initial_path[2]:
+        study_id_human_readable = initial_path[2].replace("---", "/")
+    else:
+        study_id_human_readable = initial_path[2] + "/" + initial_path[3]
+    for institute in institutes:
+        for studies in institute.studies:
+            if studies.study_id_human_readable == study_id_human_readable:
+                s3_prefix_for_annotation_file = studies.s3_prefix
+                break
+    index = 0
+    for annotation_file in annotation_files:
+        if str(annotation_files[index]).endswith(".json"):
+            try:
+                file_path = local_path + "/" + str(annotation_files[index])
+                with open(os.path.abspath(file_path), "r") as file:
+                    json.loads(file.read())
+            except ValueError as e:
+                logger.error("Annotation File JSON is not valid : %s" % e)
+                return
+            is_uploaded = upload_annotation_files(s3_key=annotation_path+"/"+str(annotation_files[index]), annotation_filename=file_path, s3_path=s3_prefix_for_annotation_file)
+            index += 1
+        if is_uploaded:
+          logger.info("Annotation File uploaded successfully")
+        else:
+          logger.info("Annotation File failed to upload")
+    return
 
 
 def upload_study(study_type: str, study_folder: str, patient_name: str, institute_id: str,

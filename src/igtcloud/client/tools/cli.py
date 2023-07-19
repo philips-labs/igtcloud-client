@@ -172,9 +172,9 @@ def _get_domain(domain, environment):
 )
 @click.option(
     '--category',
-    default=['annotation'],
-    type=click.Choice(['annotation'], case_sensitive=False),
-    help='Uploads annotation file'
+    default=['annotations'],
+    type=click.Choice(['annotations'], case_sensitive=False),
+    help='Uploads annotation files'
 )
 def upload(local_folder, project, institute, environment, domain, user, submit, debug, concurrent_studies,
            concurrent_files, folder_structure, category):
