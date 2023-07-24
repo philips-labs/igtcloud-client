@@ -185,7 +185,7 @@ def upload(local_folder, project, institute, environment, domain, user, submit, 
     the folder structure should be LOCAL_FOLDER / INSTITUTE / <patient study name> / <files and folders
     \b
     Folder structure should be maintained for annotation file upload as below
-    < patient_id > / < study_id > / Annotation Folder upload structure """
+    LOCAL_FOLDER / INSTITUTE / < patient_id > / < study_id > / Annotation Folder upload structure """
     if debug:
         logging.getLogger('igtcloud.client').setLevel(logging.DEBUG)
 
