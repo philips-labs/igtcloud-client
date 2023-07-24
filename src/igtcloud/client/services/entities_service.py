@@ -232,13 +232,6 @@ def get_study_files(service: EntitiesService, study: RootStudy) -> FilesCollecti
     return data_store['files']
 
 
-def upload_annotation_files(s3_key: str = None, annotation_filename: str = None, s3_path: str = None) -> bool:
-    files_collection_wrapper_obj = FilesCollectionWrapper(s3_prefix=s3_path, f_auth=lambda action, prefix: s3_creds(action, prefix), f_extend=lambda x: x)
-    annotation_data = FilesCollectionWrapper.upload(files_collection_wrapper_obj, filename=annotation_filename, key=s3_key)
-    return annotation_data
-
-
-
 def get_dicom_files(service: EntitiesService, study: RootStudy) -> FilesCollectionWrapper:
     data_store = study.get('_data_store')
     initial_value = data_store.get('dicom', None)
@@ -257,7 +250,8 @@ def get_annotation_files(service: EntitiesService, study: RootStudy) -> FilesCol
         data_store['annotations'] = FilesCollectionWrapper(s3_prefix=study.s3_prefix + 'annotations/',
                                                            category='annotations',
                                                            f_auth=lambda action, prefix: s3_creds(action, prefix),
-                                                           f_init=lambda: get_aux_files(service, study, 'annotations'))
+                                                           f_init=lambda: get_aux_files(service, study, 'annotations'),
+                                                           f_extend=lambda x: x)
     return data_store['annotations']
 
 

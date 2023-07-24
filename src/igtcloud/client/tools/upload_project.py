@@ -15,7 +15,6 @@ from igtcloud.client.services.entities.model.electronic_record_state import Elec
 from igtcloud.client.services.entities.model.patient import Patient
 from igtcloud.client.services.entities.model.root_study import RootStudy
 from igtcloud.client.services.entities.model_utils import validate_and_convert_types
-from igtcloud.client.services.entities_service import upload_annotation_files
 from igtcloud.client.tools.common import find_project_and_institutes, study_key
 
 logger = logging.getLogger(__name__)
@@ -35,7 +34,7 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
         _password = getpass("For electronic record state it is required to reenter the password")
 
     if category.lower() == "annotations":
-        return upload_annotation_files_private_method(institutes, local_folder)
+        return upload_annotation_files_private_method(institutes, local_folder, max_workers_files)
 
     if project:
         # Project level file upload when there is a "files" folder in the root directory
@@ -88,7 +87,7 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
                             f"files_skipped: {len(files_skipped)}")
 
 
-def upload_annotation_files_private_method(institutes, local_folder):
+def upload_annotation_files_private_method(institutes, local_folder, max_workers_files):
     # Annotation file upload
     logger.info("Annotation File Uploading...")
     annotation_files = []
@@ -98,11 +97,10 @@ def upload_annotation_files_private_method(institutes, local_folder):
             annotation_files.extend(local_files)
     else:
         logger.error("Not a valid Directory")
-    local_path = local_path.replace("/name", "")
-    initial_path = local_path.split('/')
-    annotation_paths = local_path.split('/0')
+    initial_path = local_path.split("/")
+    annotation_paths = local_path.split("/0") if "/0" in local_path else local_path.split("/files")
     annotation_path = annotation_paths[1]
-    annotation_path = "annotations/0" + annotation_path
+    annotation_path = "0" + annotation_path if "/0" in local_path else "files" + annotation_path
     if "---" in initial_path[2]:
         study_id_human_readable = initial_path[2].replace("---", "/")
     else:
@@ -111,23 +109,55 @@ def upload_annotation_files_private_method(institutes, local_folder):
         for studies in institute.studies:
             if studies.study_id_human_readable == study_id_human_readable:
                 s3_prefix_for_annotation_file = studies.s3_prefix
+                hospital_id = studies.hospital_id
+                study_id = studies.study_database_id
                 break
-    index = 0
-    for annotation_file in annotation_files:
-        if str(annotation_files[index]).endswith(".json"):
-            try:
-                file_path = local_path + "/" + str(annotation_files[index])
-                with open(os.path.abspath(file_path), "r") as file:
-                    json.loads(file.read())
-            except ValueError as e:
-                logger.error("Annotation File JSON is not valid : %s" % e)
-                return
-            is_uploaded = upload_annotation_files(s3_key=annotation_path+"/"+str(annotation_files[index]), annotation_filename=file_path, s3_path=s3_prefix_for_annotation_file)
-            index += 1
-        if is_uploaded:
-          logger.info("Annotation File uploaded successfully")
-        else:
-          logger.info("Annotation File failed to upload")
+
+    studies_id = entities_service.get_study(hospital_id=hospital_id, study_id=study_id)
+
+    files_uploaded = list()
+    files_skipped = list()
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers_files or 4) as executor:
+        fs = dict()
+        with tqdm(total=0, leave=False, desc=f" Annotation file Upload", unit='B', unit_scale=True,
+                  unit_divisor=1024) as pbar:
+            def callback(x):
+                pbar.update(x)
+
+            for annotation_file in annotation_files:
+                if annotation_file.endswith(".json"):
+                    try:
+                        local_path_json = local_path.replace("/name", "")
+                        annotation_path_json = annotation_path.replace("/name", "")
+                        file_path = local_path_json + "/" + annotation_file
+                        size = os.path.getsize(file_path)
+                        pbar.total += size
+                        with open(os.path.abspath(file_path), "r") as file:
+                            json.loads(file.read())
+                    except ValueError as e:
+                        logger.error("Annotation File JSON is not valid : %s" % e)
+                        return
+                    fs[executor.submit(studies_id.annotations.upload, file_path,
+                                       annotation_path_json + "/" + annotation_file, callback=callback)] = (
+                    s3_prefix_for_annotation_file, size)
+                else:
+                    file_path = local_path + "/" + annotation_file
+                    size = os.path.getsize(file_path)
+                    pbar.total += size
+                    fs[executor.submit(studies_id.annotations.upload, file_path,
+                                       annotation_path + "/" + annotation_file, callback=callback)] = (
+                    s3_prefix_for_annotation_file, size)
+
+            for f in concurrent.futures.as_completed(fs.keys()):
+                file, size = fs.pop(f)
+                if f.result():
+                    files_uploaded.append(file)
+                else:
+                    files_skipped.append(file)
+    logger.info(f"files_uploaded: {len(files_uploaded)}, "
+                                f"files_skipped: {len(files_skipped)}")
+    logger.info("Annotation File uploaded successfully")
     return
 
 
