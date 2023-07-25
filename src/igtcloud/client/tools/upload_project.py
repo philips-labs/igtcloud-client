@@ -33,7 +33,7 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
     if submit:
         _password = getpass("For electronic record state it is required to reenter the password")
 
-    if category.lower() == "annotations":
+    if category is not None and category.lower() == "annotations":
         return upload_annotation_files_private_method(institutes, local_folder, max_workers_files)
 
     if project:

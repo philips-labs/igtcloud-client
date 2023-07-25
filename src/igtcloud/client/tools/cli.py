@@ -172,7 +172,7 @@ def _get_domain(domain, environment):
 )
 @click.option(
     '--category',
-    default=['annotations'],
+    default=None,
     type=click.Choice(['annotations'], case_sensitive=False),
     help='Uploads annotation files'
 )
