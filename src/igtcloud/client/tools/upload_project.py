@@ -96,14 +96,15 @@ def upload_annotation_files(institutes, local_folder, max_workers_files):
             annotation_files.extend(local_files)
     else:
         logger.error("Not a valid Directory")
-    initial_path = local_path.split("/")
-    annotation_paths = local_path.split("/0") if "/0" in local_path else local_path.split("/files")
-    annotation_path = annotation_paths[1]
-    annotation_path = "0" + annotation_path if "/0" in local_path else "files" + annotation_path
+    initial_path = local_path.split(os.sep)
     if "---" in initial_path[2]:
         study_id_human_readable = initial_path[2].replace("---", "/")
+        annotation_paths = local_path.split(initial_path[2] + os.sep)
+        annotation_path = annotation_paths[1]
     else:
         study_id_human_readable = initial_path[2] + "/" + initial_path[3]
+        annotation_paths = local_path.split(initial_path[3] + os.sep)
+        annotation_path = annotation_paths[1]
     for institute in institutes:
         for studies in institute.studies:
             if studies.study_id_human_readable == study_id_human_readable:
@@ -127,9 +128,9 @@ def upload_annotation_files(institutes, local_folder, max_workers_files):
             for annotation_file in annotation_files:
                 if annotation_file.endswith(".json"):
                     try:
-                        local_path_json = local_path.replace("/name", "")
-                        annotation_path_json = annotation_path.replace("/name", "")
-                        file_path = local_path_json + "/" + annotation_file
+                        local_path_json = local_path.replace(os.sep + "name", "")
+                        annotation_path_json = annotation_path.replace(os.sep + "name", "")
+                        file_path = os.path.join(local_path_json, annotation_file)
                         size = os.path.getsize(file_path)
                         pbar.total += size
                         with open(os.path.abspath(file_path), "r") as file:
@@ -141,7 +142,7 @@ def upload_annotation_files(institutes, local_folder, max_workers_files):
                                        annotation_path_json + "/" + annotation_file, callback=callback)] = (
                     s3_prefix_for_annotation_file, size)
                 else:
-                    file_path = local_path + "/" + annotation_file
+                    file_path = os.path.join(local_path, annotation_file)
                     size = os.path.getsize(file_path)
                     pbar.total += size
                     fs[executor.submit(study.annotations.upload, file_path,
@@ -155,7 +156,7 @@ def upload_annotation_files(institutes, local_folder, max_workers_files):
                 else:
                     files_skipped.append(file)
     logger.info(f"files_uploaded: {len(files_uploaded)}, "
-                                f"files_skipped: {len(files_skipped)}")
+                f"files_skipped: {len(files_skipped)}")
     return
 
 
