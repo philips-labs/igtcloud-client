@@ -21,7 +21,8 @@ logger = logging.getLogger(__name__)
 
 
 def upload_project(local_folder: str, project_name: str, institute_name: str = None, submit: bool = False,
-                   max_workers_studies: int = None, max_workers_files: int = None, folder_structure: str = None):
+                   max_workers_studies: int = None, max_workers_files: int = None, folder_structure: str = None,
+                   category: str = None):
     project, institutes = find_project_and_institutes(project_name, institute_name)
 
     if not project and not institutes:
@@ -31,6 +32,9 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
     _password = None
     if submit:
         _password = getpass("For electronic record state it is required to reenter the password")
+
+    if category is not None and category.lower() == "annotations":
+        return upload_annotation_files(institutes, local_folder, max_workers_files)
 
     if project:
         # Project level file upload when there is a "files" folder in the root directory
@@ -81,6 +85,79 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
                 study, files_uploaded, files_skipped = f.result()
                 logger.info(f"Study: {study.study_id_human_readable} files_uploaded: {len(files_uploaded)}, "
                             f"files_skipped: {len(files_skipped)}")
+
+
+def upload_annotation_files(institutes, local_folder, max_workers_files):
+    # Annotation file upload
+    annotation_files = []
+    if os.path.isdir(local_folder):
+        for root, dirs, local_files in os.walk(local_folder):
+            local_path = root
+            annotation_files.extend(local_files)
+    else:
+        logger.error("Not a valid Directory")
+    initial_path = local_path.split(os.sep)
+    if "---" in initial_path[2]:
+        study_id_human_readable = initial_path[2].replace("---", "/")
+        annotation_paths = local_path.split(initial_path[2] + os.sep)
+        annotation_path = annotation_paths[1]
+    else:
+        study_id_human_readable = initial_path[2] + "/" + initial_path[3]
+        annotation_paths = local_path.split(initial_path[3] + os.sep)
+        annotation_path = annotation_paths[1]
+    for institute in institutes:
+        for studies in institute.studies:
+            if studies.study_id_human_readable == study_id_human_readable:
+                s3_prefix_for_annotation_file = studies.s3_prefix
+                hospital_id = studies.hospital_id
+                study_id = studies.study_database_id
+                break
+
+    study = entities_service.get_study(hospital_id=hospital_id, study_id=study_id)
+
+    files_uploaded = list()
+    files_skipped = list()
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers_files or 4) as executor:
+        fs = dict()
+        with tqdm(total=0, leave=False, desc=f"Annotation file Upload", unit='B', unit_scale=True,
+                  unit_divisor=1024) as pbar:
+            def callback(x):
+                pbar.update(x)
+
+            for annotation_file in annotation_files:
+                if annotation_file.endswith(".json"):
+                    try:
+                        local_path_json = local_path.replace(os.sep + "name", "")
+                        annotation_path_json = annotation_path.replace(os.sep + "name", "")
+                        file_path = os.path.join(local_path_json, annotation_file)
+                        size = os.path.getsize(file_path)
+                        pbar.total += size
+                        with open(os.path.abspath(file_path), "r") as file:
+                            json.loads(file.read())
+                    except ValueError as e:
+                        logger.error("Annotation File JSON is not valid : %s" % e)
+                        return
+                    fs[executor.submit(study.annotations.upload, file_path,
+                                       annotation_path_json + "/" + annotation_file, callback=callback)] = (
+                    s3_prefix_for_annotation_file, size)
+                else:
+                    file_path = os.path.join(local_path, annotation_file)
+                    size = os.path.getsize(file_path)
+                    pbar.total += size
+                    fs[executor.submit(study.annotations.upload, file_path,
+                                       annotation_path + "/" + annotation_file, callback=callback)] = (
+                    s3_prefix_for_annotation_file, size)
+
+            for f in concurrent.futures.as_completed(fs.keys()):
+                file, size = fs.pop(f)
+                if f.result():
+                    files_uploaded.append(file)
+                else:
+                    files_skipped.append(file)
+    logger.info(f"files_uploaded: {len(files_uploaded)}, "
+                f"files_skipped: {len(files_skipped)}")
+    return
 
 
 def upload_study(study_type: str, study_folder: str, patient_name: str, institute_id: str,

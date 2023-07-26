@@ -250,7 +250,8 @@ def get_annotation_files(service: EntitiesService, study: RootStudy) -> FilesCol
         data_store['annotations'] = FilesCollectionWrapper(s3_prefix=study.s3_prefix + 'annotations/',
                                                            category='annotations',
                                                            f_auth=lambda action, prefix: s3_creds(action, prefix),
-                                                           f_init=lambda: get_aux_files(service, study, 'annotations'))
+                                                           f_init=lambda: get_aux_files(service, study, 'annotations'),
+                                                           f_extend=lambda x: x)
     return data_store['annotations']
 
 
