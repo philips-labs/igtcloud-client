@@ -62,7 +62,7 @@ For convenience, you can discard the `-u <SERVICE_ID>`. Now the service_id will 
 
 To create a service identity you can use the following python example code:
 
-(this requires one of the following roles: `DATA_MANAGER`, `COORDINATOR` or `INVESTIGATOR`)
+(this requires one of the following roles: `DATA_MANAGER` on the project or `COORDINATOR` or `INVESTIGATOR` on the institute. Next it requires a user specific role `SERVICES_MANAGER`)
 ```python
 from igtcloud.client.core.auth import smart_auth
 from igtcloud.client.services import entities_service, set_auth
