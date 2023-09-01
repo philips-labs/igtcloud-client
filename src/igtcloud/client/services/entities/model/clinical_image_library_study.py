@@ -102,6 +102,8 @@ class ClinicalImageLibraryStudy(ModelComposed):
             'manufacturer': (str,),  # noqa: E501
             'environment': (str,),  # noqa: E501
             'modality_version': (str,),  # noqa: E501
+            'protocol_name': (str,),  # noqa: E501
+            'study_category': (str,),  # noqa: E501
             'study_database_id': (str,),  # noqa: E501
             'institute_id': (str,),  # noqa: E501
             'project_id': (str,),  # noqa: E501
@@ -122,7 +124,6 @@ class ClinicalImageLibraryStudy(ModelComposed):
             'state': (str,),  # noqa: E501
             'description': (str,),  # noqa: E501
             'study_comments': (str,),  # noqa: E501
-            'comments': (str,),  # noqa: E501
             'study_date': (datetime,),  # noqa: E501
             'accession_number': (str,),  # noqa: E501
             'hospital_id': (str,),  # noqa: E501
@@ -153,6 +154,8 @@ class ClinicalImageLibraryStudy(ModelComposed):
         'manufacturer': 'manufacturer',  # noqa: E501
         'environment': 'environment',  # noqa: E501
         'modality_version': 'modalityVersion',  # noqa: E501
+        'protocol_name': 'protocolName',  # noqa: E501
+        'study_category': 'studyCategory',  # noqa: E501
         'study_database_id': 'studyDatabaseId',  # noqa: E501
         'institute_id': 'instituteId',  # noqa: E501
         'project_id': 'projectId',  # noqa: E501
@@ -173,7 +176,6 @@ class ClinicalImageLibraryStudy(ModelComposed):
         'state': 'state',  # noqa: E501
         'description': 'description',  # noqa: E501
         'study_comments': 'studyComments',  # noqa: E501
-        'comments': 'comments',  # noqa: E501
         'study_date': 'studyDate',  # noqa: E501
         'accession_number': 'accessionNumber',  # noqa: E501
         'hospital_id': 'hospitalId',  # noqa: E501
@@ -244,6 +246,8 @@ class ClinicalImageLibraryStudy(ModelComposed):
             manufacturer (str): [optional]  # noqa: E501
             environment (str): [optional]  # noqa: E501
             modality_version (str): [optional]  # noqa: E501
+            protocol_name (str): [optional]  # noqa: E501
+            study_category (str): [optional]  # noqa: E501
             study_database_id (str): [optional]  # noqa: E501
             institute_id (str): [optional]  # noqa: E501
             project_id (str): [optional]  # noqa: E501
@@ -264,7 +268,6 @@ class ClinicalImageLibraryStudy(ModelComposed):
             state (str): [optional]  # noqa: E501
             description (str): [optional]  # noqa: E501
             study_comments (str): [optional]  # noqa: E501
-            comments (str): [optional]  # noqa: E501
             study_date (datetime): [optional]  # noqa: E501
             accession_number (str): [optional]  # noqa: E501
             hospital_id (str): [optional]  # noqa: E501

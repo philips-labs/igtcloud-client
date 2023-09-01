@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **manufacturer** | **str** |  | [optional] 
 **environment** | **str** |  | [optional] 
 **modality_version** | **str** |  | [optional] 
+**protocol_name** | **str** |  | [optional] 
+**study_category** | **str** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
