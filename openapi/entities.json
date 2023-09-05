@@ -211,14 +211,14 @@
       },
       "delete": {
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
           "400": {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/4xxMessage"
             }
+          },
+          "204": {
+            "description": "No Content"
           }
         },
         "operationId": "delete_application_specific",
@@ -401,14 +401,14 @@
       },
       "delete": {
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
           "400": {
             "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/4xxMessage"
             }
+          },
+          "204": {
+            "description": "No Content"
           }
         },
         "operationId": "delete_epd_site_specific",
@@ -2095,14 +2095,14 @@
               }
             }
           },
-          "400": {
-            "description": "Bad request",
+          "404": {
+            "description": "Not found",
             "schema": {
               "$ref": "#/definitions/4xxMessage"
             }
           },
-          "404": {
-            "description": "Not found",
+          "400": {
+            "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/4xxMessage"
             }
@@ -2250,14 +2250,14 @@
               "$ref": "#/definitions/Project"
             }
           },
-          "400": {
-            "description": "Bad request",
+          "404": {
+            "description": "Not found",
             "schema": {
               "$ref": "#/definitions/4xxMessage"
             }
           },
-          "404": {
-            "description": "Not found",
+          "400": {
+            "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/4xxMessage"
             }
@@ -2285,8 +2285,11 @@
       },
       "delete": {
         "responses": {
-          "204": {
-            "description": "No Content"
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
           },
           "400": {
             "description": "Bad request",
@@ -2294,11 +2297,8 @@
               "$ref": "#/definitions/4xxMessage"
             }
           },
-          "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
+          "204": {
+            "description": "No Content"
           }
         },
         "operationId": "delete_project",
@@ -2614,14 +2614,14 @@
       ],
       "get": {
         "responses": {
-          "400": {
-            "description": "Bad request",
+          "404": {
+            "description": "Not found",
             "schema": {
               "$ref": "#/definitions/4xxMessage"
             }
           },
-          "404": {
-            "description": "Not found",
+          "400": {
+            "description": "Bad request",
             "schema": {
               "$ref": "#/definitions/4xxMessage"
             }
@@ -2729,8 +2729,11 @@
       ],
       "delete": {
         "responses": {
-          "204": {
-            "description": "No Content"
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
           },
           "400": {
             "description": "Bad request",
@@ -2738,11 +2741,8 @@
               "$ref": "#/definitions/4xxMessage"
             }
           },
-          "404": {
-            "description": "Not found",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
+          "204": {
+            "description": "No Content"
           }
         },
         "operationId": "delete_institute",
@@ -2778,20 +2778,14 @@
       ],
       "get": {
         "responses": {
-          "200": {
-            "description": "Redirect URL"
-          },
           "302": {
             "description": "Redirect"
           },
-          "400": {
-            "description": "Download expired",
-            "schema": {
-              "$ref": "#/definitions/4xxMessage"
-            }
+          "200": {
+            "description": "Redirect URL"
           },
-          "401": {
-            "description": "Unauthenticated",
+          "404": {
+            "description": "Not found",
             "schema": {
               "$ref": "#/definitions/4xxMessage"
             }
@@ -2802,8 +2796,14 @@
               "$ref": "#/definitions/4xxMessage"
             }
           },
-          "404": {
-            "description": "Not found",
+          "401": {
+            "description": "Unauthenticated",
+            "schema": {
+              "$ref": "#/definitions/4xxMessage"
+            }
+          },
+          "400": {
+            "description": "Download expired",
             "schema": {
               "$ref": "#/definitions/4xxMessage"
             }
@@ -3718,9 +3718,6 @@
             "studyComments": {
               "type": "string"
             },
-            "comments": {
-              "type": "string"
-            },
             "studyDate": {
               "type": "string",
               "format": "date-time"
@@ -4291,6 +4288,12 @@
               "type": "string"
             },
             "modalityVersion": {
+              "type": "string"
+            },
+            "protocolName": {
+              "type": "string"
+            },
+            "studyCategory": {
               "type": "string"
             }
           },

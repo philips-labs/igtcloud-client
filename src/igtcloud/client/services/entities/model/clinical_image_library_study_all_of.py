@@ -85,6 +85,8 @@ class ClinicalImageLibraryStudyAllOf(ModelNormal):
             'manufacturer': (str,),  # noqa: E501
             'environment': (str,),  # noqa: E501
             'modality_version': (str,),  # noqa: E501
+            'protocol_name': (str,),  # noqa: E501
+            'study_category': (str,),  # noqa: E501
         }
 
     @cached_property
@@ -106,6 +108,8 @@ class ClinicalImageLibraryStudyAllOf(ModelNormal):
         'manufacturer': 'manufacturer',  # noqa: E501
         'environment': 'environment',  # noqa: E501
         'modality_version': 'modalityVersion',  # noqa: E501
+        'protocol_name': 'protocolName',  # noqa: E501
+        'study_category': 'studyCategory',  # noqa: E501
     }
 
     _composed_schemas = {}
@@ -167,6 +171,8 @@ class ClinicalImageLibraryStudyAllOf(ModelNormal):
             manufacturer (str): [optional]  # noqa: E501
             environment (str): [optional]  # noqa: E501
             modality_version (str): [optional]  # noqa: E501
+            protocol_name (str): [optional]  # noqa: E501
+            study_category (str): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

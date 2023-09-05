@@ -41,7 +41,6 @@ Name | Type | Description | Notes
 **state** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
 **study_comments** | **str** |  | [optional] 
-**comments** | **str** |  | [optional] 
 **study_date** | **datetime** |  | [optional] 
 **accession_number** | **str** |  | [optional] 
 **hospital_id** | **str** |  | [optional] [readonly] 
