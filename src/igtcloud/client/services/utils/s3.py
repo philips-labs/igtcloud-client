@@ -3,13 +3,15 @@ from typing import Optional
 
 
 class S3File(io.RawIOBase):
-    def __init__(self, s3_object, mode):
-        self._s3_object = s3_object
+    def __init__(self, s3_client, bucket, key, mode):
+        self._s3_client = s3_client
+        self._bucket = bucket
+        self._key = key
         self._position: int = 0
         self.mode = mode
 
     def __repr__(self):
-        return "<%s s3_object=%r>" % (type(self).__name__, self._s3_object)
+        return "<%s s3_object=%s/%s>" % (type(self).__name__, self._bucket, self._key)
 
     def readinto(self, buffer) -> Optional[int]:
         data = self.read(len(buffer))
@@ -35,7 +37,7 @@ class S3File(io.RawIOBase):
             range_header = "bytes=%d-%d" % (self._position, new_position - 1)
             self.seek(offset=size, whence=io.SEEK_CUR)
 
-        return self._s3_object.get(Range=range_header)["Body"].read()
+        return self._s3_client.get_object(Bucket=self._bucket, Key=self._key, Range=range_header)["Body"].read()
 
     def readable(self) -> bool:
         return True
