@@ -6,6 +6,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from getpass import getpass
 from typing import Tuple, List
 
+from botocore.config import Config
+
 from igtcloud.client.services.entities.model.project import Project
 from tqdm.auto import tqdm
 
@@ -53,6 +55,8 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
     if folder_structure not in ['flat', 'hierarchical']:
         folder_structure = 'flat'
 
+    client_kwargs = dict(config=Config(max_pool_connections=(max_workers_files or 4) * (max_workers_studies or 4)))
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers_studies or 4) as executor:
         for institute in institutes:
             logger.info(f"Uploading to institute: {institute.name}")
@@ -79,7 +83,7 @@ def upload_project(local_folder: str, project_name: str, institute_name: str = N
                             local_studies[study_dir] = patient_name
 
             fs = [executor.submit(upload_study, institute.study_type, study_folder, local_studies[study_folder],
-                                  institute.id, existing_studies, _password, max_workers_files) for study_folder in local_studies]
+                                  institute.id, existing_studies, _password, max_workers_files, client_kwargs=client_kwargs) for study_folder in local_studies]
 
             for f in tqdm(concurrent.futures.as_completed(fs), total=len(fs), desc="Studies", unit='study'):
                 study, files_uploaded, files_skipped = f.result()
@@ -162,7 +166,7 @@ def upload_annotation_files(institutes, local_folder, max_workers_files):
 
 def upload_study(study_type: str, study_folder: str, patient_name: str, institute_id: str,
                  studies: CollectionWrapper[RootStudy], _submit_password: str = None,
-                 max_workers_files: int = None) -> Tuple[RootStudy, List[str], List[str]]:
+                 max_workers_files: int = None, client_kwargs: dict = None) -> Tuple[RootStudy, List[str], List[str]]:
     local_study = None
     study_cls = entities_service.study_type_classes.get(study_type)
     study_json_file = os.path.join(study_folder, 'study.json')
@@ -219,7 +223,8 @@ def upload_study(study_type: str, study_folder: str, patient_name: str, institut
                     key = os.path.relpath(file_path, study_folder).replace(os.path.sep, '/')
                     size = os.path.getsize(file_path)
                     pbar.total += size
-                    fs[executor.submit(study.files.upload, file_path, key, callback=callback)] = (key, size)
+                    fs[executor.submit(study.files.upload, file_path, key, callback=callback,
+                                       client_kwargs=client_kwargs)] = (key, size)
             for f in concurrent.futures.as_completed(fs.keys()):
                 file, size = fs.pop(f)
                 if f.result():

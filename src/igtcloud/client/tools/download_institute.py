@@ -46,6 +46,8 @@ def download_institutes(project_name: str, institute_name: str, destination: str
         if callable(studies_filter):
             studies = list(filter(studies_filter, studies))
 
+        client_kwargs = dict(config=Config(max_pool_connections=(max_workers_files or 4) * (max_workers_studies or 4)))
+
         with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers_studies or 4) as executor:
             with tqdm(total=len(studies), desc="Studies", unit='study') as pbar:
                 fs = {executor.submit(_download_study,
@@ -54,7 +56,7 @@ def download_institutes(project_name: str, institute_name: str, destination: str
                                       categories,
                                       files_filter,
                                       include_modified_date,
-                                      max_workers_files): study for study in studies}
+                                      max_workers_files, client_kwargs=client_kwargs): study for study in studies}
                 for future in as_completed(fs):
                     study = fs.pop(future)
                     pbar.update()
@@ -72,7 +74,8 @@ def _create_study_destination_path(destination: str, institute, study, folder_st
     return os.path.join(destination, institute.name, os.path.normpath(study_destination))
 
 
-def _download_study(study, study_destination, categories, files_filter, include_modified_date, max_workers_files: int):
+def _download_study(study, study_destination, categories, files_filter, include_modified_date, max_workers_files: int,
+                    client_kwargs: dict = None):
     study_json_file = os.path.join(study_destination, 'study.json')
     os.makedirs(os.path.dirname(study_json_file), exist_ok=True)
     with open(study_json_file, 'w') as f:
@@ -90,8 +93,6 @@ def _download_study(study, study_destination, categories, files_filter, include_
         if len(categories) > 1:
             return os.path.join(study_destination, file.category)
         return study_destination
-
-    client_kwargs = dict(config=Config(max_pool_connections=max_workers_files or 10))
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers_files or 4) as executor:
         fs = {executor.submit(file.download, study_destination_fn(file), overwrite=False,

@@ -100,7 +100,10 @@ class FilesCollectionWrapper(CollectionWrapper[File]):
         return self._credentials.get(action)
 
     def upload(self, filename: str, key: str = None, overwrite: bool = False,
-               callback: Callable[[int], None] = None, trigger_action: bool = True) -> bool:
+               callback: Callable[[int], None] = None, trigger_action: bool = True,
+               client_kwargs: dict = None) -> bool:
+        if client_kwargs is None:
+            client_kwargs = {}
         abs_path = os.path.abspath(filename)
         if not os.path.exists(abs_path):
             raise FileNotFoundError(f"File {filename} not found")
@@ -118,7 +121,7 @@ class FilesCollectionWrapper(CollectionWrapper[File]):
                 if callback:
                     callback(file.file_size)
                 return False
-        s3_client, bucket_name = get_s3_client(file, 'PUT')
+        s3_client, bucket_name = get_s3_client(file, 'PUT', **client_kwargs)
         extra_args = {'ServerSideEncryption': 'AES256'}
         kwargs = dict(Bucket=bucket_name, Filename=abs_path, Key=file.key, ExtraArgs=extra_args)
         if callback:
@@ -291,6 +294,8 @@ def get_file_creds(file: File, action: str) -> Optional[Credentials]:
 def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = True,
                   callback: Callable[[int], None] = None, include_modified_date: bool = False,
                   client_kwargs: dict = None):
+    if client_kwargs is None:
+        client_kwargs = {}
     if not file.is_completed:
         return False
     destination = os.path.abspath(os.path.join(destination_dir, file.file_name))
