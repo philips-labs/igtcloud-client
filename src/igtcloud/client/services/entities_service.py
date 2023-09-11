@@ -2,11 +2,13 @@ import datetime
 import io
 import os
 import uuid
+from threading import Lock
 from typing import Optional, Iterable, Callable, Any
 
 import boto3
 import dateutil.parser
 from botocore.exceptions import HTTPClientError
+from cachetools import cached, LRUCache
 from tenacity import retry, wait_exponential, retry_if_exception_type, stop_after_attempt
 
 from .auth.model.credentials import Credentials
@@ -98,7 +100,10 @@ class FilesCollectionWrapper(CollectionWrapper[File]):
         return self._credentials.get(action)
 
     def upload(self, filename: str, key: str = None, overwrite: bool = False,
-               callback: Callable[[int], None] = None, trigger_action: bool = True) -> bool:
+               callback: Callable[[int], None] = None, trigger_action: bool = True,
+               client_kwargs: dict = None) -> bool:
+        if client_kwargs is None:
+            client_kwargs = {}
         abs_path = os.path.abspath(filename)
         if not os.path.exists(abs_path):
             raise FileNotFoundError(f"File {filename} not found")
@@ -116,12 +121,12 @@ class FilesCollectionWrapper(CollectionWrapper[File]):
                 if callback:
                     callback(file.file_size)
                 return False
-        bucket = get_s3_bucket(file, 'PUT')
+        s3_client, bucket_name = get_s3_client(file, 'PUT', **client_kwargs)
         extra_args = {'ServerSideEncryption': 'AES256'}
-        kwargs = dict(Filename=abs_path, Key=file.key, ExtraArgs=extra_args)
+        kwargs = dict(Bucket=bucket_name, Filename=abs_path, Key=file.key, ExtraArgs=extra_args)
         if callback:
             kwargs['Callback'] = callback
-        bucket.upload_file(**kwargs)
+        s3_client.upload_file(**kwargs)
         file.is_completed = True
         file.is_new = False
         file.progress_in_bytes = file.file_size
@@ -287,7 +292,10 @@ def get_file_creds(file: File, action: str) -> Optional[Credentials]:
 @retry(stop=(stop_after_attempt(3)), wait=wait_exponential(),
        retry=retry_if_exception_type(HTTPClientError), reraise=True)
 def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = True,
-                  callback: Callable[[int], None] = None, include_modified_date: bool = False):
+                  callback: Callable[[int], None] = None, include_modified_date: bool = False,
+                  client_kwargs: dict = None):
+    if client_kwargs is None:
+        client_kwargs = {}
     if not file.is_completed:
         return False
     destination = os.path.abspath(os.path.join(destination_dir, file.file_name))
@@ -295,15 +303,15 @@ def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = Tr
         if callback:
             callback(file.file_size)
         return False
-    bucket = get_s3_bucket(file, 'GET')
+    client, bucket_name = get_s3_client(file, 'GET', **client_kwargs)
     os.makedirs(os.path.abspath(os.path.dirname(destination)), exist_ok=True)
-    kwargs = dict(Key=file.key, Filename=destination)
+    kwargs = dict(Bucket=bucket_name, Key=file.key, Filename=destination)
     if callback:
         kwargs['Callback'] = callback
-    bucket.download_file(**kwargs)
+    client.download_file(**kwargs)
 
     if include_modified_date:
-        metadata = get_s3_file_metadata(file, 'GET')
+        metadata = get_s3_file_metadata(file)
         epoch = metadata['LastModified'].timestamp()
         os.utime(destination, (epoch, epoch))
 
@@ -313,16 +321,16 @@ def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = Tr
 @retry(stop=(stop_after_attempt(3)), wait=wait_exponential(),
        retry=retry_if_exception_type(HTTPClientError), reraise=True)
 def download_fileobj(file: File, file_obj: io.IOBase):
-    bucket = get_s3_bucket(file, 'GET')
-    bucket.download_fileobj(Key=file.key, Fileobj=file_obj)
+    client, bucket_name = get_s3_client(file, 'GET')
+    client.download_fileobj(Bucket=bucket_name, Key=file.key, Fileobj=file_obj)
 
 
 def open_file(file: File, mode='rb', buffering=-1, **kwargs):
     if 'r' not in mode:
         raise RuntimeError("Mode should contain 'r'")
     binary = 'b' in mode
-    bucket = get_s3_bucket(file, 'GET')
-    s3_file = S3File(bucket.Object(file.key), mode=mode)
+    s3_client, bucket_name = get_s3_client(file, "GET")
+    s3_file = S3File(s3_client, bucket_name, file.key, mode=mode)
     if binary:
         if buffering == 0:
             return s3_file
@@ -334,7 +342,12 @@ def open_file(file: File, mode='rb', buffering=-1, **kwargs):
         return io.TextIOWrapper(s3_file, **kwargs)
 
 
-def get_s3_bucket(file: File, action: str):
+@cached(cache=LRUCache(10), lock=Lock())
+def _cached_boto3_client(*args, **kwargs):
+    return boto3.client(*args, **kwargs)
+
+
+def get_s3_client(file: File, action: str, **kwargs):
     creds = file.credentials(action)
     if not creds:
         raise RuntimeError("No valid credentials")
@@ -342,23 +355,15 @@ def get_s3_bucket(file: File, action: str):
                       aws_secret_access_key=creds.secret_key,
                       aws_session_token=creds.session_token)
     creds_dict = {k: v for k, v in creds_dict.items() if k}
-    session = boto3.session.Session(**creds_dict)
-    s3 = session.resource('s3')
-    return s3.Bucket(creds.bucket)
+    client = _cached_boto3_client('s3', **creds_dict, **kwargs)
+
+    return client, creds.bucket
 
 
-def get_s3_file_metadata(file: File, action: str):
-    creds = file.credentials(action)
-    if not creds:
-        raise RuntimeError("No valid credentials")
-    creds_dict = dict(aws_access_key_id=creds.access_key,
-                      aws_secret_access_key=creds.secret_key,
-                      aws_session_token=creds.session_token)
-    creds_dict = {k: v for k, v in creds_dict.items() if k}
-    session = boto3.session.Session(**creds_dict)
-    s3 = session.client('s3')
+def get_s3_file_metadata(file: File):
+    s3_client, bucket_name = get_s3_client(file, 'GET')
 
-    return s3.head_object(Bucket=creds.bucket, Key=file.key)
+    return s3_client.head_object(Bucket=bucket_name, Key=file.key)
 
 
 def file_upload_completed(service: EntitiesService, study: RootStudy, file: File):
