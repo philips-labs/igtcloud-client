@@ -122,6 +122,8 @@ def upload_annotation_files(institutes, local_folder, max_workers_files):
     files_uploaded = list()
     files_skipped = list()
 
+    client_kwargs = dict(config=Config(max_pool_connections=max_workers_files or 4))
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers_files or 4) as executor:
         fs = dict()
         with tqdm(total=0, leave=False, desc=f"Annotation file Upload", unit='B', unit_scale=True,
@@ -143,14 +145,16 @@ def upload_annotation_files(institutes, local_folder, max_workers_files):
                         logger.error("Annotation File JSON is not valid : %s" % e)
                         return
                     fs[executor.submit(study.annotations.upload, file_path,
-                                       annotation_path_json + "/" + annotation_file, callback=callback)] = (
+                                       annotation_path_json + "/" + annotation_file, callback=callback,
+                                       client_kwargs=client_kwargs)] = (
                     s3_prefix_for_annotation_file, size)
                 else:
                     file_path = os.path.join(local_path, annotation_file)
                     size = os.path.getsize(file_path)
                     pbar.total += size
                     fs[executor.submit(study.annotations.upload, file_path,
-                                       annotation_path + "/" + annotation_file, callback=callback)] = (
+                                       annotation_path + "/" + annotation_file, callback=callback,
+                                       client_kwargs=client_kwargs)] = (
                     s3_prefix_for_annotation_file, size)
 
             for f in concurrent.futures.as_completed(fs.keys()):
@@ -255,6 +259,8 @@ def upload_project_files(project: Project, files_folder: str, max_workers_files:
     files_uploaded = list()
     files_skipped = list()
 
+    client_kwargs = dict(config=Config(max_pool_connections=max_workers_files or 4))
+
     with ThreadPoolExecutor(max_workers=max_workers_files or 4) as executor:
         with tqdm(total=0, desc="Project files", unit='B', unit_scale=True, unit_divisor=1024) as pbar:
             for root, _, files in os.walk(files_folder):
@@ -263,7 +269,8 @@ def upload_project_files(project: Project, files_folder: str, max_workers_files:
                     size = os.path.getsize(file_path)
                     key = os.path.relpath(file_path, files_folder).replace(os.path.sep, '/')
                     pbar.total += size
-                    future = executor.submit(project.files.upload, file_path, key, callback=pbar.update)
+                    future = executor.submit(project.files.upload, file_path, key, callback=pbar.update,
+                                             client_kwargs=client_kwargs)
                     fs[future] = (file, size)
 
             for f in as_completed(fs.keys()):
