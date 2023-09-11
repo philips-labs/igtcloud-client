@@ -5,6 +5,7 @@ import os
 from concurrent.futures import as_completed
 from typing import Callable, List
 
+from botocore.config import Config
 from tqdm.auto import tqdm
 
 from .common import find_project_and_institutes
@@ -90,9 +91,12 @@ def _download_study(study, study_destination, categories, files_filter, include_
             return os.path.join(study_destination, file.category)
         return study_destination
 
+    client_kwargs = dict(config=Config(max_pool_connections=max_workers_files or 10))
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers_files or 4) as executor:
         fs = {executor.submit(file.download, study_destination_fn(file), overwrite=False,
-                              include_modified_date=include_modified_date): file for file in files}
+                              include_modified_date=include_modified_date,
+                              client_kwargs=client_kwargs): file for file in files}
         study_folder = os.path.basename(study_destination)
         with tqdm(total=total_size, leave=False, desc=f"Study {study_folder}", unit='B', unit_scale=True,
                   unit_divisor=1024) as pbar:

@@ -2,11 +2,13 @@ import datetime
 import io
 import os
 import uuid
+from threading import Lock
 from typing import Optional, Iterable, Callable, Any
 
 import boto3
 import dateutil.parser
 from botocore.exceptions import HTTPClientError
+from cachetools import cached, LRUCache
 from tenacity import retry, wait_exponential, retry_if_exception_type, stop_after_attempt
 
 from .auth.model.credentials import Credentials
@@ -287,7 +289,8 @@ def get_file_creds(file: File, action: str) -> Optional[Credentials]:
 @retry(stop=(stop_after_attempt(3)), wait=wait_exponential(),
        retry=retry_if_exception_type(HTTPClientError), reraise=True)
 def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = True,
-                  callback: Callable[[int], None] = None, include_modified_date: bool = False):
+                  callback: Callable[[int], None] = None, include_modified_date: bool = False,
+                  client_kwargs: dict = None):
     if not file.is_completed:
         return False
     destination = os.path.abspath(os.path.join(destination_dir, file.file_name))
@@ -295,7 +298,7 @@ def download_file(file: File, destination_dir: os.PathLike, overwrite: bool = Tr
         if callback:
             callback(file.file_size)
         return False
-    client, bucket_name = get_s3_client(file, 'GET')
+    client, bucket_name = get_s3_client(file, 'GET', **client_kwargs)
     os.makedirs(os.path.abspath(os.path.dirname(destination)), exist_ok=True)
     kwargs = dict(Bucket=bucket_name, Key=file.key, Filename=destination)
     if callback:
@@ -334,7 +337,12 @@ def open_file(file: File, mode='rb', buffering=-1, **kwargs):
         return io.TextIOWrapper(s3_file, **kwargs)
 
 
-def get_s3_client(file: File, action: str):
+@cached(cache=LRUCache(10), lock=Lock())
+def _cached_boto3_client(*args, **kwargs):
+    return boto3.client(*args, **kwargs)
+
+
+def get_s3_client(file: File, action: str, **kwargs):
     creds = file.credentials(action)
     if not creds:
         raise RuntimeError("No valid credentials")
@@ -342,7 +350,7 @@ def get_s3_client(file: File, action: str):
                       aws_secret_access_key=creds.secret_key,
                       aws_session_token=creds.session_token)
     creds_dict = {k: v for k, v in creds_dict.items() if k}
-    client = boto3.client('s3', **creds_dict)
+    client = _cached_boto3_client('s3', **creds_dict, **kwargs)
 
     return client, creds.bucket
 
