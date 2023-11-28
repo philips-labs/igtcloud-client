@@ -12,7 +12,6 @@ from datetime import datetime, timezone, timedelta
 from getpass import getpass
 from http import cookies
 from threading import Lock, Timer
-import time
 from time import sleep
 from urllib.parse import urlparse, urljoin
 
@@ -235,8 +234,9 @@ class AuthRefresher:
         if resp.ok:
             data = resp.json()
             data["jwt"] = jwt_token
-            data["expires_in"] = data['exp'] - int(time.time())
+            data["expires_in"] = float(data["jwt_data"]['exp'])
             data["jwt_data"] = self._extract_jwt_payload(data["jwt"])
+            data["sub"] = data["user"]
 
             self._token_data = data
             self._token_data["csrf"] = csrf_token  # Copy csrf, is only valid on logon, not refresh
