@@ -234,8 +234,8 @@ class AuthRefresher:
         if resp.ok:
             data = resp.json()
             data["jwt"] = jwt_token
-            data["expires_in"] = float(data["jwt_data"]['exp'])
             data["jwt_data"] = self._extract_jwt_payload(data["jwt"])
+            data["expires_in"] = float(data["jwt_data"]['exp'])
             data["sub"] = data["user"]
 
             self._token_data = data
