@@ -19,7 +19,7 @@ from urllib.parse import urlparse, urljoin
 import requests
 import logging
 
-from jwt import JWT, jwk_from_pem
+import jwt as pyjwt
 from requests import RequestException
 from tenacity import retry, wait_exponential, stop_after_delay, retry_if_exception_type
 
@@ -212,9 +212,7 @@ class AuthRefresher:
             sub=sub,
             exp=int((datetime.utcnow().replace(tzinfo=timezone.utc) + timedelta(hours=1)).timestamp()))
 
-        jwt = JWT()
-        signing_key = jwk_from_pem(key.encode())
-        assertion = jwt.encode(payload, signing_key, 'RS256')
+        assertion = pyjwt.encode(payload, key.encode(), algorithm="RS256")
 
         data = {'grantType': 'jwt-key',
                 'assertion': assertion,
